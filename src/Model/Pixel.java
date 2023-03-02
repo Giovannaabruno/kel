@@ -47,7 +47,7 @@ public class Pixel {
   }
 
   public int getLuma() {
-    return (int)(0.2126 * red + 0.7152 * green + 0.0722 * blue);
+    return (int)(0.2126 * (float) red + 0.7152 * (float) green + 0.0722 * (float) blue);
     //if luma must be between 0 and 1, add "/255" after each color (ex: red/255)
   }
 
