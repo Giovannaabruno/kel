@@ -1,6 +1,9 @@
 package Controller;
 
 import org.junit.Test;
+
+import java.io.IOException;
+
 import static org.junit.Assert.assertEquals;
 
 public class ImageControllerTest {
@@ -50,7 +53,7 @@ public class ImageControllerTest {
   }
 
   @Test
-  public void testReadCommand() {
+  public void testReadCommand() throws IOException {
     ImageController ic = new ImageController();
     // command 1
     ic.readCommand("new-project tako");
