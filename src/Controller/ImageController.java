@@ -3,16 +3,21 @@ package Controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
 import Model.Project;
 import Model.Layer;
 import Model.Pixel;
+import View.CollagingCommandView;
+import View.CollagingView;
+
 // ask teacher about saveProject and saveImage.
 public class ImageController implements ControllerInterface {
   private Project img;
   private String currentCommand;
+  private CollagingView view;
 
 //  public ImageController() {
 //
@@ -174,13 +179,15 @@ public class ImageController implements ControllerInterface {
 
   }
 
-  public void  quit() {
+  public void  quit() throws IOException {
     this.img = null;
+    this.view = new CollagingCommandView();
+    this.view.renderMessage("Quiting the project... Bye!");
     System.exit(0);
   }
 
 
-    public void readCommand(String line) {
+    public void readCommand(String line) throws IOException {
     String[] words = line.split(" ");
     this.currentCommand = words[0];
     switch(words[0]) {

@@ -2,6 +2,8 @@ package Controller;
 
 
 
+import java.io.IOException;
+
 import Model.Layer;
 
 
@@ -38,8 +40,8 @@ public interface ControllerInterface {
 // how can you add multiple layers with transpareses that add up too 255.
   void  saveImage();
 
-  void  quit();
+  void  quit() throws IOException;
 
 
-  void readCommand(String line);
+  void readCommand(String line) throws IOException;
 }
