@@ -1,6 +1,6 @@
 package Model;
-
-public class Layer {
+// need to have atleast 1 layer
+public class Layer implements LayerInterface<Pixel>{
   private int height;
   private int width;
   private Pixel[][] grid;
@@ -47,7 +47,10 @@ public class Layer {
   }
   public Pixel getPixelAt(int row, int colum) {
     return grid[row][colum];
-
+  }
+  
+  public void setPixelAt(int row, int colum, Pixel pixel) {
+    grid[row][colum] = pixel;
   }
 
   public void setFilter(String filter, int amount) {
@@ -59,6 +62,9 @@ public class Layer {
 
   public void setFilter(String filter) {
     this.filter = filter;
+  }
+  public String getFilter() {
+    return this.filter;
   }
 
   public Pixel[][] getFilteredGrid() {

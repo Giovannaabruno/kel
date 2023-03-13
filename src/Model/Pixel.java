@@ -1,9 +1,10 @@
 package Model;
 
-public class Pixel {
+public class Pixel implements PixelInterface {
   private int red;
   private int green;
   private int blue;
+  // amount of transparency
   private int alpha;
 
 
@@ -20,6 +21,13 @@ public class Pixel {
     this.blue = blue;
     this.alpha = alpha;
 
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    Pixel otherPixel = (Pixel) other;
+    return this.red == otherPixel.red && this.blue == otherPixel.blue &&
+            this.green == otherPixel.green && this.alpha == otherPixel.alpha;
   }
 
   public int getRed() {
