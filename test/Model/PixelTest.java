@@ -7,6 +7,9 @@ import static org.testng.AssertJUnit.assertEquals;
 
 public class PixelTest {
 
+  /**
+   * Tester to getRed component.
+   */
   @Test
   public void getRed() {
     Pixel pixel = new Pixel(255,255,255);
@@ -25,6 +28,9 @@ public class PixelTest {
     assertNotEquals(pixel.getRed(), 50);
   }
 
+  /**
+   * Tester to getBlue component.
+   */
   @Test
   public void getBlue() {
     Pixel pixel = new Pixel(255,255,255);
@@ -43,6 +49,9 @@ public class PixelTest {
     assertNotEquals(pixel.getBlue(), 50);
   }
 
+  /**
+   * Tester to getGreen component.
+   */
   @Test
   public void getGreen() {
     Pixel pixel = new Pixel(255,255,255);
@@ -61,6 +70,9 @@ public class PixelTest {
     assertNotEquals(pixel.getGreen(), 50);
   }
 
+  /**
+   * Tester for getAlpha.
+   */
   @Test
   public void getAlpha() {
     Pixel pixel = new Pixel(255,255,255,255);
@@ -79,6 +91,9 @@ public class PixelTest {
     assertNotEquals(pixel.getAlpha(), 50);
   }
 
+  /**
+   * Tester
+   */
   @Test
   public void getValue() {
     Pixel pixel = new Pixel(255, 40,200, 70);

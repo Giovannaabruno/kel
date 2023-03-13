@@ -2,21 +2,21 @@ package Model;
 
 public interface LayerInterface<T> {
 
-  public int getHeight();
+  int getHeight();
 
-  public int getWidth();
+  int getWidth();
 
-  public String getName();
+  String getName();
 
-  public T[][] getGrid();
+  T[][] getGrid();
 
-  public T getPixelAt(int row, int colum);
+  T getPixelAt(int row, int colum);
 
-  public void setFilter(String filter, int amount);
+  void setFilter(String filter, int amount);
 
 
-  public void setFilter(String filter);
-  public String getFilter();
+  void setFilter(String filter);
+  String getFilter();
 
-  public T[][] getFilteredGrid();
+  T[][] getFilteredGrid();
 }

@@ -1,27 +1,26 @@
 package Model;
 
 public interface PixelInterface {
+  int getRed();
 
-  public int getRed();
+  int getBlue();
 
-  public int getBlue();
+  int getGreen();
 
-  public int getGreen();
+  int getAlpha();
 
-  public int getAlpha();
+  int getValue();
 
-  public int getValue();
+  int getIntensity();
 
-  public int getIntensity();
+  int getLuma();
 
-  public int getLuma();
+  void setRed(int red);
 
-  public void setRed(int red);
+  void setGreen(int green);
 
-  public void setGreen(int green);
+  void setBlue(int blue);
 
-  public void setBlue(int blue);
-
-  public void setAlpha(int alpha);
+  void setAlpha(int alpha);
 
 }

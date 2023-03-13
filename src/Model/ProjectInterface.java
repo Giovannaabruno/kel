@@ -8,7 +8,7 @@ public interface ProjectInterface {
    * @param index
    * @return
    */
-  public Layer getLayer(int index);
+  Layer getLayer(int index);
 
-  public void addLayer(Layer l);
+  void addLayer(Layer l);
 }
