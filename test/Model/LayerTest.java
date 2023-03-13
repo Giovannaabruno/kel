@@ -1,10 +1,8 @@
 package Model;
 
-import org.testng.annotations.Test;
-
-import static org.testng.Assert.assertNotEquals;
-import static org.testng.AssertJUnit.assertEquals;
-
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class LayerTest {
 // int height, int width, String name
