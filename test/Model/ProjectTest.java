@@ -2,14 +2,15 @@ package Model;
 
 
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
+
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertThrows;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertThrows;
 
 public class ProjectTest {
 
   /**
-   * testAddLayer, add s layer effect to the orginal pixal.
+   * TestAddLayer, add s layer effect to the orginal pixal.
    */
   @Test
   public void testAddLayer() {
@@ -26,7 +27,7 @@ public class ProjectTest {
   }
 
   /**
-   * testGetLayer, getting the background for the image.
+   * TestGetLayer, getting the background for the image.
    */
   @Test
   public void testGetLayer() {
@@ -37,7 +38,7 @@ public class ProjectTest {
   }
 
   /**
-   * testNotGetLayer, tester when the image has a null layer.
+   * TestNotGetLayer, tester when the image has a null layer.
    */
   @Test
   public void testNotGetLayer() {
@@ -45,5 +46,20 @@ public class ProjectTest {
     assertThrows(IllegalArgumentException.class, () -> {
       Layer l = image.getLayer(-1);
     });
+  }
+  @Test
+  public void testGetWidth() {
+    Project image = new Project(600, 700);
+    assertEquals(image.getWidth(),600);
+    assertNotEquals(image.getWidth(),700);
+
+
+  }
+  @Test
+  public void testGetHeight() {
+    Project image = new Project(600, 700);
+    assertEquals(image.getHeight(),700);
+    assertNotEquals(image.getHeight(),600);
+
   }
 }

@@ -1,5 +1,8 @@
 package Model;
 
+/**
+ * interface for PixelInterface.
+ */
 public interface PixelInterface {
   int getRed();
 

@@ -1,13 +1,21 @@
 package Model;
 
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
+import static org.testng.Assert.assertNotEquals;
+import static org.testng.AssertJUnit.assertEquals;
+
+
+/**
+ * Tester for Layer class.
+ */
 public class LayerTest {
 // int height, int width, String name
 // Pixel[][] grid, String name
 
+  /**
+   * Tester that test getHeight method.
+   */
   @Test
   public void getHeight() {
     Layer ll = new Layer(600,600, "image.tako.pmm");
@@ -15,6 +23,9 @@ public class LayerTest {
     assertNotEquals(ll.getHeight(), 500);
   }
 
+  /**
+   * Tester that test getWidth method.
+   */
   @Test
   public void getWidth() {
     Layer ll = new Layer(600,600, "image.tako.pmm");
@@ -22,6 +33,9 @@ public class LayerTest {
     assertNotEquals(ll.getWidth(), 500);
   }
 
+  /**
+   * Tester that test getName method.
+   */
   @Test
   public void getName() {
     Layer ll = new Layer(600,600, "image.tako.pmm");
@@ -30,6 +44,9 @@ public class LayerTest {
 
   }
 
+  /**
+   * Tester that test getGrid method.
+   */
   @Test
   public void getGrid() {
     Layer ll = new Layer(600,600, "image.tako.pmm");
@@ -44,6 +61,9 @@ public class LayerTest {
             new Pixel(255,128, 255, 255));
   }
 
+  /**
+   * Tester that test getPixelAt method.
+   */
   @Test
   public void getPixelAt() {
     Layer ll = new Layer(600,600, "image.tako.pmm");
@@ -69,6 +89,10 @@ public class LayerTest {
 //      case "blue-component":
 //              return blueComponent();
 //      case "brighten-value":
+
+  /**
+   * Tester that test setFilter method.
+   */
   @Test
   public void setFilter() {
     Layer ll = new Layer(600,600, "image.tako.pmm");
@@ -81,6 +105,9 @@ public class LayerTest {
     assertNotEquals(ll.getFilter(), "blue");
   }
 
+  /**
+   * Tester that test SetFilter method.
+   */
   @Test
   public void testSetFilter() {
     Layer ll = new Layer(600,600, "image.tako.pmm");
@@ -94,6 +121,10 @@ public class LayerTest {
     assertNotEquals(ll.getFilter(), "blue");
 
   }
+
+  /**
+   * Tester that test GetFilter method.
+   */
   @Test
   public void GetFilter() {
     Layer ll = new Layer(600,600, "image.tako.pmm");
@@ -109,6 +140,9 @@ public class LayerTest {
 
   }
 
+  /**
+   * Tester that test FilteredGrid method.
+   */
   @Test
   public void getFilteredGrid() {
     Layer ll = new Layer(600,600, "image.tako.pmm");

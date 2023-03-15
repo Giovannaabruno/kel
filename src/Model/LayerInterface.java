@@ -1,5 +1,10 @@
 package Model;
 
+/**
+ * interface for LayerInterface.
+ *
+ * @param <T> pixel
+ */
 public interface LayerInterface<T> {
 
   int getHeight();
@@ -14,9 +19,9 @@ public interface LayerInterface<T> {
 
   void setFilter(String filter, int amount);
 
+  String getFilter();
 
   void setFilter(String filter);
-  String getFilter();
 
   T[][] getFilteredGrid();
 }

@@ -1,5 +1,8 @@
 package Model;
 
+/**
+ * Class Pixel which implements PixelInterface.
+ */
 public class Pixel implements PixelInterface {
   private int red;
   private int green;
@@ -8,6 +11,13 @@ public class Pixel implements PixelInterface {
   private int alpha;
 
 
+  /**
+   * Constructor for Pixel, represents integer objects red, green, and blue.
+   *
+   * @param red   equals red
+   * @param green equals green
+   * @param blue  equals blue
+   */
   public Pixel(int red, int green, int blue) {
     this.red = red;
     this.green = green;
@@ -15,6 +25,14 @@ public class Pixel implements PixelInterface {
     this.alpha = 255;
   }
 
+  /**
+   * Constructor for Pixel, represents alpha and integer objects red, green, and blue.
+   *
+   * @param red   equals red
+   * @param green equals green
+   * @param blue  equals blue
+   * @param alpha the amount of transparency
+   */
   public Pixel(int red, int green, int blue, int alpha) {
     this.red = red;
     this.green = green;
@@ -23,6 +41,12 @@ public class Pixel implements PixelInterface {
 
   }
 
+  /**
+   * Method equals, represents total components.
+   *
+   * @param other object
+   * @return pixels components
+   */
   @Override
   public boolean equals(Object other) {
     Pixel otherPixel = (Pixel) other;
@@ -30,48 +54,103 @@ public class Pixel implements PixelInterface {
             this.green == otherPixel.green && this.alpha == otherPixel.alpha;
   }
 
+  /***
+   * Method getRed, gets red component.
+   * @return red
+   */
   public int getRed() {
     return red;
   }
 
-  public int getBlue() {
-    return blue;
-  }
-
-  public int getGreen() {
-    return green;
-  }
-
-  public int getAlpha() {
-    return alpha;
-  }
-
-  public int getValue() {
-    return Math.max(red, Math.max(green, blue));
-  }
-
-  public int getIntensity() {
-    return (red + green + blue) / 3;
-  }
-
-  public int getLuma() {
-    return (int)(0.2126 * (float) red + 0.7152 * (float) green + 0.0722 * (float) blue);
-    //if luma must be between 0 and 1, add "/255" after each color (ex: red/255)
-  }
-
+  /**
+   * Method setRed, sets reds components.
+   *
+   * @param red red
+   */
   public void setRed(int red) {
     this.red = red;
   }
 
-  public void setGreen(int green) {
-    this.green = green;
+  /**
+   * Method getBlue, gets blue component.
+   *
+   * @return blue
+   */
+  public int getBlue() {
+    return blue;
   }
 
+  /**
+   * Method setBlue, sets blue components.
+   *
+   * @param blue blue
+   */
   public void setBlue(int blue) {
     this.blue = blue;
   }
 
+  /**
+   * Method getGreen, gets green component.
+   *
+   * @return green
+   */
+  public int getGreen() {
+    return green;
+  }
+
+  /**
+   * Method setGreen, sets green components.
+   *
+   * @param green green
+   */
+  public void setGreen(int green) {
+    this.green = green;
+  }
+
+  /**
+   * Method getAlpha,gets alpha value.
+   *
+   * @return alpha
+   */
+  public int getAlpha() {
+    return alpha;
+  }
+
+  /**
+   * Method setAlpha, sets alpha value.
+   *
+   * @param alpha aplpha
+   */
   public void setAlpha(int alpha) {
     this.alpha = alpha;
+  }
+
+  /**
+   * Method getValue, get the maximum value of the three components for each pixel.
+   *
+   * @return value
+   */
+  public int getValue() {
+    return Math.max(red, Math.max(green, blue));
+  }
+
+  /**
+   * Method getIntensity, gets the average of the three components for each pixel.
+   *
+   * @return total intensity
+   */
+  public int getIntensity() {
+    return (red + green + blue) / 3;
+  }
+
+  /**
+   * Method getLume, gets the weighted sum. if
+   * luma must be between 0 and 1, add "/255" after each color (ex: red/255).
+   *
+   * @return luma
+   */
+  public int getLuma() {
+    return (int) (0.2126 * (float) red + 0.7152 * (float) green + 0.0722 * (float) blue);
+
   }
 }

@@ -1,6 +1,10 @@
 package Model;
 // need to have atleast 1 layer
-public class Layer implements LayerInterface<Pixel>{
+
+/**
+ * Class for Layer which implements LayerInterface.
+ */
+public class Layer implements LayerInterface<Pixel> {
   private int height;
   private int width;
   private Pixel[][] grid;
@@ -11,18 +15,31 @@ public class Layer implements LayerInterface<Pixel>{
 
   private int amount; //store the intensity of the filter
 
+  /**
+   * Constructor for Layer, represents objects height, width, and name.
+   *
+   * @param height of the layer
+   * @param width  of the layer
+   * @param name   of the type of layer
+   */
   public Layer(int height, int width, String name) {
     this.height = height;
     this.width = width;
     this.name = name;
     this.grid = new Pixel[height][width];
-    for( int row = 0 ; row < grid.length; row++) {
-      for(int colum = 0; colum < grid[0].length; colum++) {
+    for (int row = 0; row < grid.length; row++) {
+      for (int colum = 0; colum < grid[0].length; colum++) {
         grid[row][colum] = new Pixel(255, 255, 255);
       }
     }
   }
 
+  /**
+   * Constructor for Layer, repesents the objects for grid and name.
+   *
+   * @param grid of the layer
+   * @param name of the layer
+   */
   public Layer(Pixel[][] grid, String name) {
     this.height = grid.length;
     this.width = grid[0].length;
@@ -30,29 +47,71 @@ public class Layer implements LayerInterface<Pixel>{
     this.name = name;
   }
 
+  /**
+   * Method getHeight, gets the height of the layer.
+   *
+   * @return height
+   */
   public int getHeight() {
     return height;
   }
 
+  /**
+   * Method getWidth, gets the width of the layer.
+   *
+   * @return width
+   */
   public int getWidth() {
     return width;
   }
 
+  /**
+   * Method getWidth, gets the name of the type of layer.
+   *
+   * @return name
+   */
   public String getName() {
     return name;
   }
 
+  /**
+   * Method getGrid, gets the grid of the layer.
+   *
+   * @return grid
+   */
   public Pixel[][] getGrid() {
     return grid;
   }
+
+  /**
+   * Method getPixelAt, get the coordinate of a certain pixel on the grid.
+   *
+   * @param row   of the grid for the layer
+   * @param colum of the grid for the layer
+   * @return row and colum for the grid for layer
+   */
   public Pixel getPixelAt(int row, int colum) {
     return grid[row][colum];
   }
-  
+
+  /**
+   * Method setPixelAt, sets the coordinate of a certain pixel on the grid.
+   *
+   * @param row   of the grid for the layer
+   * @param colum of the grid for the layer
+   * @param pixel selected pixel on the grid
+   */
   public void setPixelAt(int row, int colum, Pixel pixel) {
     grid[row][colum] = pixel;
   }
 
+  /**
+   * Method setFilter, check whether filter is a valid choice, and the amount of
+   * transparency for that layer.
+   *
+   * @param filter type
+   * @param amount of transparency
+   */
   public void setFilter(String filter, int amount) {
     //ideally, this should check whether filter is a valid choice
     //and throw an error if it's not
@@ -60,15 +119,31 @@ public class Layer implements LayerInterface<Pixel>{
     this.amount = amount;
   }
 
-  public void setFilter(String filter) {
-    this.filter = filter;
-  }
+  /**
+   * Getter method getFilter, gets the type of filter on the image.
+   *
+   * @return filter type
+   */
   public String getFilter() {
     return this.filter;
   }
 
+  /**
+   * Setter method setFilter, sets the type of filter on the image.
+   *
+   * @param filter filter type
+   */
+  public void setFilter(String filter) {
+    this.filter = filter;
+  }
+
+  /**
+   * Method getFilteredGrid, selects what each filter type is called.
+   *
+   * @return filter or null if given a Invalid filter
+   */
   public Pixel[][] getFilteredGrid() {
-    switch(filter) {
+    switch (filter) {
       case "red-component":
         return redComponent();
       case "green-component":
@@ -101,6 +176,13 @@ public class Layer implements LayerInterface<Pixel>{
   //named Filter if we wanted (not necessary, might be good practice)
 
 
+  /**
+   * Method darken, removes the brightness value
+   * pixel by pixel according to value from the corresponding pixel
+   * on the current layer.
+   *
+   * @return result amount
+   */
   private Pixel[][] darken() {
     Pixel[][] result = new Pixel[height][width];
 
@@ -123,11 +205,18 @@ public class Layer implements LayerInterface<Pixel>{
 
   //not sure what brighten intensity and brighten luma are,
   //or how they differ from this brighten method
+
+  /**
+   * Method brighten represents, adds the brightness value pixel
+   * by pixel according to value from the corresponding pixel on the current layer.
+   *
+   * @return result amount
+   */
   private Pixel[][] brighten() {
     Pixel[][] result = new Pixel[height][width];
 
-    for(int row = 0; row < grid.length; row++) {
-      for(int colum = 0; colum < grid[0].length; colum++) {
+    for (int row = 0; row < grid.length; row++) {
+      for (int colum = 0; colum < grid[0].length; colum++) {
         int red = grid[row][colum].getRed();
         int green = grid[row][colum].getGreen();
         int blue = grid[row][colum].getBlue();
@@ -143,11 +232,16 @@ public class Layer implements LayerInterface<Pixel>{
     return result;
   }
 
+  /**
+   * Method redComponent, represents the red portion of the RGB.
+   *
+   * @return result amount
+   */
   private Pixel[][] redComponent() {
     Pixel[][] result = new Pixel[height][width];
 
-    for(int row = 0; row < grid.length; row++) {
-      for(int colum = 0; colum < grid[0].length; colum++) {
+    for (int row = 0; row < grid.length; row++) {
+      for (int colum = 0; colum < grid[0].length; colum++) {
         int red = grid[row][colum].getRed();
 
         result[row][colum] = new Pixel(red, 0, 0);
@@ -156,11 +250,17 @@ public class Layer implements LayerInterface<Pixel>{
     }
     return result;
   }
+
+  /**
+   * Method greenComponent, represents the green portion of the RGB.
+   *
+   * @return result amount
+   */
   private Pixel[][] greenComponent() {
     Pixel[][] result = new Pixel[height][width];
 
-    for(int row = 0; row < grid.length; row++) {
-      for(int colum = 0; colum < grid[0].length; colum++) {
+    for (int row = 0; row < grid.length; row++) {
+      for (int colum = 0; colum < grid[0].length; colum++) {
         int green = grid[row][colum].getGreen();
 
         result[row][colum] = new Pixel(0, green, 0);
@@ -169,11 +269,17 @@ public class Layer implements LayerInterface<Pixel>{
     }
     return result;
   }
+
+  /**
+   * Method blueComponent, represents the blue portion of the RGB.
+   *
+   * @return result amount
+   */
   private Pixel[][] blueComponent() {
     Pixel[][] result = new Pixel[height][width];
 
-    for(int row = 0; row < grid.length; row++) {
-      for(int colum = 0; colum < grid[0].length; colum++) {
+    for (int row = 0; row < grid.length; row++) {
+      for (int colum = 0; colum < grid[0].length; colum++) {
         int blue = grid[row][colum].getBlue();
 
         result[row][colum] = new Pixel(0, 0, blue);
