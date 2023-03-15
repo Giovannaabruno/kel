@@ -4,20 +4,56 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+import Model.Layer;
+
 import static org.junit.Assert.assertEquals;
 
 public class ImageControllerTest {
 
+  // Test Load Image - with Valid PPM file format - check Height.
   @Test
-  public void testLoadImage() {
+  public void testLoadImageValidFormatHeight() {
+    ImageController imgCtr = new ImageController();
+    Layer l1 = imgCtr.loadImage("images/A4-sample2.ppm", "dark");
+    assertEquals(500, l1.getHeight());
   }
+
+  // Test Load Image - with Valid PPM file format - check Width.
+  @Test
+  public void testLoadImageValidFormatWidth() {
+    ImageController imgCtr = new ImageController();
+    Layer l1 = imgCtr.loadImage("images/A4-sample2.ppm", "dark");
+    assertEquals(400, l1.getWidth());
+  }
+
+  // Test Load Image - with invalid PPM file format.
+  @Test
+  public void testLoadImageWrongFormat() {
+    ImageController imgCtr = new ImageController();
+    assertEquals(null,
+            imgCtr.loadImage("images/wrong_format.ppm", "dark"));
+  }
+
+
 
   @Test
   public void testGetCurrentCommand() {
   }
 
+  // Test new project with dimensions - check width.
   @Test
-  public void testNewProject() {
+  public void testNewProjectCheckWidth() throws IOException {
+    ImageController imgCtr = new ImageController();
+    imgCtr.readCommand("new-project 800 600");
+    assertEquals(800, imgCtr.img.getWidth());
+  }
+
+  // Test new project with dimensions - check height.
+  @Test
+  public void testNewProjectCheckHeight() throws IOException {
+    ImageController imgCtr = new ImageController();
+    imgCtr.readCommand("new-project 800 600");
+    assertEquals(600, imgCtr.img.getHeight());
   }
 
   @Test
@@ -48,8 +84,12 @@ public class ImageControllerTest {
   public void testSaveImage() {
   }
 
+  // Test quiting the project.
   @Test
-  public void testQuit() {
+  public void testQuit() throws IOException {
+    ImageController imgCtr = new ImageController();
+    imgCtr.quit();
+    assertEquals(null, imgCtr.img);
   }
 
   @Test
