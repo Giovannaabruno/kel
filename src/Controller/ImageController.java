@@ -15,7 +15,7 @@ import View.CollagingView;
 
 // ask teacher about saveProject and saveImage.
 public class ImageController implements ControllerInterface {
-  private Project img;
+  protected Project img;
   private String currentCommand;
   private CollagingView view;
 
@@ -53,6 +53,7 @@ public class ImageController implements ControllerInterface {
     s = sc.next();
     if (!s.equals("P3")) {
       System.out.println("Invalid PPM file: plain RAW file should begin with P3");
+      return null;
     }
 
     int width = sc.nextInt();

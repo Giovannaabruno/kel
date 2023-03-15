@@ -15,6 +15,10 @@ public class Project implements ProjectInterface {
     layers.add(new Layer(width, height, "background")); //completely white background layer
   }
 
+  // Accessor
+  public int getWidth() { return this.width;}
+  public int getHeight() { return this.height;}
+
   @Override
   public Layer getLayer(int index) {
     if(index < 0 || index >= this.layers.size()) {
