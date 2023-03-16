@@ -65,6 +65,7 @@ public class ImageController implements ControllerInterface {
     s = sc.next();
     if (!s.equals("P3")) {
       System.out.println("Invalid PPM file: plain RAW file should begin with P3");
+      return null;
     }
 
     int width = sc.nextInt();
