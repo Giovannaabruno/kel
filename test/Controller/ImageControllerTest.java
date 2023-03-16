@@ -30,6 +30,36 @@ public class ImageControllerTest {
   }
 
   /**
+   * Test Load Image - with Valid PPM file format - check Height.
+   */
+  @Test
+  public void testLoadImageValidFormatHeight() {
+    ImageController imgCtr = new ImageController();
+    Layer l1 = imgCtr.loadImage("images/A4-sample2.ppm", "dark");
+    assertEquals(500, l1.getHeight());
+  }
+
+  /**
+   * Test Load Image - with Valid PPM file format - check Width.
+   */
+  @Test
+  public void testLoadImageValidFormatWidth() {
+    ImageController imgCtr = new ImageController();
+    Layer l1 = imgCtr.loadImage("images/A4-sample2.ppm", "dark");
+    assertEquals(400, l1.getWidth());
+  }
+
+  /**
+   Test Load Image - with invalid PPM file format.
+   */
+  @Test
+  public void testLoadImageWrongFormat() {
+    ImageController imgCtr = new ImageController();
+    assertEquals(null,
+            imgCtr.loadImage("images/wrong_format.ppm", "dark"));
+  }
+
+  /**
    * Tester that test GetCurrentCommand method.
    */
   @Test
@@ -45,12 +75,27 @@ public class ImageControllerTest {
   }
 
   /**
-   * Tester that test NewProject method.
+   * Tester that test NewProject method with dimensions - check width
+   * @throws IOException
    */
-  //kelsie will do
   @Test
-  public void testNewProject() {
+  public void testNewProjectCheckWidth() throws IOException {
+    ImageController imgCtr = new ImageController();
+    imgCtr.readCommand("new-project 800 600");
+    assertEquals(800, imgCtr.img.getWidth());
   }
+
+  /**
+   *  Tester that test NewProject method with dimensions - check height.
+   * @throws IOException
+   */
+  @Test
+  public void testNewProjectCheckHeight() throws IOException {
+    ImageController imgCtr = new ImageController();
+    imgCtr.readCommand("new-project 800 600");
+    assertEquals(600, imgCtr.img.getHeight());
+  }
+
 
   @Test
   public void testGetProject() {
@@ -59,14 +104,6 @@ public class ImageControllerTest {
     ic.getProject();
     assertEquals(600, ic.getProject().getWidth());
     assertEquals(800, ic.getProject().getHeight());
-  }
-
-  /**
-   * Tester that test GetLoadProject method.
-   */
-  //kelsie will do
-  @Test
-  public void testLoadProject() {
   }
 
   /**
@@ -162,9 +199,11 @@ public class ImageControllerTest {
   /**
    * Tester that test Quit method.
    */
-  //kelsie will do
   @Test
-  public void testQuit() {
+  public void testQuit() throws IOException {
+    ImageController imgCtr = new ImageController();
+    imgCtr.quit();
+    assertEquals(null, imgCtr.img);
   }
 
   @Test
