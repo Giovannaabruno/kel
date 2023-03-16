@@ -3,25 +3,26 @@ package Model;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertThrows;
 
 public class ProjectTest {
 
   /**
-   * TestAddLayer, add s layer effect to the orginal pixal.
+   * TestAddLayer, add s layer effect to the original pixel.
    */
   @Test
   public void testAddLayer() {
-    Project image = new Project(600, 600);
-    Layer l1 = new Layer(new Pixel[600][600], "layer1");
+    Project image = new Project(800, 600);
+    Layer l1 = new Layer(new Pixel[800][600], "layer1");
     image.addLayer(l1);
     l1 = image.getLayer(1);
     assertEquals(l1.getName(), "layer1");
 
-    Layer l2 = new Layer(new Pixel[600][600], "layer2");
+    Layer l2 = new Layer(new Pixel[800][600], "layer2");
     image.addLayer(l2);
     l2 = image.getLayer(2);
     assertEquals(l2.getName(), "layer2");
@@ -32,7 +33,7 @@ public class ProjectTest {
    */
   @Test
   public void testGetLayer() {
-    Project image = new Project(600, 600);
+    Project image = new Project(800, 600);
 
     Layer l = image.getLayer(0);
     assertEquals(l.getName(), "background");
@@ -43,32 +44,41 @@ public class ProjectTest {
    */
   @Test
   public void testNotGetLayer() {
-    Project image = new Project(600, 600);
+    Project image = new Project(800, 600);
     assertThrows(IllegalArgumentException.class, () -> {
       Layer l = image.getLayer(-1);
     });
   }
 
+  /**
+   * Tester that test getWidth method.
+   */
   @Test
   public void testGetWidth() {
-    Project image = new Project(600, 700);
+    Project image = new Project(800, 600);
     assertEquals(image.getWidth(), 600);
-    assertNotEquals(image.getWidth(), 700);
+    assertNotEquals(image.getWidth(), 800);
 
 
   }
 
+  /**
+   * Tester that test getHeight method.
+   */
   @Test
   public void testGetHeight() {
-    Project image = new Project(600, 700);
-    assertEquals(image.getHeight(), 700);
-    assertNotEquals(image.getHeight(), 600);
+    Project image = new Project(800, 600);
+    assertEquals(image.getHeight(), 800);
+    assertNotEquals(image.getHeight(), 700);
 
   }
 
+  /**
+   * Tester that test darken method.
+   */
   @Test
   public void testDarken() {
-    Project image = new Project(600, 800);
+    Project image = new Project(800, 600);
     Layer l = image.getLayer(0);
     l.setPixelAt(0, 0, new Pixel(255, 255, 255));
     Pixel oldPixel = l.getPixelAt(0, 0).clone();
@@ -78,12 +88,18 @@ public class ProjectTest {
     assertTrue(newPixel.getRed() < oldPixel.getRed());
     assertTrue(newPixel.getGreen() < oldPixel.getGreen());
     assertTrue(newPixel.getBlue() < oldPixel.getBlue());
+    assertFalse(newPixel.getRed() > oldPixel.getRed());
+    assertFalse(newPixel.getGreen() > oldPixel.getGreen());
+    assertFalse(newPixel.getBlue() > oldPixel.getBlue());
 
   }
 
+  /**
+   * Tester that test darkenValue method.
+   */
   @Test
   public void testDarkenValue() {
-    Project image = new Project(600, 800);
+    Project image = new Project(800, 600);
     Layer l = image.getLayer(0);
     l.setPixelAt(0, 0, new Pixel(0, 255, 0));
     Pixel oldPixel = l.getPixelAt(0, 0).clone();
@@ -91,11 +107,15 @@ public class ProjectTest {
     Pixel[][] grid = l.getFilteredGrid();
     Pixel newPixel = grid[0][0];
     assertTrue(newPixel.getGreen() < oldPixel.getGreen());
+    assertFalse(newPixel.getGreen() > oldPixel.getGreen());
   }
 
+  /**
+   * Tester that test darkenLuma method.
+   */
   @Test
   public void testDarkenLuma() {
-    Project image = new Project(600, 800);
+    Project image = new Project(800, 600);
     Layer l = image.getLayer(0);
     l.setPixelAt(0, 0, new Pixel(255, 255, 255));
     Pixel oldPixel = l.getPixelAt(0, 0).clone();
@@ -105,11 +125,18 @@ public class ProjectTest {
     assertTrue(newPixel.getRed() < oldPixel.getRed());
     assertTrue(newPixel.getGreen() < oldPixel.getGreen());
     assertTrue(newPixel.getBlue() < oldPixel.getBlue());
+
+    assertFalse(newPixel.getRed() > oldPixel.getRed());
+    assertFalse(newPixel.getGreen() > oldPixel.getGreen());
+    assertFalse(newPixel.getBlue() > oldPixel.getBlue());
   }
 
+  /**
+   * Tester that test darkenBrightening method.
+   */
   @Test
   public void testBrightening() {
-    Project image = new Project(600, 800);
+    Project image = new Project(800, 600);
     Layer l = image.getLayer(0);
     l.setPixelAt(0, 0, new Pixel(0, 0, 0));
     Pixel oldPixel = l.getPixelAt(0, 0).clone();
@@ -119,10 +146,17 @@ public class ProjectTest {
     assertTrue(newPixel.getRed() > oldPixel.getRed());
     assertTrue(newPixel.getGreen() > oldPixel.getGreen());
     assertTrue(newPixel.getBlue() > oldPixel.getBlue());
+    assertFalse(newPixel.getRed() < oldPixel.getRed());
+    assertFalse(newPixel.getGreen() < oldPixel.getGreen());
+    assertFalse(newPixel.getBlue() < oldPixel.getBlue());
   }
+
+  /**
+   * Tester that test brighteningValue method.
+   */
   @Test
   public void testBrighteningValue() {
-    Project image = new Project(600, 800);
+    Project image = new Project(800, 600);
     Layer l = image.getLayer(0);
     l.setPixelAt(0, 0, new Pixel(255, 0, 255));
     Pixel oldPixel = l.getPixelAt(0, 0).clone();
@@ -130,11 +164,16 @@ public class ProjectTest {
     Pixel[][] grid = l.getFilteredGrid();
     Pixel newPixel = grid[0][0];
     assertTrue(newPixel.getGreen() > oldPixel.getGreen());
+    assertFalse(newPixel.getGreen() < oldPixel.getGreen());
+
   }
 
+  /**
+   * Tester that test brighteningLuma method.
+   */
   @Test
   public void testBrighteningLuma() {
-    Project image = new Project(600, 800);
+    Project image = new Project(800, 600);
     Layer l = image.getLayer(0);
     l.setPixelAt(0, 0, new Pixel(0, 0, 0));
     Pixel oldPixel = l.getPixelAt(0, 0).clone();
@@ -144,25 +183,40 @@ public class ProjectTest {
     assertTrue(newPixel.getRed() > oldPixel.getRed());
     assertTrue(newPixel.getGreen() > oldPixel.getGreen());
     assertTrue(newPixel.getBlue() > oldPixel.getBlue());
+
+    assertFalse(newPixel.getRed() < oldPixel.getRed());
+    assertFalse(newPixel.getGreen() < oldPixel.getGreen());
+    assertFalse(newPixel.getBlue() < oldPixel.getBlue());
   }
+
+  /**
+   * Tester that test redComponent method.
+   */
   @Test
   public void testRedComponent() {
-    Project image = new Project(600, 800);
+    Project image = new Project(800, 600);
     Layer l = image.getLayer(0);
-    l.setPixelAt(0,0, new Pixel(255, 255, 255));
+    l.setPixelAt(0, 0, new Pixel(255, 255, 255));
     Pixel oldPixel = l.getPixelAt(0, 0).clone();
     l.setFilter("red-component");
     Pixel[][] grid = l.getFilteredGrid();
     assertEquals(grid[0][0].getRed(), oldPixel.getRed());
     assertEquals(grid[0][0].getGreen(), 0);
     assertEquals(grid[0][0].getBlue(), 0);
+
+    assertNotEquals(grid[0][0].getRed(), 1);
+    assertNotEquals(grid[0][0].getGreen(), 1);
+    assertNotEquals(grid[0][0].getBlue(), 1);
   }
 
+  /**
+   * Tester that test greenComponent method.
+   */
   @Test
-  public void testgreenComponent(){
-    Project image = new Project(600, 800);
+  public void testGreenComponent() {
+    Project image = new Project(800, 600);
     Layer l = image.getLayer(0);
-    l.setPixelAt(0,0, new Pixel(255, 255, 255));
+    l.setPixelAt(0, 0, new Pixel(255, 255, 255));
     Pixel oldPixel = l.getPixelAt(0, 0).clone();
     l.setFilter("green-component");
     Pixel[][] grid = l.getFilteredGrid();
@@ -170,19 +224,30 @@ public class ProjectTest {
     assertEquals(grid[0][0].getGreen(), oldPixel.getGreen());
     assertEquals(grid[0][0].getBlue(), 0);
 
+    assertNotEquals(grid[0][0].getRed(), 1);
+    assertNotEquals(grid[0][0].getGreen(), 1);
+    assertNotEquals(grid[0][0].getBlue(), 1);
+
   }
 
+  /**
+   * Tester that test blueComponent method.
+   */
   @Test
-  public void testblueComponent(){
-    Project image = new Project(600, 800);
+  public void testBlueComponent() {
+    Project image = new Project(800, 600);
     Layer l = image.getLayer(0);
-    l.setPixelAt(0,0, new Pixel(255, 255, 255));
+    l.setPixelAt(0, 0, new Pixel(255, 255, 255));
     Pixel oldPixel = l.getPixelAt(0, 0).clone();
     l.setFilter("blue-component");
     Pixel[][] grid = l.getFilteredGrid();
     assertEquals(grid[0][0].getRed(), 0);
     assertEquals(grid[0][0].getGreen(), 0);
     assertEquals(grid[0][0].getBlue(), oldPixel.getBlue());
+
+    assertNotEquals(grid[0][0].getRed(), 1);
+    assertNotEquals(grid[0][0].getGreen(), 1);
+    assertNotEquals(grid[0][0].getBlue(), 1);
 
 
   }

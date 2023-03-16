@@ -112,12 +112,12 @@ public class ImageController implements ControllerInterface {
    * @param width  of the canvas
    * @param height of the canvas
    */
-  public void newProject(int width, int height) {
-    this.img = new Project(width, height);
+  public void newProject(int height, int width) {
+    this.img = new Project(height, width);
   }
 
   /**
-   * Returns the current project
+   * Returns the current project.
    *
    * @return the current project
    */
@@ -133,17 +133,31 @@ public class ImageController implements ControllerInterface {
   public void loadProject(String path) {
     File file = new File(path);
     try {
-      Scanner scan = new Scanner(path);
-      scan.nextLine(); //reads the "C1"
+      Scanner scan = new Scanner(file);
+      /*Remove later*/
+      System.out.println("Scanner working");
+
+      String str = scan.nextLine(); //reads the "C1"
+      /*Remove later*/
+      System.out.println("first line: " + str);
       int width = scan.nextInt();
       int height = scan.nextInt();
       int maxVal = scan.nextInt();
 
-      img = new Project(width, height);
+      /*Remove later*/
+      System.out.println("Width/height/max read");
+
+      img = new Project(height, width);
 
       while (scan.hasNext()) {
         String layerName = scan.next();
         String filterName = scan.next();
+
+        /*Remove later*/
+        System.out.println("Layer name: " + layerName);
+        /*Remove later*/
+        System.out.println("Filter name: " + filterName);
+
 
         Pixel[][] pixels = new Pixel[height][width];
         for (int i = 0; i < height; i++) { //rows
@@ -172,7 +186,7 @@ public class ImageController implements ControllerInterface {
    * Method saveProject, save the project as one file as described above.
    */
   public void saveProject() {
-    saveProject("tako.ppm");
+    saveProject("image.Project");
 
   }
 
@@ -200,8 +214,8 @@ public class ImageController implements ControllerInterface {
         Layer layer = img.getLayer(i);
         pw.println(layer.getName() + " " + layer.getFilter());
 
-        for (int j = 0; j < width; j++) {
-          for (int k = 0; k < height; k++) {
+        for (int j = 0; j < height; j++) {
+          for (int k = 0; k < width; k++) {
             Pixel pix = layer.getPixelAt(j, k);
             pw.print(pix.getRed() + " ");
             pw.print(pix.getGreen() + " ");
@@ -239,8 +253,8 @@ public class ImageController implements ControllerInterface {
 //        Layer layer = img.getLayer(i);
 //        pw.print(layer.getName() + " ");
 //        pw.println(layer.getFilter());
-      for (int j = 0; j < width; j++) {
-        for (int k = 0; k < height; k++) {
+      for (int j = 0; j < height; j++) {
+        for (int k = 0; k < width; k++) {
           Pixel pix = layer.getPixelAt(j, k);
           pw.print(pix.getRed() + " ");
           pw.print(pix.getGreen() + " ");
@@ -266,7 +280,7 @@ public class ImageController implements ControllerInterface {
    */
   public void addLayer(String layerName) {
     Layer l0 = this.img.getLayer(0);
-    Layer layer = new Layer(l0.getWidth(), l0.getHeight(), layerName);
+    Layer layer = new Layer(l0.getHeight(), l0.getWidth(), layerName);
     this.img.addLayer(layer);
   }
 
@@ -294,6 +308,7 @@ public class ImageController implements ControllerInterface {
       }
     } catch (Exception e) {
       System.out.print("error");
+      e.printStackTrace();
     }
   }
 // save-image file-name: save the result of applying all filters on the image
@@ -330,108 +345,127 @@ public class ImageController implements ControllerInterface {
     }
   }
 
-    /**
-     * Method Save image, save the result of applying all filters on the image.
-     */
-    public void saveImage (String fileName){
-      Layer firstLayer = this.img.getLayer(0);
-      Layer finalLayer = new Layer(
-              firstLayer.getWidth(),
-              firstLayer.getHeight(),
-              "layer1");
 
-      //concern: this doesn't use alpha to determine how much each layer contributes
-      //a layer with 0 alpha will affect the end result just as much as a layer with 255 alpha
-      for (int i = 0; i < this.img.getNumLayers(); i++) {
-        Layer layer = this.img.getLayer(i);
-        for (int r = 0; r < layer.getHeight(); r++) {
-          for (int c = 0; c < layer.getWidth(); c++) {
-            Pixel layerp = layer.getPixelAt(r, c);
-            Pixel finalp = finalLayer.getPixelAt(r, c);
-            int newred = clamp(finalp.getRed() + layerp.getRed());
-            int newgreen = clamp(finalp.getGreen() + layerp.getGreen());
-            int newblue = clamp(finalp.getBlue() + layerp.getBlue());
-            int newalpha = clamp(finalp.getAlpha() + layerp.getAlpha());
+  /**
+   * Method Save image, save the result of applying all filters on the image.
+   *
+   * @param fileName name of the file
+   */
+  public void saveImage(String fileName) {
+    Layer firstLayer = this.img.getLayer(0);
+    Layer finalLayer = new Layer(
+            firstLayer.getHeight(),
+            firstLayer.getWidth(),
+            "layer1");
 
-            finalp.setRed(newred);
-            finalp.setGreen(newgreen);
-            finalp.setBlue(newblue);
-            finalp.setAlpha(newalpha);
-          }
+    /*remove later*/
+    System.out.println("FirstLayer Height, Width: " + firstLayer.getHeight() + ", " + firstLayer.getWidth());
+    System.out.println(finalLayer.getHeight() + ", " + finalLayer.getWidth());
+
+    //concern: this doesn't use alpha to determine how much each layer contributes
+    //a layer with 0 alpha will affect the end result just as much as a layer with 255 alpha
+    for (int i = 0; i < this.img.getNumLayers(); i++) {
+      Layer layer = this.img.getLayer(i);
+      System.out.println("Layer #" + i + " has height of " + layer.getHeight() +
+              " and width " + layer.getWidth());
+      for (int r = 0; r < layer.getHeight(); r++) {
+        for (int c = 0; c < layer.getWidth(); c++) {
+          Pixel layerp = layer.getPixelAt(r, c);
+          Pixel finalp = finalLayer.getPixelAt(r, c);
+          int newred = clamp(finalp.getRed() + layerp.getRed());
+          int newgreen = clamp(finalp.getGreen() + layerp.getGreen());
+          int newblue = clamp(finalp.getBlue() + layerp.getBlue());
+          int newalpha = clamp(finalp.getAlpha() + layerp.getAlpha());
+
+          finalp.setRed(newred);
+          finalp.setGreen(newgreen);
+          finalp.setBlue(newblue);
+          finalp.setAlpha(newalpha);
         }
       }
-      saveLayer(fileName, finalLayer);
-
     }
+    saveLayer(fileName, finalLayer);
 
-    /**
-     * Method quit, quits the project and loses all unsaved work.
-     */
-    public void quit () throws IOException {
-      this.img = null;
-      this.view = new CollagingCommandView(); // kal
-      this.view.renderMessage("Quiting the project... Bye!"); //kal
-      System.exit(0);
-    }
-
-
-    /**
-     * Method readCommand, reader for the layer/ filter type commands.
-     *
-     * @param line
-     */
-    public void readCommand (String line) throws IOException {
-      String[] words = line.split(" ");
-      this.currentCommand = words[0];
-      switch (words[0]) {
-        case "new-project":
-          //two different ways to create a project: with a name or with dimensions
-          if (words.length > 2) {
-            newProject(Integer.parseInt(words[2]), Integer.parseInt(words[1]));
-          } else {
-            newProject(600, 600);
-            //the name doesn't do anything right now
-          }
-          break;
-        case "add-layer":
-          addLayer(words[1]);
-          break;
-        case "add-image-to-layer":
-          String layerName = words[1];
-          String imageName = words[2];
-          int xPos = Integer.parseInt(words[3]);
-          int yPos = Integer.parseInt(words[4]);
-          addImageToLayer(layerName, imageName, xPos, yPos);
-          break;
-        case "set-filter":
-          String layer = words[1];
-          String filerOption = words[2];
-          setFilter(layer, filerOption);
-          break;
-        case "save-image":
-          if (words.length > 1) {
-            saveImage(words[1]);
-          } else {
-            throw new IllegalArgumentException("Too few arguments, need filename");
-          }
-          break;
-        case "save-project":
-          if (words.length > 1) {
-            saveProject(words[1]);
-          } else {
-            saveProject();
-          }
-          break;
-        case "load-project":
-          loadProject(words[1]);
-          break;
-        case "quit":
-        case "QUIT":
-          this.quit();
-          break;
-        default:
-          System.out.println("Invalid command");
-      }
-
-    }
   }
+
+
+  /**
+   * Method quit, quits the project and loses all unsaved work.
+   *
+   * @throws IOException found error
+   */
+  public void quit() throws IOException {
+    this.img = null;
+    this.view = new CollagingCommandView(); // kal
+    this.view.renderMessage("Quiting the project... Bye!"); //kal
+    //System.exit(0); //warning: will stop all programs
+  }
+
+
+  /**
+   * Method readCommand, reader for the layer/ filter type commands.
+   *
+   * @param line input command
+   * @throws IOException found error
+   */
+  public void readCommand(String line) throws IOException {
+    String[] words = line.split(" ");
+    this.currentCommand = words[0];
+    switch (words[0]) {
+      case "new-project":
+        //two different ways to create a project: with a name or with dimensions
+        if (words.length > 2) {
+          newProject(Integer.parseInt(words[1]), Integer.parseInt(words[2]));
+        } else {
+          newProject(600, 800);
+          //the name doesn't do anything right now
+        }
+        break;
+      case "add-layer":
+        addLayer(words[1]);
+        break;
+      case "add-image-to-layer":
+        String layerName = words[1];
+        String imageName = words[2];
+        int xPos = 0;
+        int yPos = 0;
+        if (words.length > 3) {
+          xPos = Integer.parseInt(words[3]);
+          yPos = Integer.parseInt(words[4]);
+        }
+
+        addImageToLayer(layerName, imageName, xPos, yPos);
+        break;
+      case "set-filter":
+        String layer = words[1];
+        String filerOption = words[2];
+        setFilter(layer, filerOption);
+        break;
+      case "save-image":
+        if (words.length > 1) {
+          saveImage(words[1]);
+        } else {
+          throw new IllegalArgumentException("Too few arguments, need filename");
+        }
+        break;
+      case "save-project":
+        if (words.length > 1) {
+          saveProject(words[1]);
+        } else {
+          saveProject();
+        }
+        break;
+      case "load-project":
+        loadProject(words[1]);
+        break;
+      case "quit":
+      case "QUIT":
+        this.quit();
+        break;
+      default:
+        System.out.println("Invalid-command");
+        this.currentCommand = "Invalid-command";
+    }
+
+  }
+}

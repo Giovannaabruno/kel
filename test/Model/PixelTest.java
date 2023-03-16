@@ -2,9 +2,9 @@ package Model;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertNotEquals;
+import static org.testng.AssertJUnit.assertEquals;
 
 public class PixelTest {
 
@@ -12,7 +12,7 @@ public class PixelTest {
    * Tester to getRed component.
    */
   @Test
-  public void getRed() {
+  public void testGetRed() {
     Pixel pixel = new Pixel(255,255,255);
     assertEquals(pixel.getRed(), 255);
 
@@ -33,7 +33,7 @@ public class PixelTest {
    * Tester to getBlue component.
    */
   @Test
-  public void getBlue() {
+  public void testGetBlue() {
     Pixel pixel = new Pixel(255,255,255);
     assertEquals(pixel.getBlue(), 255);
 
@@ -54,7 +54,7 @@ public class PixelTest {
    * Tester to getGreen component.
    */
   @Test
-  public void getGreen() {
+  public void testGetGreen() {
     Pixel pixel = new Pixel(255,255,255);
     assertEquals(pixel.getGreen(), 255);
 
@@ -75,7 +75,7 @@ public class PixelTest {
    * Tester for getAlpha.
    */
   @Test
-  public void getAlpha() {
+  public void testGetAlpha() {
     Pixel pixel = new Pixel(255,255,255,255);
     assertEquals(pixel.getAlpha(), 255);
 
@@ -93,10 +93,10 @@ public class PixelTest {
   }
 
   /**
-   * Tester
+   * Tester that test getValue method.
    */
   @Test
-  public void getValue() {
+  public void testGetValue() {
     Pixel pixel = new Pixel(255, 40,200, 70);
     assertEquals(pixel.getValue(), 255);
 
@@ -115,8 +115,11 @@ public class PixelTest {
 
   }
 
+  /**
+   * Tester that test getIntensity method.
+   */
   @Test
-  public void getIntensity() {
+  public void testGetIntensity() {
     Pixel pixel = new Pixel(255, 40,200, 70);
     assertEquals(pixel.getIntensity(), 165);
 
@@ -134,8 +137,12 @@ public class PixelTest {
 
   }
 // 0.2126 * (float) red + 0.7152 * (float) green + 0.0722 * (float) blue);
+
+  /**
+   *  Tester that test getLuma method.
+   */
   @Test
-  public void getLuma() {
+  public void testGetLuma() {
     Pixel pixel = new Pixel(255, 40,200, 70);
     assertEquals(pixel.getLuma(), (int) (0.2126 * (float) 255 + 0.7152 *
             (float) 40 + 0.0722 * (float) 200));
@@ -157,8 +164,11 @@ public class PixelTest {
             (float) 20 + 0.0722 * (float) 70));
   }
 
+  /**
+   * Tester that test SetRed method.
+   */
   @Test
-  public void setRed() {
+  public void testSetRed() {
     Pixel pixel = new Pixel(255,255,255);
     pixel.setRed(127);
     assertEquals(pixel.getRed(), 127);
@@ -181,8 +191,11 @@ public class PixelTest {
 
   }
 
+  /**
+   * Tester that test SetGreen method.
+   */
   @Test
-  public void setGreen() {
+  public void testSetGreen() {
     Pixel pixel = new Pixel(255,255,255);
     pixel.setGreen(127);
     assertEquals(pixel.getGreen(),127);
@@ -204,8 +217,11 @@ public class PixelTest {
     assertNotEquals(pixel.getGreen(), 100);
   }
 
+  /**
+   *  Tester that test SetBlue method.
+   */
   @Test
-  public void setBlue() {
+  public void testSetBlue() {
     Pixel pixel = new Pixel(255,255,255);
     pixel.setBlue(127);
     assertEquals(pixel.getBlue(),127);
@@ -228,6 +244,9 @@ public class PixelTest {
   }
 
 
+  /**
+   *  Tester that test SetAlpha method.
+   */
   @Test
   public void setAlpha() {
     Pixel pixel = new Pixel(255,255,255,255);
@@ -250,5 +269,23 @@ public class PixelTest {
     pixel.setAlpha(90);
     assertNotEquals(pixel.getAlpha(), 100);
 
+  }
+
+  /**
+   *  Tester that test Clone method.
+   */
+  @Test
+  public void testClone() {
+    Pixel pixel = new Pixel(1,2,3,4);
+    Pixel other = pixel.clone();
+
+    assertEquals(pixel.getRed(), other.getRed());
+    assertEquals(pixel.getGreen(), other.getGreen());
+    assertEquals(pixel.getBlue(), other.getBlue());
+    assertEquals(pixel.getAlpha(), other.getAlpha());
+
+    assertFalse(pixel == other);
+    other.setRed(100);
+    assertNotEquals(100, pixel.getRed());
   }
 }

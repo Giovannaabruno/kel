@@ -2,8 +2,8 @@ package Model;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.testng.Assert.assertNotEquals;
+import static org.testng.AssertJUnit.assertEquals;
 
 
 /**
@@ -17,9 +17,9 @@ public class LayerTest {
    * Tester that test getHeight method.
    */
   @Test
-  public void getHeight() {
-    Layer ll = new Layer(600,600, "image.tako.pmm");
-    assertEquals(ll.getHeight(), 600);
+  public void testGetHeight() {
+    Layer ll = new Layer(800,600, "image/tako.pmm");
+    assertEquals(ll.getHeight(), 800);
     assertNotEquals(ll.getHeight(), 500);
   }
 
@@ -27,8 +27,8 @@ public class LayerTest {
    * Tester that test getWidth method.
    */
   @Test
-  public void getWidth() {
-    Layer ll = new Layer(600,600, "image.tako.pmm");
+  public void testGetWidth() {
+    Layer ll = new Layer(800,600, "image/tako.pmm");
     assertEquals(ll.getWidth(), 600);
     assertNotEquals(ll.getWidth(), 500);
   }
@@ -37,9 +37,9 @@ public class LayerTest {
    * Tester that test getName method.
    */
   @Test
-  public void getName() {
-    Layer ll = new Layer(600,600, "image.tako.pmm");
-    assertEquals(ll.getName(), "image.tako.pmm");
+  public void testGetName() {
+    Layer ll = new Layer(800,600, "image/tako.pmm");
+    assertEquals(ll.getName(), "image/tako.pmm");
     assertNotEquals(ll.getName(), "mage.tako.pmm");
 
   }
@@ -48,8 +48,8 @@ public class LayerTest {
    * Tester that test getGrid method.
    */
   @Test
-  public void getGrid() {
-    Layer ll = new Layer(600,600, "image.tako.pmm");
+  public void testGetGrid() {
+    Layer ll = new Layer(800,600, "image/tako.pmm");
     Pixel[][] grid = ll.getGrid();
     assertEquals(grid[0][0],
             new Pixel(255,255, 255, 255));
@@ -65,8 +65,8 @@ public class LayerTest {
    * Tester that test getPixelAt method.
    */
   @Test
-  public void getPixelAt() {
-    Layer ll = new Layer(600,600, "image.tako.pmm");
+  public void testGetPixelAt() {
+    Layer ll = new Layer(800,600, "image/tako.pmm");
     assertEquals(ll.getPixelAt(0, 0),
             new Pixel(255, 255, 255, 255));
 
@@ -95,12 +95,14 @@ public class LayerTest {
    */
   @Test
   public void setFilter() {
-    Layer ll = new Layer(600,600, "image.tako.pmm");
+    Layer ll = new Layer(800,600, "image.tako.pmm");
     ll.setFilter("red-component", 80);
     assertEquals(ll.getFilter(), "red-component");
+    assertNotEquals(ll.getFilter(), "red");
 
     ll.setFilter("green-component", 80);
     assertEquals(ll.getFilter(), "green-component");
+    assertNotEquals(ll.getFilter(), "green");
     ll.setFilter("blue-component", 80);
     assertNotEquals(ll.getFilter(), "blue");
   }
@@ -110,12 +112,14 @@ public class LayerTest {
    */
   @Test
   public void testSetFilter() {
-    Layer ll = new Layer(600,600, "image.tako.pmm");
+    Layer ll = new Layer(800,600, "image/tako.pmm");
     ll.setFilter("red-component", 80);
     assertEquals(ll.getFilter(), "red-component");
+    assertNotEquals(ll.getFilter(), "red");
 
     ll.setFilter("green-component", 80);
     assertEquals(ll.getFilter(), "green-component");
+    assertNotEquals(ll.getFilter(), "green");
 
     ll.setFilter("blue-component", 80);
     assertNotEquals(ll.getFilter(), "blue");
@@ -126,13 +130,15 @@ public class LayerTest {
    * Tester that test GetFilter method.
    */
   @Test
-  public void GetFilter() {
-    Layer ll = new Layer(600,600, "image.tako.pmm");
+  public void testGetFilter() {
+    Layer ll = new Layer(800,600, "image/tako.pmm");
     ll.setFilter("red-component", 80);
     assertEquals(ll.getFilter(), "red-component");
+    assertNotEquals(ll.getFilter(), "red");
 
     ll.setFilter("green-component", 80);
     assertEquals(ll.getFilter(), "green-component");
+    assertNotEquals(ll.getFilter(), "green");
 
     ll.setFilter("blue-component", 80);
     assertNotEquals(ll.getFilter(), "blue");
@@ -144,8 +150,8 @@ public class LayerTest {
    * Tester that test FilteredGrid method.
    */
   @Test
-  public void getFilteredGrid() {
-    Layer ll = new Layer(600,600, "image.tako.pmm");
+  public void testGetFilteredGrid() {
+    Layer ll = new Layer(800,600, "image/tako.pmm");
     ll.setFilter("red-component");
     Pixel[][] grid = ll.getFilteredGrid();
     assertEquals(grid[0][0],

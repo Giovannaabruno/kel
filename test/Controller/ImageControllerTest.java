@@ -7,7 +7,6 @@ import java.io.IOException;
 
 import Model.Layer;
 import Model.Pixel;
-import Model.Project;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -23,9 +22,9 @@ public class ImageControllerTest {
    */
   @Test
   public void testLoadImage() {
-    Layer l = new Layer(600, 800, "layer1");
+    Layer l = new Layer(800, 600, "layer1");
     ImageController ic = new ImageController();
-    ic.loadImage("./images/tako.ppm", "layer1");
+    ic.loadImage("images/tako.ppm", "layer1");
 
   }
 
@@ -35,8 +34,8 @@ public class ImageControllerTest {
   @Test
   public void testLoadImageValidFormatHeight() {
     ImageController imgCtr = new ImageController();
-    Layer l1 = imgCtr.loadImage("images/A4-sample2.ppm", "dark");
-    assertEquals(500, l1.getHeight());
+    Layer l1 = imgCtr.loadImage("images/tako.ppm", "dark");
+    assertEquals(800, l1.getHeight());
   }
 
   /**
@@ -45,12 +44,12 @@ public class ImageControllerTest {
   @Test
   public void testLoadImageValidFormatWidth() {
     ImageController imgCtr = new ImageController();
-    Layer l1 = imgCtr.loadImage("images/A4-sample2.ppm", "dark");
-    assertEquals(400, l1.getWidth());
+    Layer l1 = imgCtr.loadImage("images/tako.ppm", "dark");
+    assertEquals(600, l1.getWidth());
   }
 
   /**
-   Test Load Image - with invalid PPM file format.
+   * Test Load Image - with invalid PPM file format.
    */
   @Test
   public void testLoadImageWrongFormat() {
@@ -65,7 +64,7 @@ public class ImageControllerTest {
   @Test
   public void testGetCurrentCommand() throws IOException {
     ImageController ic = new ImageController();
-    ic.newProject(600, 800);
+    ic.newProject(800, 600);
     ic.readCommand("add-layer layer1");
     assertEquals(ic.getCurrentCommand(), "add-layer");
     ic.readCommand("set-filter layer1 blue-component");
@@ -76,6 +75,7 @@ public class ImageControllerTest {
 
   /**
    * Tester that test NewProject method with dimensions - check width
+   *
    * @throws IOException
    */
   @Test
@@ -83,10 +83,12 @@ public class ImageControllerTest {
     ImageController imgCtr = new ImageController();
     imgCtr.readCommand("new-project 800 600");
     assertEquals(600, imgCtr.img.getWidth());
+    assertNotEquals(800, imgCtr.img.getWidth());
   }
 
   /**
-   *  Tester that test NewProject method with dimensions - check height.
+   * Tester that test NewProject method with dimensions - check height.
+   *
    * @throws IOException
    */
   @Test
@@ -100,7 +102,7 @@ public class ImageControllerTest {
   @Test
   public void testGetProject() {
     ImageController ic = new ImageController();
-    ic.newProject(600, 800);
+    ic.newProject(800, 600);
     ic.getProject();
     assertEquals(600, ic.getProject().getWidth());
     assertEquals(800, ic.getProject().getHeight());
@@ -112,7 +114,7 @@ public class ImageControllerTest {
   @Test
   public void testSaveProject() {
     ImageController ic = new ImageController();
-    ic.newProject(600, 800);
+    ic.newProject(800, 600);
     ic.saveProject("tako.ppm.collager");
     File file = new File("tako.ppm.collager");
     assertTrue(file.exists());
@@ -125,7 +127,7 @@ public class ImageControllerTest {
   @Test
   public void testTestSaveProject() {
     ImageController ic = new ImageController();
-    ic.newProject(600, 800);
+    ic.newProject(800, 600);
     ic.saveProject();
     File file = new File("tako.ppm.collager");
     assertTrue(file.exists());
@@ -149,9 +151,10 @@ public class ImageControllerTest {
   @Test
   public void testAddImageToLayer() {
     ImageController ic = new ImageController();
-    ic.newProject(800, 800);
+    ic.newProject(800, 600);
     ic.addLayer("layer1");
-    ic.addImageToLayer("layer1","images/tako.ppm",0,0);
+    ic.addImageToLayer("layer1", "images/tako.ppm", 0, 0);
+    /*Remove later*/ //System.out.println(ic.getProject().getLayer("layer1").getGrid()[5][20].getBlue());
     Pixel topLeft = ic.getProject().getLayer("layer1").getGrid()[0][0];
     assertEquals(173, topLeft.getRed());
     assertEquals(179, topLeft.getGreen());
@@ -173,11 +176,11 @@ public class ImageControllerTest {
     ImageController ic = new ImageController();
     ic.newProject(600, 800);
     ic.addLayer("layer1");
-    ic.setFilter("layer1","red-component");
+    ic.setFilter("layer1", "red-component");
     assertEquals("red-component", ic.getProject().getLayer("layer1").getFilter());
     assertNotEquals("recomponent", ic.getProject().getLayer("layer1").getFilter());
     ic.addLayer("layer2");
-    ic.setFilter("layer2","green-component");
+    ic.setFilter("layer2", "green-component");
     assertEquals("green-component", ic.getProject().getLayer("layer2").getFilter());
     assertNotEquals("grcomponent", ic.getProject().getLayer("layer2").getFilter());
 
@@ -185,7 +188,6 @@ public class ImageControllerTest {
 
   /**
    * Tester that test SaveImage method.
-   *
    */
   @Test
   public void testSaveImage() {
@@ -206,8 +208,11 @@ public class ImageControllerTest {
     assertEquals(null, imgCtr.img);
   }
 
+  /**
+   * Tester that test loadDarkenAndSaveImage.
+   */
   @Test
-  public void loadDarkenAndSaveImage() {
+  public void testLoadDarkenAndSaveImage() {
     ImageController ic = new ImageController();
     ic.newProject(800, 800);
     ic.addImageToLayer("background", "./images/tako.ppm", 0, 0);
@@ -221,40 +226,56 @@ public class ImageControllerTest {
    * Tester that test ReadCommand method.
    */
   @Test
-  public void testReadCommand() throws IOException{
+  public void testReadCommand() throws IOException {
     ImageController ic = new ImageController();
 
     // command 1
-    ic.readCommand("new-project 600 800");
+    ic.readCommand("new-project 800 600");
     assertEquals(ic.getCurrentCommand(), "new-project");
-    assertEquals(600, ic.getProject().getHeight());
-    assertEquals(800, ic.getProject().getWidth());
+    assertEquals(800, ic.getProject().getHeight());
+    assertEquals(600, ic.getProject().getWidth());
+    assertNotEquals(600, ic.getProject().getHeight());
+    assertNotEquals(800, ic.getProject().getWidth());
     // command 2
-//    ic.readCommand("add-layer tako");
-//    assertEquals(ic.getCurrentCommand(), "add-layer");
-//    //commdand 3
-//    ic.readCommand("add-image-to-layer tako");
-//    assertEquals(ic.getCurrentCommand(), "add-image-to-layer");
-//    //command 4
-//    ic.readCommand("set-filter tako");
-//    assertEquals(ic.getCurrentCommand(), "set-filter");
-//    //command 5
-//    ic.readCommand("save-image tako");
-//    assertEquals(ic.getCurrentCommand(), "save-image");
-//
-//    //command 5
-//    ic.readCommand("save-project");
-//    assertEquals(ic.getCurrentCommand(), "save-project");
-//
-//    //command 5
-//    ic.readCommand("load-project tako");
-//    assertEquals(ic.getCurrentCommand(), "load-project");
-//
-//    //command 5
-//    ic.readCommand("quit");
-//    assertEquals(ic.getCurrentCommand(), "quit");
+    ic.readCommand("add-layer layerName");
+    assertEquals(ic.getCurrentCommand(), "add-layer");
+    assertEquals(ic.getProject().getNumLayers(), 2);
+    assertNotEquals(ic.getCurrentCommand(), 0);
 
+    //commdand 3
+    ic.readCommand("add-image-to-layer layerName tako.ppm");
+    assertEquals(ic.getCurrentCommand(), "add-image-to-layer");
+    assertNotEquals(ic.getCurrentCommand(), "add layers to pic");
 
+    //command 4
+    ic.readCommand("set-filter layerName red-component");
+    assertEquals(ic.getCurrentCommand(), "set-filter");
+    assertNotEquals(ic.getCurrentCommand(), "red");
+
+    //command 5
+    ic.readCommand("save-image image.ppm");
+    assertEquals(ic.getCurrentCommand(), "save-image");
+    assertNotEquals(ic.getCurrentCommand(), "savePic");
+
+    //command 6
+    ic.readCommand("save-project");
+    assertEquals(ic.getCurrentCommand(), "save-project");
+    assertNotEquals(ic.getCurrentCommand(), "savProject");
+
+    //command 7
+    ic.readCommand("load-project image.Project");
+    assertEquals(ic.getCurrentCommand(), "load-project");
+    assertNotEquals(ic.getCurrentCommand(), "loadProject");
+
+    //command 8
+    ic.readCommand("quit");
+    assertEquals(ic.getCurrentCommand(), "quit");
+    assertNotEquals(ic.getCurrentCommand(), "Out");
+
+/// make sure it does not crase with invalied comanied
+    ic.readCommand("Invalid-command");
+    assertEquals(ic.getCurrentCommand(), "Invalid-command");
+    assertNotEquals(ic.getCurrentCommand(), "Out");
 
   }
 }

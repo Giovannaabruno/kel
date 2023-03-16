@@ -128,7 +128,7 @@ public class Pixel implements PixelInterface {
   /**
    * Method getValue, get the maximum value of the three components for each pixel.
    *
-   * @return value
+   * @return values of the image RGB
    */
   public int getValue() {
     return Math.max(red, Math.max(green, blue));
@@ -137,7 +137,7 @@ public class Pixel implements PixelInterface {
   /**
    * Method getIntensity, gets the average of the three components for each pixel.
    *
-   * @return total intensity
+   * @return total intensity  of the image RGB
    */
   public int getIntensity() {
     return (red + green + blue) / 3;
@@ -147,15 +147,20 @@ public class Pixel implements PixelInterface {
    * Method getLume, gets the weighted sum. if
    * luma must be between 0 and 1, add "/255" after each color (ex: red/255).
    *
-   * @return luma
+   * @return luma of the image RGB
    */
   public int getLuma() {
     return (int) (0.2126 * (float) red + 0.7152 * (float) green + 0.0722 * (float) blue);
 
   }
 
+  /**
+   * Method clone, creates a copy of the red green blue alpha values.
+   *
+   * @return RGBA values
+   */
   @Override
   public Pixel clone() {
-    return new Pixel(red, green, blue);
+    return new Pixel(red, green, blue, alpha);
   }
 }

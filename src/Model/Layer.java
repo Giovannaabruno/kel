@@ -35,7 +35,7 @@ public class Layer implements LayerInterface<Pixel> {
   }
 
   /**
-   * Constructor for Layer, repesents the objects for grid and name.
+   * Constructor for Layer, represents the objects for grid and name.
    *
    * @param grid of the layer
    * @param name of the layer
@@ -50,7 +50,7 @@ public class Layer implements LayerInterface<Pixel> {
   /**
    * Method getHeight, gets the height of the layer.
    *
-   * @return height
+   * @return height of layer
    */
   public int getHeight() {
     return height;
@@ -59,7 +59,7 @@ public class Layer implements LayerInterface<Pixel> {
   /**
    * Method getWidth, gets the width of the layer.
    *
-   * @return width
+   * @return width of layer
    */
   public int getWidth() {
     return width;
@@ -68,7 +68,7 @@ public class Layer implements LayerInterface<Pixel> {
   /**
    * Method getWidth, gets the name of the type of layer.
    *
-   * @return name
+   * @return name of layer
    */
   public String getName() {
     return name;
@@ -77,7 +77,7 @@ public class Layer implements LayerInterface<Pixel> {
   /**
    * Method getGrid, gets the grid of the layer.
    *
-   * @return grid
+   * @return grid of layer
    */
   public Pixel[][] getGrid() {
     return grid;
@@ -138,7 +138,7 @@ public class Layer implements LayerInterface<Pixel> {
   }
 
   /**
-   * Method getFilteredGrid, selects what each filter type is called.
+   * Method getFilteredGrid, selects what each filter type command is called.
    *
    * @return filter or null if given a Invalid filter
    */
@@ -150,15 +150,15 @@ public class Layer implements LayerInterface<Pixel> {
         return greenComponent();
       case "blue-component":
         return blueComponent();
-        //still not sure how brighten value is different from
-        // brighten intensity or brighten luma
+      //still not sure how brighten value is different from
+      // brighten intensity or brighten luma
       case "brighten-value":
-      return brightenValue();
+        return brightenValue();
       case "brighten":
         return brighten();
       case "brighten-luma":
         return brightenLuma();
-        //darken
+      //darken
       case "darken-value":
         return darkenValue();
       case "darken":
@@ -204,6 +204,12 @@ public class Layer implements LayerInterface<Pixel> {
     return result;
   }
 
+  /**
+   * Method darkenValue, removes the brightness value
+   * pixel by pixel according to value from the corresponding pixel
+   * on the current layer.
+   * @return result amount
+   */
   private Pixel[][] darkenValue() {
     Pixel[][] result = new Pixel[height][width];
 
@@ -214,13 +220,11 @@ public class Layer implements LayerInterface<Pixel> {
         int blue = grid[row][colum].getBlue();
 
 
-        if(red >= green && red >= blue) {
+        if (red >= green && red >= blue) {
           red -= amount;
-        }
-        else if(green >= red && green >= blue) {
+        } else if (green >= red && green >= blue) {
           green -= amount;
-        }
-        else if(blue >= green && red >= red) {
+        } else if (blue >= green && red >= red) {
           blue -= amount;
         }
         result[row][colum] = new Pixel(red, blue, green);
@@ -231,6 +235,12 @@ public class Layer implements LayerInterface<Pixel> {
   }
 
 
+  /**
+   * Method darkenLuma, removes the brightness luma
+   * pixel by pixel according to luma from the corresponding pixel
+   * on the current layer.
+   * @return result amount
+   */
   private Pixel[][] darkenLuma() {
     Pixel[][] result = new Pixel[height][width];
 
@@ -279,6 +289,12 @@ public class Layer implements LayerInterface<Pixel> {
     }
     return result;
   }
+
+  /**
+   * Method brightenValue, represents, adds the brightness value pixel
+   * by pixel according to value from the corresponding pixel on the current layer.
+   * @return result amount
+   */
   private Pixel[][] brightenValue() {
     Pixel[][] result = new Pixel[height][width];
 
@@ -289,13 +305,11 @@ public class Layer implements LayerInterface<Pixel> {
         int blue = grid[row][colum].getBlue();
 
 
-        if(red >= green && red >= blue) {
+        if (red >= green && red >= blue) {
           red += amount;
-        }
-        else if(green >= red && green >= blue) {
+        } else if (green >= red && green >= blue) {
           green += amount;
-        }
-        else if(blue >= green && red >= red) {
+        } else if (blue >= green && red >= red) {
           blue += amount;
         }
         result[row][colum] = new Pixel(red, blue, green);
@@ -306,6 +320,11 @@ public class Layer implements LayerInterface<Pixel> {
   }
 
 
+  /**
+   * Method brightenLuma, represents, adds the brightness luma pixel
+   * by pixel according to luma from the corresponding pixel on the current layer.
+   * @return result amount
+   */
   private Pixel[][] brightenLuma() {
     Pixel[][] result = new Pixel[height][width];
 
