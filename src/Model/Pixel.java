@@ -153,4 +153,9 @@ public class Pixel implements PixelInterface {
     return (int) (0.2126 * (float) red + 0.7152 * (float) green + 0.0722 * (float) blue);
 
   }
+
+  @Override
+  public Pixel clone() {
+    return new Pixel(red, green, blue);
+  }
 }

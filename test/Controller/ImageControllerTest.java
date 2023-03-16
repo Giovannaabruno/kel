@@ -112,7 +112,7 @@ public class ImageControllerTest {
   @Test
   public void testAddImageToLayer() {
     ImageController ic = new ImageController();
-    ic.newProject(600, 800);
+    ic.newProject(800, 800);
     ic.addLayer("layer1");
     ic.addImageToLayer("layer1","/images/tako.ppm",0,0);
     Pixel topLeft = ic.getProject().getLayer("layer1").getGrid()[0][0];
@@ -153,7 +153,7 @@ public class ImageControllerTest {
   @Test
   public void testSaveImage() {
     ImageController ic = new ImageController();
-    ic.newProject(600, 800);
+    ic.newProject(800, 800);
     ic.saveImage("tako.ppm"); /// check the individual pixal.
     File file = new File("tako.ppm");
     assertTrue(file.exists());
@@ -165,6 +165,17 @@ public class ImageControllerTest {
   //kelsie will do
   @Test
   public void testQuit() {
+  }
+
+  @Test
+  public void loadDarkenAndSaveImage() {
+    ImageController ic = new ImageController();
+    ic.newProject(800, 800);
+    ic.addImageToLayer("background", "./images/tako.ppm", 0, 0);
+    ic.setFilter("background", "darken");
+    ic.saveImage("newTako.ppm");
+    File file = new File("newTako.ppm");
+    assertTrue(file.exists());
   }
 
   /**

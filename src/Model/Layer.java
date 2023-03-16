@@ -150,20 +150,21 @@ public class Layer implements LayerInterface<Pixel> {
         return greenComponent();
       case "blue-component":
         return blueComponent();
-      case "brighten-value":
         //still not sure how brighten value is different from
         // brighten intensity or brighten luma
-        return brighten();
-      case "brighten-intensity":
+      case "brighten-value":
+      return brightenValue();
+      case "brighten":
         return brighten();
       case "brighten-luma":
-        return brighten();
+        return brightenLuma();
+        //darken
       case "darken-value":
-        return darken();
-      case "darken-intensity":
+        return darkenValue();
+      case "darken":
         return darken();
       case "darken-luma":
-        return darken();
+        return darkenLuma();
       default:
         System.out.println("Invalid filter");
         return null;
@@ -203,6 +204,53 @@ public class Layer implements LayerInterface<Pixel> {
     return result;
   }
 
+  private Pixel[][] darkenValue() {
+    Pixel[][] result = new Pixel[height][width];
+
+    for (int row = 0; row < grid.length; row++) {
+      for (int colum = 0; colum < grid[0].length; colum++) {
+        int red = grid[row][colum].getRed();
+        int green = grid[row][colum].getGreen();
+        int blue = grid[row][colum].getBlue();
+
+
+        if(red >= green && red >= blue) {
+          red -= amount;
+        }
+        else if(green >= red && green >= blue) {
+          green -= amount;
+        }
+        else if(blue >= green && red >= red) {
+          blue -= amount;
+        }
+        result[row][colum] = new Pixel(red, blue, green);
+        //assume full opaqueness/full alpha
+      }
+    }
+    return result;
+  }
+
+
+  private Pixel[][] darkenLuma() {
+    Pixel[][] result = new Pixel[height][width];
+
+    for (int row = 0; row < grid.length; row++) {
+      for (int colum = 0; colum < grid[0].length; colum++) {
+        int red = (int) (grid[row][colum].getRed() * 0.2126);
+        int green = (int) (grid[row][colum].getGreen() * 0.7152);
+        int blue = (int) (grid[row][colum].getBlue() * 0.0722);
+
+        int resultRed = Math.max(0, red - amount);
+        int resultGreen = Math.max(0, green - amount);
+        int resultBlue = Math.max(0, blue - amount);
+
+        result[row][colum] = new Pixel(resultRed, resultBlue, resultGreen);
+        //assume full opaqueness/full alpha
+      }
+    }
+    return result;
+  }
+
   //not sure what brighten intensity and brighten luma are,
   //or how they differ from this brighten method
 
@@ -224,6 +272,52 @@ public class Layer implements LayerInterface<Pixel> {
         int resultRed = Math.min(255, red + amount);
         int resultGreen = Math.min(255, green + amount);
         int resultBlue = Math.min(255, blue + amount);
+
+        result[row][colum] = new Pixel(resultRed, resultBlue, resultGreen);
+        //assume full opaqueness/full alpha
+      }
+    }
+    return result;
+  }
+  private Pixel[][] brightenValue() {
+    Pixel[][] result = new Pixel[height][width];
+
+    for (int row = 0; row < grid.length; row++) {
+      for (int colum = 0; colum < grid[0].length; colum++) {
+        int red = grid[row][colum].getRed();
+        int green = grid[row][colum].getGreen();
+        int blue = grid[row][colum].getBlue();
+
+
+        if(red >= green && red >= blue) {
+          red += amount;
+        }
+        else if(green >= red && green >= blue) {
+          green += amount;
+        }
+        else if(blue >= green && red >= red) {
+          blue += amount;
+        }
+        result[row][colum] = new Pixel(red, blue, green);
+        //assume full opaqueness/full alpha
+      }
+    }
+    return result;
+  }
+
+
+  private Pixel[][] brightenLuma() {
+    Pixel[][] result = new Pixel[height][width];
+
+    for (int row = 0; row < grid.length; row++) {
+      for (int colum = 0; colum < grid[0].length; colum++) {
+        int red = (int) (grid[row][colum].getRed() * 0.2126);
+        int green = (int) (grid[row][colum].getGreen() * 0.7152);
+        int blue = (int) (grid[row][colum].getBlue() * 0.0722);
+
+        int resultRed = Math.max(0, red + amount);
+        int resultGreen = Math.max(0, green + amount);
+        int resultBlue = Math.max(0, blue + amount);
 
         result[row][colum] = new Pixel(resultRed, resultBlue, resultGreen);
         //assume full opaqueness/full alpha
