@@ -18,7 +18,7 @@ import View.CollagingView;
  * Class for ImageController which implements ControllerInterface.
  */
 public class ImageController implements ControllerInterface {
-  private Project img;
+  protected Project img;
   private String currentCommand;
 
   private CollagingView view; //kel
