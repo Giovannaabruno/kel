@@ -151,7 +151,7 @@ public class ImageControllerTest {
     ImageController ic = new ImageController();
     ic.newProject(800, 800);
     ic.addLayer("layer1");
-    ic.addImageToLayer("layer1","/images/tako.ppm",0,0);
+    ic.addImageToLayer("layer1","images/tako.ppm",0,0);
     Pixel topLeft = ic.getProject().getLayer("layer1").getGrid()[0][0];
     assertEquals(173, topLeft.getRed());
     assertEquals(179, topLeft.getGreen());
