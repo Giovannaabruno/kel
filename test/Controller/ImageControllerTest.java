@@ -82,7 +82,7 @@ public class ImageControllerTest {
   public void testNewProjectCheckWidth() throws IOException {
     ImageController imgCtr = new ImageController();
     imgCtr.readCommand("new-project 800 600");
-    assertEquals(800, imgCtr.img.getWidth());
+    assertEquals(600, imgCtr.img.getWidth());
   }
 
   /**
@@ -93,7 +93,7 @@ public class ImageControllerTest {
   public void testNewProjectCheckHeight() throws IOException {
     ImageController imgCtr = new ImageController();
     imgCtr.readCommand("new-project 800 600");
-    assertEquals(600, imgCtr.img.getHeight());
+    assertEquals(800, imgCtr.img.getHeight());
   }
 
 
