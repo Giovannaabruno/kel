@@ -14,6 +14,9 @@ public class CollagingCommandView implements CollagingView {
   public CollagingCommandView() {
     this.ap = System.out;
   }
+  public CollagingCommandView(Appendable ap) {
+    this.ap = ap;
+  }
 
   @Override
   public void renderMessage(String message) throws IOException {
