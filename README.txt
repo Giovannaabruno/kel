@@ -26,3 +26,5 @@ SCRIPT OF COMMANDS
 6. to save a project type --> save-project
 7. to load a project type --> load-project image.Project
 8. to quit type --> quit
+
+Citation: we own the image, and we're authorized to use the image for the project
