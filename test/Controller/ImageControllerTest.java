@@ -243,7 +243,7 @@ public class ImageControllerTest {
     assertNotEquals(ic.getCurrentCommand(), 0);
 
     //commdand 3
-    ic.readCommand("add-image-to-layer layerName tako.ppm");
+    ic.readCommand("add-image-to-layer layerName images/tako.ppm");
     assertEquals(ic.getCurrentCommand(), "add-image-to-layer");
     assertNotEquals(ic.getCurrentCommand(), "add layers to pic");
 
