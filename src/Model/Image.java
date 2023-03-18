@@ -7,17 +7,13 @@ import java.util.ArrayList;
  */
 public class Image {
   private final ArrayList<Layer> layers;
-  private final int width;
-  private final int height;
 
   /**
-   * this is a constructor for Iimage. 
-   * @param width
-   * @param height
+   * this is a constructor for Iimage.
+   * @param width for image
+   * @param height for image
    */
   public Image(int width, int height) {
-    this.width = width;
-    this.height = height;
     layers = new ArrayList<Layer>();
     layers.add(new Layer(width, height, "background")); //completely white background layer
   }
