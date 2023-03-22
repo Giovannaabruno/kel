@@ -161,4 +161,66 @@ public class LayerTest {
             new Pixel(855, 0, 0, 255));
 
   }
+  //NEW TESTERS
+  @Test
+  public void testInversionBlending() {
+    Layer l1 = new Layer(800,600, "image/tako.pmm");
+    Layer l2 = new Layer(800,600, "image/tako.pmm");
+    l1.setFilter("inversionBlending", 40);
+    Pixel[][]  mix = l1.getFilteredGrid(l2);
+    assertEquals(0, mix[0][0].getRed());
+    assertEquals(0, mix[0][0].getGreen());
+    assertEquals(0, mix[0][0].getBlue());
+    assertNotEquals(1, mix[1][6].getRed());
+    assertNotEquals(1, mix[2][1].getGreen());
+    assertNotEquals(1, mix[4][0].getBlue());
+    //Layer 1
+
+
+
+  }
+  @Test
+  public void testdarkenBlending() {
+    Layer l1 = new Layer(800,600, "image/tako.pmm");
+    Layer l2 = new Layer(800,600, "image/tako.pmm");
+    l1.setFilter("darkenBlending");
+
+  double lightness = l1.getPixelAt(0,0 ).getLightness();
+  double lightnessD = l2.getPixelAt(0, 0).getLightness();
+    lightness *= lightnessD;
+
+    System.out.println(lightness);
+    Pixel[][]  mix = l1.getFilteredGrid(l2);
+    assertEquals(0.992, mix[0][0].getLightness(), 0.01);
+
+    lightness = l1.getPixelAt(1,0 ).getLightness();
+    lightnessD = l2.getPixelAt(1, 0).getLightness();
+    lightness *= lightnessD;
+    assertEquals(1, mix[0][0].getLightness(), 0.01);
+
+
+
+
+
+
+  }
+  @Test
+  public void testbrighteningBlending() {
+    Layer l = new Layer(800,600, "image/tako.pmm");
+    Layer ld = new Layer(800,600, "image/tako.pmm");
+    l.setFilter("brightenBlending");
+
+    double lightness = l.getPixelAt(0,0).getLightness();
+    double lightnessD = ld.getPixelAt(0, 0).getLightness();
+    double newLightness = (1 - ((1 - lightness) * (1 - lightnessD)));
+    System.out.println(newLightness);
+    Pixel[][]  mix = l.getFilteredGrid(ld);
+    assertEquals(newLightness, mix[0][0].getLightness(), 0.001);
+    //assertNotEquals(newLightness, mix[1][0].getLightness(), 0.001);
+
+    lightness = l.getPixelAt(1,0).getLightness();
+    lightnessD = ld.getPixelAt(1, 0).getLightness();
+    newLightness = (1 - ((1 - lightness) * (1 - lightnessD)));
+    assertEquals(newLightness, mix[1][0].getLightness(), 0.001);
+  }
 }

@@ -361,6 +361,15 @@ public class ImageController implements ControllerInterface {
       case "darken-luma":
         l.setFilter("darken-luma", amount);
         break;
+      case "darkenBlending":
+        l.setFilter("darkenBlending", amount);
+        break;
+      case "brightenBlending":
+        l.setFilter("brightenBlending", amount);
+        break;
+      case "inversionBlending":
+        l.setFilter("inversionBlending", amount);
+        break;
 
       default:
         l.setFilter("red-component", 30);

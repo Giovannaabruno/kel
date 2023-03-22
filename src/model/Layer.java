@@ -1,8 +1,17 @@
 package model;
 // need to have atleast 1 layer
 
+
 /**
  * Class for Layer which implements LayerInterface.
+ * <p>
+ * NOTES: the project will work with the blending method like this:
+ * if(layers.get(i).isBlending()) {
+ * layers.get(i).filter(layers.get(i-1));   <- this shows that filtering this layer requires
+ * passing the layer beneath it as an argument
+ * } else {
+ * lyaers.get(i).filter();   <- if the layer is not blending, it needs no arguments
+ * }
  */
 public class Layer implements LayerInterface<Pixel> {
   private int height;
@@ -12,6 +21,9 @@ public class Layer implements LayerInterface<Pixel> {
   private String name;
 
   private String filter; //store the type of filter
+
+  private boolean blending; //stores whether this layer needs the layer behind it to work:
+  //red-component, brighten don't,  but blendingDarkness and blendingInversion do
 
   private int amount; //store the intensity of the filter
 
@@ -105,6 +117,11 @@ public class Layer implements LayerInterface<Pixel> {
     grid[row][colum] = pixel;
   }
 
+  //used for blending filters, where amount doesn't matter
+  public void setFilter(String filter) {
+    setFilter(filter, 0);
+  }
+
   /**
    * Method setFilter, check whether filter is a valid choice, and the amount of
    * transparency for that layer.
@@ -116,6 +133,26 @@ public class Layer implements LayerInterface<Pixel> {
     //ideally, this should check whether filter is a valid choice
     //and throw an error if it's not
     this.filter = filter;
+    switch (filter) {
+      case "red-component":
+      case "green-component":
+      case "blue-component":
+      case "brighten-value":
+      case "brighten":
+      case "brighten-luma":
+      case "darken-value":
+      case "darken":
+      case "darken-luma":
+        this.filter = filter;
+        blending = false;
+        break;
+      case "blendingDarkness": //REPLACE
+        this.filter = filter;
+        blending = true;
+      default:
+        System.out.println("Invalid filter");
+
+    }
     this.amount = amount;
   }
 
@@ -135,6 +172,26 @@ public class Layer implements LayerInterface<Pixel> {
   //  public void setFilter(String filter) {
   //    this.filter = filter;
   //  }
+
+  /**
+   * NEW: INCOMPLETE
+   *
+   * @param other
+   * @return
+   */
+  public Pixel[][] getFilteredGrid(Layer other) {
+    switch (filter) {
+      case "darkenBlending":
+        return darkenBlending(other);
+      case "inversionBlending":
+        return inversionBlending(other);
+      case "brightenBlending":
+        return brighteningBlending(other);
+      default:
+        System.out.println("Invalid filter");
+        return null;
+    }
+  }
 
   /**
    * Method getFilteredGrid, selects what each filter type command is called.
@@ -174,6 +231,12 @@ public class Layer implements LayerInterface<Pixel> {
   //named Filter if we wanted (not necessary, might be good practice)
 
 
+  //returns whether this layer needs the layer behind it to work
+  //might be renamed to something better
+  public boolean isBlending() {
+    return blending;
+  }
+
   /**
    * Method darken, removes the brightness value
    * pixel by pixel according to value from the corresponding pixel
@@ -205,6 +268,7 @@ public class Layer implements LayerInterface<Pixel> {
    * Method darkenValue, removes the brightness value
    * pixel by pixel according to value from the corresponding pixel
    * on the current layer.
+   *
    * @return result amount
    */
   private Pixel[][] darkenValue() {
@@ -236,6 +300,7 @@ public class Layer implements LayerInterface<Pixel> {
    * Method darkenLuma, removes the brightness luma
    * pixel by pixel according to luma from the corresponding pixel
    * on the current layer.
+   *
    * @return result amount
    */
   private Pixel[][] darkenLuma() {
@@ -290,6 +355,7 @@ public class Layer implements LayerInterface<Pixel> {
   /**
    * Method brightenValue, represents, adds the brightness value pixel
    * by pixel according to value from the corresponding pixel on the current layer.
+   *
    * @return result amount
    */
   private Pixel[][] brightenValue() {
@@ -320,6 +386,7 @@ public class Layer implements LayerInterface<Pixel> {
   /**
    * Method brightenLuma, represents, adds the brightness luma pixel
    * by pixel according to luma from the corresponding pixel on the current layer.
+   *
    * @return result amount
    */
   private Pixel[][] brightenLuma() {
@@ -397,6 +464,62 @@ public class Layer implements LayerInterface<Pixel> {
       }
     }
     return result;
+  }
+//// differances section
+
+  /**
+   *
+   * @param other differences
+   * @return
+   */
+  private Pixel[][] inversionBlending(Layer other) {
+    Pixel[][] result = new Pixel[height][width];
+    for (int row = 0; row < grid.length; row++) {
+      for (int colum = 0; colum < grid[0].length; colum++) {
+        int red = Math.abs(grid[row][colum].getRed() - other.grid[row][colum].getRed());
+        int green = Math.abs(grid[row][colum].getGreen() - other.grid[row][colum].getGreen());
+        int blue = Math.abs(grid[row][colum].getBlue() - other.grid[row][colum].getBlue());
+
+        result[row][colum] = new Pixel(red, green, blue);
+
+      }
+    }
+    return result;
+  }
+
+  private Pixel[][] darkenBlending(Layer other) {
+    Pixel[][] result = new Pixel[height][width];
+    for (int row = 0; row < grid.length; row++) {
+      for (int colum = 0; colum < grid[0].length; colum++) {
+        double hue = grid[row][colum].getHue();
+        double saturation = grid[row][colum].getSaturation();
+        double lightness = grid[row][colum].getLightness() * other.grid[row][colum].getLightness();
+
+        result[row][colum] = new Pixel(hue, saturation, lightness);
+      }
+    }
+    return result;
+
+  }
+
+  private Pixel[][] brighteningBlending(Layer other) {
+    Pixel[][] result = new Pixel[height][width];
+    for (int row = 0; row < grid.length; row++) {
+      for (int colum = 0; colum < grid[0].length; colum++) {
+        double hue = grid[row][colum].getHue();
+        double saturation = grid[row][colum].getSaturation();
+        //  Lightness
+        double l = grid[row][colum].getLightness();
+        double dL = other.grid[row][colum].getLightness();
+        double lightness = (1 - ((1 - l) * (1 - dL)));
+
+        result[row][colum] = new Pixel(hue,saturation, lightness);
+      }
+
+      }
+    return result;
+
+
   }
 
 }

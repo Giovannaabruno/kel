@@ -315,4 +315,29 @@ public class PixelTest {
     other.setRed(100);
     assertNotEquals(100, pixel.getRed());
   }
+  //NEW TESTERS
+  @Test
+  public void testGetHue() {
+    Pixel pixel = new Pixel(50.5,0.5,0.8);
+    assertEquals(50.5,pixel.getHue());
+    assertNotEquals(0.5,pixel.getHue());
+
+
+  }
+  @Test
+  public void testGetSaturation() {
+    Pixel pixel = new Pixel(50.5,0.5,0.8);
+    assertEquals(0.5,pixel.getSaturation());
+    assertNotEquals(0.8,pixel.getSaturation());
+
+  }
+  @Test
+  public void testGetLightness() {
+    Pixel pixel = new Pixel(50.5,0.5,0.8);
+    assertEquals(0.8,pixel.getLightness());
+    assertNotEquals(50.5,pixel.getLightness());
+
+  }
+
+
 }

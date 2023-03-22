@@ -10,6 +10,12 @@ public class Pixel implements PixelInterface {
   // amount of transparency
   private int alpha;
 
+  private double hue;
+
+  private double saturation;
+
+  private double lightness;
+
 
   /**
    * Constructor for Pixel, represents integer objects red, green, and blue.
@@ -23,6 +29,7 @@ public class Pixel implements PixelInterface {
     this.green = green;
     this.blue = blue;
     this.alpha = 255;
+    convertRGBtoHSL();
   }
 
   /**
@@ -38,7 +45,104 @@ public class Pixel implements PixelInterface {
     this.green = green;
     this.blue = blue;
     this.alpha = alpha;
+    convertRGBtoHSL();
+  }
 
+  public Pixel(double hue, double saturation, double lightness) {
+    this.hue = hue;
+    this.saturation = saturation;
+    this.lightness = lightness;
+    this.alpha = 255;
+    convertHSLtoRGB();
+  }
+  public Pixel(double hue, double saturation, double lightness, int alpha) {
+    this.hue = hue;
+    this.saturation = saturation;
+    this.lightness = lightness;
+    this.alpha = alpha;
+    convertHSLtoRGB();
+  }
+
+
+  /**
+   * Converts an RGB representation in the range 0-1 into an HSL
+   * representation where
+   * <ul>
+   * <li> 0 &lt;= H &lt; 360</li>
+   * <li> 0 &lt;= S &lt;= 1</li>
+   * <li> 0 &lt;= L &lt;= 1</li>
+   * </ul>
+   */
+  private void convertRGBtoHSL() {
+    int r = red;
+    int g = green;
+    int b = blue;
+
+    double componentMax = Math.max(r, Math.max(g, b));
+    double componentMin = Math.min(r, Math.min(g, b));
+    double delta = componentMax - componentMin;
+
+    double lightness = (componentMax + componentMin)/2;
+    double hue, saturation;
+    if(delta == 0) {
+      hue = 0;
+      saturation = 0;
+    } else {
+      saturation = delta / (1 - Math.abs(2*lightness - 1));
+      hue = 0;
+      if(componentMax == r) {
+        hue = (g - b)/delta;
+        hue = hue % 6;
+      } else if(componentMax == g) {
+        hue = (b - r)/delta;
+        hue += 2;
+      } else if(componentMax == b){
+        hue = (r - g)/delta;
+        hue += 4;
+      }
+
+      hue = hue * 60;
+    }
+
+    this.hue = hue;
+    this.saturation = saturation / 256;
+    this.lightness = lightness / 256; //EXPERIMENTAL- forces lightness to be 0 < L < 1
+    //System.out.println("RGB (" + r + "," + g + "," + b +") to HSL => (" + hue + "," + saturation + "," + lightness + ")");
+  }
+
+
+  /**
+   * Convers an HSL representation where
+   * <ul>
+   * <li> 0 &lt;= H &lt; 360</li>
+   * <li> 0 &lt;= S &lt;= 1</li>
+   * <li> 0 &lt;= L &lt;= 1</li>
+   * </ul>
+   * into an RGB representation where each component is in the range 0-1
+   */
+
+  private void convertHSLtoRGB() {
+    double r=  convertFn(hue, saturation, lightness, 0) * 255;
+    double g = convertFn(hue, saturation, lightness, 8) * 255;
+    double b = convertFn(hue, saturation, lightness, 4) * 255;
+
+    //NOTE: we have int values for red, green, blue (this is how they are saved in ppm files)
+    //multiply each value of 0.4 by 256 to get an int version of the color
+    this.red = (int)(r*256);
+    this.green = (int)(g*256);
+    this.blue = (int)(b*256);
+    //System.out.println("HSL (" + hue + "," + saturation + "," + lightness +") to RGB => (" + r + "," + g + "," + b + ")");
+  }
+
+  /*
+   * Helper method that performs the translation from the HSL polygonal
+   * model to the more familiar RGB model
+   */
+  private double convertFn(double hue, double saturation, double lightness, int n) {
+    double k = (n + (hue/30)) % 12;
+    double a  = saturation * Math.min(lightness, 1 - lightness);
+
+    return lightness - a * Math.max(-1, Math.min(k - 3, Math.min(9 - k, 1)));
   }
 
 
@@ -167,6 +271,18 @@ public class Pixel implements PixelInterface {
   public int getLuma() {
     return (int) (0.2126 * (float) red + 0.7152 * (float) green + 0.0722 * (float) blue);
 
+  }
+  ////////// DIfferences section
+  public double getHue() {
+    return hue;
+  }
+
+  public double getSaturation() {
+    return saturation;
+  }
+
+  public double getLightness() {
+    return lightness;
   }
 
   /**
