@@ -35,6 +35,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import controller.ImageController;
 import model.Layer;
 import model.Pixel;
+import model.Project;
 
 /**
  * This class opens the main window, that has different elements illustrated in
@@ -61,6 +62,14 @@ public class SwingFeaturesFrame extends JFrame implements ActionListener, ItemLi
   private JList<String> listOfStrings;
   private JList<Integer> listOfIntegers;
 
+  private ImageController ic;
+
+  private int currentLayerIndex;
+
+
+  /**
+   * Constructor for SwingFeaturesFrame class.
+   */
   public SwingFeaturesFrame() {
     super();
     setTitle("Swing features");
@@ -74,9 +83,10 @@ public class SwingFeaturesFrame extends JFrame implements ActionListener, ItemLi
     //mainScrollPane = new JScrollPane(mainPanel);
     //add(mainScrollPane);
 
-    ImageController ic = new ImageController();
+    ic = new ImageController();
     Layer l = ic.loadImage("tako.ppm", "image");
     System.out.println(l);
+
     model.Image img = new model.Image(l.getWidth(), l.getHeight()); // create new model iage
     Layer bg = img.getLayer(0); // get bg layer
     for(int r = 0; r < bg.getHeight(); r++) {
@@ -86,6 +96,10 @@ public class SwingFeaturesFrame extends JFrame implements ActionListener, ItemLi
     }
     BufferedImage newImg = ppmImageToBufferedImage(img); // create new buffered image
     JPanel pane = new JPanel() {
+      /**
+       * Method paintComponent, will allow us to draw image.
+       * @param g the <code>Graphics</code> object to protect
+       */
       @Override
       protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -332,6 +346,10 @@ public class SwingFeaturesFrame extends JFrame implements ActionListener, ItemLi
   }
 
 
+  /**
+   * Method actionPerformed.
+   * @param arg0 the event to be processed
+   */
   @Override
   public void actionPerformed(ActionEvent arg0) {
     // TODO Auto-generated method stub
@@ -407,6 +425,10 @@ public class SwingFeaturesFrame extends JFrame implements ActionListener, ItemLi
     }
   }
 
+  /**
+   * Method itemStateChanged.
+   * @param arg0 the event to be processed
+   */
   @Override
   public void itemStateChanged(ItemEvent arg0) {
     // TODO Auto-generated method stub
@@ -465,7 +487,11 @@ public class SwingFeaturesFrame extends JFrame implements ActionListener, ItemLi
      *
      * @return a new handcrafted image for display
      */
-    
+
+  /**
+   * Method createImageFromScratch, Creates the image using ARGB values.
+   * @return image
+   */
   private java.awt.Image createImageFromScratch() {
       BufferedImage image = new BufferedImage(300, 400, BufferedImage.TYPE_INT_ARGB);
 
@@ -511,9 +537,10 @@ public class SwingFeaturesFrame extends JFrame implements ActionListener, ItemLi
   }
 
   /**
-   * it will conver a ppm image to a buffer image in order to draw it on the screen.
-   * @param modelImage
-   * @return
+   * Method ppmImageToBufferedImage, it will conver a ppm image to a
+   * buffer image in order to draw it on the screen.
+   * @param modelImage image from the model
+   * @return finalImage
    */
   public BufferedImage ppmImageToBufferedImage(model.Image modelImage) {
     Layer l0 = modelImage.getLayer(0);
@@ -543,6 +570,10 @@ public class SwingFeaturesFrame extends JFrame implements ActionListener, ItemLi
     return finalImage;
   }
 
+  /**
+   * Method valueChanged.
+   * @param e the event that characterizes the change.
+   */
   @Override
   public void valueChanged(ListSelectionEvent e) {
     // We don't know which list called this callback, because we're using it

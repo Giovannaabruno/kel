@@ -143,7 +143,7 @@ public class LayerTest {
   }
 
   /**
-   * Tester that test FilteredGrid method.
+   * Tester that test FilteredGrid method. PART 1
    */
   @Test
   public void testGetFilteredGrid() {
@@ -162,6 +162,29 @@ public class LayerTest {
 
   }
   //NEW TESTERS
+  /**
+   * Tester that test FilteredGrid method. PART 2
+   */
+  public void GetFilteredGrid() {
+    Layer ll = new Layer(800,600, "image/tako.pmm");
+    int amount = 30;
+    ll.setFilter("darkenBlending", amount);
+    Pixel[][] grid = ll.getFilteredGrid();
+    assertEquals(grid[0][0],
+            new Pixel(255,0, 0, 255));
+    assertEquals(grid[ll.getHeight() / 2][ll.getWidth() / 2],
+            new Pixel(255,0, 0, 255));
+    assertEquals(grid[ll.getHeight() - 1][ll.getWidth() - 1],
+            new Pixel(255,0, 0, 255));
+    assertNotEquals(grid[ll.getHeight() / 2][ll.getWidth() / 2],
+            new Pixel(855, 0, 0, 255));
+
+  }
+
+
+  /**
+   * darkenBlending
+   */
   @Test
   public void testInversionBlending() {
     Layer l1 = new Layer(800,600, "image/tako.pmm");
@@ -179,6 +202,10 @@ public class LayerTest {
 
 
   }
+
+  /**
+   * Tester for testing darkenBlending method.
+   */
   @Test
   public void testdarkenBlending() {
     Layer l1 = new Layer(800,600, "image/tako.pmm");
@@ -204,6 +231,10 @@ public class LayerTest {
 
 
   }
+
+  /**
+   *  Tester for testing brighteningBlending method.
+   */
   @Test
   public void testbrighteningBlending() {
     Layer l = new Layer(800,600, "image/tako.pmm");

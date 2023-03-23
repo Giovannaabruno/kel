@@ -74,15 +74,29 @@ public class RepresentationConverter {
      * Helper method that performs the translation from the HSL polygonal
      * model to the more familiar RGB model
      */
-    private static double convertFn(double hue, double saturation, double lightness, int n) {
+
+	/**
+	 *
+	 * @param hue
+	 * @param saturation
+	 * @param lightness
+	 * @param n
+	 * @return
+	 */
+	private static double convertFn(double hue, double saturation, double lightness, int n) {
 	double k = (n + (hue/30)) % 12;
 	double a  = saturation * Math.min(lightness, 1 - lightness);
 	
 	return lightness - a * Math.max(-1, Math.min(k - 3, Math.min(9 - k, 1)));
     }
     
-    //demo main
-    public static void main(String[] args) {
+
+
+	/**
+	 * Demo main
+	 * @param args
+	 */
+	public static void main(String[] args) {
 	RepresentationConverter.convertRGBtoHSL(0.0, 0.0, 0.0);
 	RepresentationConverter.convertRGBtoHSL(1.0, 1.0, 1.0);
 	RepresentationConverter.convertRGBtoHSL(1.0, 0.0, 0.0);

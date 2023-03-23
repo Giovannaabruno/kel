@@ -30,6 +30,12 @@ public class ImageController implements ControllerInterface {
     // Blank constructor, it does not do much and is unnessary for the controller.
   }
 
+  /**
+   * Method clamps, sets a value of range between a
+   * defined minimum bound and a maximum bound.
+   * @param value amount
+   * @return Max range of values
+   */
   private static int clamp(int value) {
     return Math.max(0, Math.min(255, value));
   }

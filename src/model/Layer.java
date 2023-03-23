@@ -117,7 +117,11 @@ public class Layer implements LayerInterface<Pixel> {
     grid[row][colum] = pixel;
   }
 
-  //used for blending filters, where amount doesn't matter
+
+  /**
+   * SetFilter, used for blending filters, where amount doesn't matter.
+   * @param filter filter type being used.
+   */
   public void setFilter(String filter) {
     setFilter(filter, 0);
   }
@@ -146,7 +150,7 @@ public class Layer implements LayerInterface<Pixel> {
         this.filter = filter;
         blending = false;
         break;
-      case "blendingDarkness": //REPLACE
+      case "blendingDarkness": //REPLACE (RELOOK AT THIS)
         this.filter = filter;
         blending = true;
       default:
@@ -174,10 +178,11 @@ public class Layer implements LayerInterface<Pixel> {
   //  }
 
   /**
-   * NEW: INCOMPLETE
-   *
-   * @param other
-   * @return
+   * NEW: INCOMPLETE (MAKE A TESTER FOR THIS).
+   * Method getFilteredGrid,check whether filter is a valid choice, and the amount of
+   * transparency for that layer.
+   * @param other layer type
+   * @return layer type of null for incorrect layer
    */
   public Pixel[][] getFilteredGrid(Layer other) {
     switch (filter) {

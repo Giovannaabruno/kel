@@ -316,6 +316,10 @@ public class PixelTest {
     assertNotEquals(100, pixel.getRed());
   }
   //NEW TESTERS
+
+  /**
+   * Tester for testing getHue method.
+   */
   @Test
   public void testGetHue() {
     Pixel pixel = new Pixel(50.5,0.5,0.8);
@@ -324,6 +328,10 @@ public class PixelTest {
 
 
   }
+
+  /**
+   * Tester for testing getSaturation method.
+   */
   @Test
   public void testGetSaturation() {
     Pixel pixel = new Pixel(50.5,0.5,0.8);
@@ -331,6 +339,10 @@ public class PixelTest {
     assertNotEquals(0.8,pixel.getSaturation());
 
   }
+
+  /**
+   * Tester for testing getLightness method.
+   */
   @Test
   public void testGetLightness() {
     Pixel pixel = new Pixel(50.5,0.5,0.8);
