@@ -2,10 +2,11 @@ package model;
 
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertNotEquals;
-import static org.testng.AssertJUnit.assertEquals;
+
 
 /**
  * Testers for Pixel class.
@@ -323,7 +324,7 @@ public class PixelTest {
   @Test
   public void testGetHue() {
     Pixel pixel = new Pixel(50.5,0.5,0.8);
-    assertEquals(50.5,pixel.getHue());
+    assertEquals(50.5,pixel.getHue(), 0.0);
     assertNotEquals(0.5,pixel.getHue());
 
 
@@ -335,7 +336,7 @@ public class PixelTest {
   @Test
   public void testGetSaturation() {
     Pixel pixel = new Pixel(50.5,0.5,0.8);
-    assertEquals(0.5,pixel.getSaturation());
+    assertEquals(0.5,pixel.getSaturation(),0.0);
     assertNotEquals(0.8,pixel.getSaturation());
 
   }
@@ -346,7 +347,7 @@ public class PixelTest {
   @Test
   public void testGetLightness() {
     Pixel pixel = new Pixel(50.5,0.5,0.8);
-    assertEquals(0.8,pixel.getLightness());
+    assertEquals(0.8,pixel.getLightness(),0.0);
     assertNotEquals(50.5,pixel.getLightness());
 
   }
