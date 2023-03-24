@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
+import view.CollagingView;
+import view.JFrameView;
+
 /**
  * Runner class.
  */
@@ -21,6 +24,8 @@ public class Runner {
     Scanner scan = null;
     if(args.length == 0) {
       /// run a GUI
+      CollagingView view = new JFrameView();
+      return;
     }
     else if(args.length == 1 && args[0].equals("-text")) {
       // interactive mode
