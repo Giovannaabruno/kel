@@ -12,9 +12,11 @@ import javax.swing.BoxLayout;
  * Implements the CollagingView interface. Constructs a GUI using the Swing framework.
  */
 public class JFrameView extends JFrame implements CollagingView {
-  private final JButton loadButton;
-  private final JButton saveButton;
 
+  private final ImagePanel imagePanel;
+
+  private final CommandPanel commandPanel;
+  private final JButton loadButton;
   /**
    * Constructor for the JFrameView class.
    */
@@ -22,17 +24,27 @@ public class JFrameView extends JFrame implements CollagingView {
     super("Collaging Images");
 
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 
     JPanel topPanel = new JPanel();
-    topPanel.setLayout(new FlowLayout());
+    topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
 
-    this.loadButton = new JButton("Load");
-    topPanel.add(this.loadButton);
-    this.saveButton = new JButton("Save");
-    topPanel.add(this.saveButton);
+    JPanel bottomPanel = new JPanel();
+    bottomPanel.setLayout(new FlowLayout());
+
+    this.imagePanel = new ImagePanel();
+    topPanel.add(this.imagePanel);
+
+    this.loadButton = new JButton("Load Image");
+    bottomPanel.add(this.loadButton);
+
+    this.commandPanel = new CommandPanel();
+    bottomPanel.add(this.commandPanel);
 
     this.add(topPanel);
-    this.setSize(800,600);
+    this.add(bottomPanel);
+
+    this.pack();
     this.setVisible(true);
   }
 
