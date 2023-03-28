@@ -1,6 +1,6 @@
 package view;
 
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
@@ -17,37 +17,25 @@ import model.Image;
  */
 public class ImagePanel extends JPanel {
   private final JLabel imageLabel;
-
+  private BufferedImage img;
+  
   /**
    * Constructor for the ImagePanel class.
    */
-  public ImagePanel() {
+  public ImagePanel(BufferedImage img) {
     super();
     this.setBorder(new TitledBorder("Current Image"));
     this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-
+    this.img = img;
     this.imageLabel  = new JLabel();
-    this.addScrollPane();
+    setPreferredSize(new Dimension(600, 800));
   }
 
-  /**
-   * Renders the given image in the panel, adding a scroll pane if necessary.
-   *
-   * @param image the image to be rendered
-   */
-  public void renderImage(Image image) {
-    this.removeAll();
 
-//    BufferedImage bufferedImage = IOUtils.getBufferedImage(image);
-//    this.imageLabel.setIcon(new ImageIcon(bufferedImage));
-//
-    this.addScrollPane();
-  }
-
-  //helper method for adding a scroll pane to the panel
-  private void addScrollPane() {
-    JScrollPane scrollPane = new JScrollPane(this.imageLabel);
-    scrollPane.setPreferredSize(new Dimension(100, 300));
-    this.add(scrollPane);
+  @Override
+  protected void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    System.out.println("Calling paint");
+    g.drawImage(this.img, 0, 0,  getWidth(), getHeight(), this); /// draw image
   }
 }

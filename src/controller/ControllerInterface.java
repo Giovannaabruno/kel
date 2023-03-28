@@ -36,8 +36,9 @@ public interface ControllerInterface {
    *
    * @param width  of the canvas
    * @param height of the canvas
+   * @return
    */
-  void newProject(int width, int height);
+  Project newProject(int width, int height);
 
   /**
    * Returns the current project.

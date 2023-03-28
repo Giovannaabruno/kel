@@ -17,4 +17,3 @@ public interface CollagingView {
    */
   void renderMessage(String message) throws IOException;
 }
-

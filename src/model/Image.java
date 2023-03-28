@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * this is a class for the image.
  */
-public class Image {
+public class Image implements ImageInterface {
   private final ArrayList<Layer> layers;
 
   /**
@@ -18,10 +18,19 @@ public class Image {
     layers.add(new Layer(width, height, "background")); //completely white background layer
   }
 
+  /**
+   *
+   * @param index
+   * @return
+   */
   public Layer getLayer(int index) {
     return layers.get(index);
   }
 
+  /**
+   *
+   * @return
+   */
   public int getNumberLayers() {
     return layers.size();
   }

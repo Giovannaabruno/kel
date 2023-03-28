@@ -492,6 +492,11 @@ public class Layer implements LayerInterface<Pixel> {
     return result;
   }
 
+  /**
+   *
+   * @param other
+   * @return
+   */
   private Pixel[][] darkenBlending(Layer other) {
     Pixel[][] result = new Pixel[height][width];
     for (int row = 0; row < grid.length; row++) {
@@ -507,6 +512,11 @@ public class Layer implements LayerInterface<Pixel> {
 
   }
 
+  /**
+   *
+   * @param other
+   * @return
+   */
   private Pixel[][] brighteningBlending(Layer other) {
     Pixel[][] result = new Pixel[height][width];
     for (int row = 0; row < grid.length; row++) {
@@ -521,11 +531,12 @@ public class Layer implements LayerInterface<Pixel> {
         result[row][colum] = new Pixel(hue,saturation, lightness);
       }
 
-      }
+    }
     return result;
 
 
   }
 
 }
+
 

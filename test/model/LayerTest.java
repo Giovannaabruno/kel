@@ -212,8 +212,8 @@ public class LayerTest {
     Layer l2 = new Layer(800,600, "image/tako.pmm");
     l1.setFilter("darkenBlending");
 
-  double lightness = l1.getPixelAt(0,0 ).getLightness();
-  double lightnessD = l2.getPixelAt(0, 0).getLightness();
+    double lightness = l1.getPixelAt(0,0 ).getLightness();
+    double lightnessD = l2.getPixelAt(0, 0).getLightness();
     lightness *= lightnessD;
 
     System.out.println(lightness);

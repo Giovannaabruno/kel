@@ -4,6 +4,17 @@ package model;
  * interface for PixelInterface.
  */
 public interface PixelInterface {
+  ///NEW
+
+
+  ///NEW
+
+
+
+
+  ///NEW
+
+
   /**
    * Method equals, represents total components.
    *
@@ -11,6 +22,13 @@ public interface PixelInterface {
    * @return pixels components
    */
   boolean equals(Object other);
+
+  /**
+   * Method hashCode, run through each pixel's integer value.
+   *
+   * @return hashcode for the whole pixel value
+   */
+  int hashCode();
 
 
   /**
@@ -65,21 +83,21 @@ public interface PixelInterface {
   /**
    * Method setAlpha, sets alpha value.
    *
-   * @param alpha alpha
+   * @param alpha aplpha
    */
   void setAlpha(int alpha);
 
   /**
    * Method getValue, get the maximum value of the three components for each pixel.
    *
-   * @return value
+   * @return values of the image RGB
    */
   int getValue();
 
   /**
    * Method getIntensity, gets the average of the three components for each pixel.
    *
-   * @return total intensity
+   * @return total intensity  of the image RGB
    */
   int getIntensity();
 
@@ -87,13 +105,34 @@ public interface PixelInterface {
    * Method getLume, gets the weighted sum. if
    * luma must be between 0 and 1, add "/255" after each color (ex: red/255).
    *
-   * @return luma
+   * @return luma of the image RGB
    */
-  public int getLuma();
+  int getLuma();
+  ////////// NEW DIfferences section
 
   /**
-   * Method getLume, gets the weighted sum. if
-   * luma must be between 0 and 1, add "/255" after each color (ex: red/255).
+   * Method getHue, get the Hue value for the image.
+   *
+   * @return Hue for the image HSL  values
+   */
+  double getHue();
+
+  /**
+   * Method getSaturation, get the Saturation value for the image.
+   *
+   * @return Saturation for the image HSL  values
+   */
+  double getSaturation();
+
+  /**
+   * Method getLightness, get the Lightness value for the image.
+   *
+   * @return Lightness for the image HSL  values
+   */
+  double getLightness();
+
+  /**
+   * Method clone, creates a copy of the red green blue alpha values.
    *
    * @return RGBA values
    */

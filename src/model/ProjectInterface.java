@@ -49,5 +49,14 @@ public interface ProjectInterface {
    * @return height
    */
   int getHeight();
+  int getNumberLayers();
+
+
+  /**
+   * Combines all layers
+   *
+   * @return
+   */
+  Layer combineAllLayers();
 }
 

@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class Project which implements ProjectInterface.
@@ -93,4 +94,44 @@ public class Project implements ProjectInterface {
   public int getHeight() {
     return this.height;
   }
+
+
+  /**
+   * Number of layers
+   * @return
+   */
+  public int getNumberLayers() {
+    return this.layers.size();
+  }
+
+
+  /**
+   * Combines all layers
+   *
+   * @return
+   */
+  public Layer combineAllLayers() {
+    Layer bg = getLayer(0);
+    Layer finalLayer = new Layer(bg.getHeight(), bg.getWidth(), "final");
+    for(int l = 0; l < this.getNumberLayers(); l++) {
+      Layer currentLayer = getLayer(l);
+      for(int r = 0; r < finalLayer.getHeight(); r++) {
+        for(int c = 0; c < finalLayer.getWidth(); c++) {
+
+          Pixel oldPixel = finalLayer.getPixelAt(r, c);
+          Pixel newPixel = currentLayer.getPixelAt(r, c);
+
+          Pixel combined = new Pixel(
+                  oldPixel.getRed() + newPixel.getRed(),
+                  oldPixel.getGreen() + newPixel.getGreen(),
+                  oldPixel.getBlue() + newPixel.getBlue(),
+                  oldPixel.getAlpha() + newPixel.getAlpha()
+          );
+          finalLayer.setPixelAt(r, c, combined);
+        }
+      }
+    }
+    return finalLayer;
+  }
+
 }

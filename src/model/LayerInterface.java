@@ -10,28 +10,28 @@ public interface LayerInterface<T> {
   /**
    * Method getHeight, gets the height of the layer.
    *
-   * @return height
+   * @return height of layer
    */
   int getHeight();
 
   /**
    * Method getWidth, gets the width of the layer.
    *
-   * @return width
+   * @return width of layer
    */
   int getWidth();
 
   /**
    * Method getWidth, gets the name of the type of layer.
    *
-   * @return name
+   * @return name of layer
    */
   String getName();
 
   /**
    * Method getGrid, gets the grid of the layer.
    *
-   * @return grid
+   * @return grid of layer
    */
   Pixel[][] getGrid();
 
@@ -53,6 +53,14 @@ public interface LayerInterface<T> {
    */
   void setPixelAt(int row, int colum, Pixel pixel);
 
+
+  /**
+   * SetFilter, used for blending filters, where amount doesn't matter.
+   *
+   * @param filter filter type being used.
+   */
+  void setFilter(String filter);
+
   /**
    * Method setFilter, check whether filter is a valid choice, and the amount of
    * transparency for that layer.
@@ -73,15 +81,32 @@ public interface LayerInterface<T> {
   //   *
   //   * @param filter filter type
   //   */
-  //  void setFilter(String filter);
+  //  public void setFilter(String filter) {
+  //    this.filter = filter;
+  //  }
 
   /**
-   * Method getFilteredGrid, selects what each filter type is called.
+   * NEW: INCOMPLETE (MAKE A TESTER FOR THIS).
+   * Method getFilteredGrid,check whether filter is a valid choice, and the amount of
+   * transparency for that layer.
+   *
+   * @param other layer type
+   * @return layer type of null for incorrect layer
+   */
+  Pixel[][] getFilteredGrid(Layer other);
+
+  /**
+   * Method getFilteredGrid, selects what each filter type command is called.
    *
    * @return filter or null if given a Invalid filter
    */
   Pixel[][] getFilteredGrid();
+  //Note: we could move all of these methods to a helper class
+  //named Filter if we wanted (not necessary, might be good practice)
 
+
+  //returns whether this layer needs the layer behind it to work
+  //might be renamed to something better
+  boolean isBlending();
 
 }
-

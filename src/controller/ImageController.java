@@ -117,9 +117,11 @@ public class ImageController implements ControllerInterface {
    *
    * @param width  of the canvas
    * @param height of the canvas
+   * @return
    */
-  public void newProject(int height, int width) {
+  public Project newProject(int height, int width) {
     this.img = new Project(height, width);
+    return this.img;
   }
 
   /**
