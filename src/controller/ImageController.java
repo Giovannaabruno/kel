@@ -41,19 +41,18 @@ public class ImageController implements ControllerInterface {
   }
 
   /**
-   * LoadImage method, take module and loads it from file name.
-   *
-   * @param filename  equals selected filename which will be load from module
-   * @param layerName name of the type of layer/filer
-   * @return selected layer
+   * Load a image from a file
+   * @param file
+   * @param layerName
+   * @return
    */
-  public Layer loadImage(String filename, String layerName) {
+  public Layer loadImage(File file, String layerName) {
     Pixel[][] pixels;
     Scanner sc;
     try {
-      sc = new Scanner(new FileInputStream(filename));
+      sc = new Scanner(new FileInputStream(file));
     } catch (FileNotFoundException var12) {
-      out.println("File " + filename + " not found!");
+      out.println("File " + file.getName() + " not found!");
       return null;
     }
 
@@ -99,6 +98,17 @@ public class ImageController implements ControllerInterface {
     Layer layer = new Layer(pixels, layerName);
     //img.addLayer(layer);
     return layer;
+  }
+
+  /**
+   * LoadImage method, take module and loads it from file name.
+   *
+   * @param filename  equals selected filename which will be load from module
+   * @param layerName name of the type of layer/filer
+   * @return selected layer
+   */
+  public Layer loadImage(String filename, String layerName) {
+    return loadImage(new File(filename), layerName);
   }
 
   /**

@@ -4,8 +4,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeListener;
+import java.io.File;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import controller.ImageController;
@@ -33,6 +36,18 @@ public class JFrameView extends JFrame implements CollagingView {
 
   private Project currentProject;
 
+  /**
+   * Java get file extension
+   * @param filename
+   */
+  private String getExtension(String filename) {
+    String ext = "";
+    int i = filename.lastIndexOf(".");
+    if(i > 0) {
+      ext = filename.substring(i+1);
+    }
+    return ext;
+  }
   /**
    * Constructor for the JFrameView class.
    */
@@ -94,15 +109,50 @@ public class JFrameView extends JFrame implements CollagingView {
       }
     });
 
-    Layer layer = ic.loadImage("images/tako.ppm", "tako");
-    BufferedImage img = ppmImageToBufferedImage(layer);
-    this.imagePanel = new ImagePanel(img);
-    imageWindow.add(imagePanel);
-    imageWindow.setVisible(true);
-    imageWindow.setTitle(layer.getName());
+    JFrame currentWindow = this;
+    this.loadButton.addActionListener(new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        final JFileChooser fc = new JFileChooser();
+        fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int retVal = fc.showOpenDialog(currentWindow);
+        if (retVal == JFileChooser.APPROVE_OPTION) {
+          File selectedFile = fc.getSelectedFile();
+          if (!selectedFile.exists()) {
+            // throw file not found error
+            JOptionPane.showMessageDialog(currentWindow, "File not found.");
+          } else {
+            Layer layer = null;
+            BufferedImage img = null;
+            if (currentProject != null) {
+              if (getExtension(selectedFile.getName()).equals("ppm")) {
+                // load ppm
+                layer = ic.loadImage(selectedFile, selectedFile.getName());
+                currentProject.addLayer(layer);
+                img = ppmImageToBufferedImage(layer);
+              } else {
+                try {
+                  img = ImageIO.read(selectedFile);
+                } catch (IOException err) {
+                  JOptionPane.showMessageDialog(currentWindow, "File wasn't found.");
+                }
+              }
+              if (img != null) {
+                imagePanel = new ImagePanel(img);
+                imageWindow.add(imagePanel);
+                imageWindow.setVisible(true);
+                imageWindow.setTitle(selectedFile.getName());
+              }
+            } else {
+              JOptionPane.showMessageDialog(currentWindow, "No current project so cannot assign to layer.");
+            }
+          }
+        }
+      }
+    });
+
     if(currentProject != null) {
-      currentProject.addLayer(new Layer(800, 600, "newLayer"));
-      currentProject.addLayer(new Layer(800, 600, "layer 2"));
       this.listModel = new DefaultListModel<>();
       for (int l = 0; l < currentProject.getNumberLayers(); l++) {
         listModel.addElement(currentProject.getLayer(l).getName());

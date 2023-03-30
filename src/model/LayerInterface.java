@@ -108,5 +108,4 @@ public interface LayerInterface<T> {
   //returns whether this layer needs the layer behind it to work
   //might be renamed to something better
   boolean isBlending();
-
 }
