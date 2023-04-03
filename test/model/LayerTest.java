@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import static org.testng.Assert.assertNotEquals;
 import static org.testng.AssertJUnit.assertEquals;
+import static org.testng.AssertJUnit.assertTrue;
 
 
 /**
@@ -82,7 +83,32 @@ public class LayerTest {
             new Pixel(255,128, 255, 255));
 
   }
-  //testSetPixelAt
+
+  /**
+   * Tester for SetPixelAt method
+   */
+  @Test
+  public void testSetPixelAt() {
+    Layer ll = new Layer(800,600, "image/tako.pmm");
+    ll.setPixelAt(0, 0, new Pixel(255, 255, 255, 255));
+    ll.setPixelAt(0,1, new Pixel(0, 255, 255, 255));
+    ll.setPixelAt(0,2, new Pixel(100, 200, 255, 255));
+    ll.setPixelAt(1,0, new Pixel(0, 255, 100, 20));
+    assertEquals(ll.getPixelAt(0,0),
+            new Pixel(255, 255, 255, 255));
+    // 1
+    assertEquals(ll.getPixelAt(0,1),
+            new Pixel(0, 255, 255, 255));
+    //2
+    assertEquals(ll.getPixelAt(0,2),
+            new Pixel(100,200, 255, 255));
+    //3
+    assertEquals(ll.getPixelAt(1,0),
+            new Pixel(0,255, 100,  20));
+    //4
+    assertNotEquals(ll.getPixelAt(0,0),
+            new Pixel(255,128, 255, 255));
+  }
 
 
   /**
@@ -161,8 +187,19 @@ public class LayerTest {
 
   }
   //NEW TESTERS
+
   /**
-   * Tester that test FilteredGrid method. PART 2
+   * Tester for isBlending method.
+   * @return booleen value
+   *
+   */
+  public void isBlending() {
+    Layer ll = new Layer(800,600, "image/tako.pmm");
+    ll.setFilter("brightenBlending", 10);
+    assertTrue(ll.isBlending());
+  }
+  /**
+   * Tester that test FilteredGrid method. PART combineAllLayers2
    */
   public void GetFilteredGrid() {
     Layer ll = new Layer(800,600, "image/tako.pmm");

@@ -246,7 +246,7 @@ public class ImageControllerTest {
     // command 2
     ic.readCommand("add-layer layerName");
     assertEquals(ic.getCurrentCommand(), "add-layer");
-    assertEquals(ic.getProject().getNumLayers(), 2);
+    assertEquals(ic.getProject().getNumberLayers(), 2);
     assertNotEquals(ic.getCurrentCommand(), 0);
 
     //commdand 3

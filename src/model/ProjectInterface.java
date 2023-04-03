@@ -22,12 +22,12 @@ public interface ProjectInterface {
    */
   Layer getLayer(String name);
 
-  /**
-   * Method getNumLayers, represent size amount of tota llayer.
-   *
-   * @return layer size amount
-   */
-  int getNumLayers();
+//  /**
+//   * Method getNumLayers, represent size amount of tota llayer.
+//   *
+//   * @return layer size amount
+//   */
+//  int getNumLayers();
 
   /**
    * Method addLayer, add layer to Image/project.

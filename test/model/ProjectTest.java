@@ -32,7 +32,7 @@ public class ProjectTest {
   }
 
   /**
-   * TestGetLayer, getting the background for the image.
+   * TestGetLayer, getting the background for the image (index).
    */
   @Test
   public void testGetLayer() {
@@ -40,6 +40,31 @@ public class ProjectTest {
 
     Layer l = image.getLayer(0);
     assertEquals(l.getName(), "background");
+  }
+
+  /**
+   * Tester for getlayer, get the string name of the layer.
+   */
+  @Test
+  public void getlayer() {
+    Project image = new Project(800, 600);
+    Layer layer = image.getLayer("background");
+    assertEquals(layer.getName(), "background");
+    assertNotEquals(layer.getName(), "layer-1");
+  }
+
+  /**
+   * Tester for testGetNumberLayers method.
+   */
+  @Test
+  public void testGetNumberLayers() {
+    Project image = new Project(800, 600);
+    image.addLayer(new Layer(800,600, "layer1"));
+    image.addLayer(new Layer(800,600, "layer2"));
+    image.addLayer(new Layer(800,600, "layer3"));
+    int num = image.getNumberLayers();
+    assertEquals(4,num);
+    assertNotEquals(5,num);
   }
 
   /**
@@ -73,6 +98,17 @@ public class ProjectTest {
     Project image = new Project(800, 600);
     assertEquals(image.getHeight(), 800);
     assertNotEquals(image.getHeight(), 700);
+
+  }
+  @Test
+  public void combineAllLayers() {
+    Project image = new Project(800, 600);
+    image.addLayer(new Layer(800,600, "layer1"));
+    image.addLayer(new Layer(800,600, "layer2"));
+    Layer layer = image.combineAllLayers();
+    System.out.println(layer.getPixelAt(0,0).getRed());
+    assertTrue(layer.getPixelAt (0,0).equals(new Pixel(255,255,255)));
+
 
   }
 

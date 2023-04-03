@@ -36,7 +36,7 @@ public class ImageController implements ControllerInterface {
    * @param value amount
    * @return Max range of values
    */
-  private static int clamp(int value) {
+  public static int clamp(int value) {
     return Math.max(0, Math.min(255, value));
   }
 
@@ -237,7 +237,7 @@ public class ImageController implements ControllerInterface {
       //        Layer layer = img.getLayer(i);
       //        pw.print(layer.getName() + " ");
       //        pw.println(layer.getFilter());
-      for (int i = 0; i < img.getNumLayers(); i++) {
+      for (int i = 0; i < img.getNumberLayers(); i++) {
         Layer layer = img.getLayer(i);
         pw.println(layer.getName() + " " + layer.getFilter());
 
@@ -414,7 +414,7 @@ public class ImageController implements ControllerInterface {
 
     //concern: this doesn't use alpha to determine how much each layer contributes
     //a layer with 0 alpha will affect the end result just as much as a layer with 255 alpha
-    for (int i = 0; i < this.img.getNumLayers(); i++) {
+    for (int i = 0; i < this.img.getNumberLayers(); i++) {
       Layer layer = this.img.getLayer(i);
       out.println("Layer #" + i + " has height of " + layer.getHeight() +
               " and width " + layer.getWidth());

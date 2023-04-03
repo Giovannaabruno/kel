@@ -33,6 +33,7 @@ public class PixelTest {
     int hashCode = Integer.hashCode(255) + Integer.hashCode(255)
             + Integer.hashCode(255);
     assertEquals(pixel.hashCode(), 765);
+    assertNotEquals(pixel.hashCode(), 600);
   }
 
   /**

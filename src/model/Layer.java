@@ -150,7 +150,9 @@ public class Layer implements LayerInterface<Pixel> {
         this.filter = filter;
         blending = false;
         break;
-      case "blendingDarkness": //REPLACE (RELOOK AT THIS)
+      case "blendingDarkness"://REPLACE (RELOOK AT THIS)
+      case "inversionBlending":
+      case "brightenBlending":
         this.filter = filter;
         blending = true;
       default:
