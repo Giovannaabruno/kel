@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 
 /**
@@ -22,6 +23,7 @@ public class ImageViewTest {
     CollagingView view = new CollagingCommandView(out);
     view.renderMessage("Testing Message!");
     assertEquals("Testing Message!", out.toString());
+    assertNotEquals("Testing Mess ", out.toString());
   }
 
 

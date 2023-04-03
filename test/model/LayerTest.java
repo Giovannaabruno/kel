@@ -81,9 +81,8 @@ public class LayerTest {
     assertNotEquals(ll.getPixelAt(ll.getHeight() / 2, ll.getWidth() / 2),
             new Pixel(255,128, 255, 255));
 
-
-
   }
+  //testSetPixelAt
 
 
   /**

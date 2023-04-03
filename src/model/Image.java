@@ -19,17 +19,17 @@ public class Image implements ImageInterface {
   }
 
   /**
-   *
-   * @param index
-   * @return
+   * Method getLayer, gets a specific index of layers.
+   * @param index of layers
+   * @return a specific index of layer
    */
   public Layer getLayer(int index) {
     return layers.get(index);
   }
 
   /**
-   *
-   * @return
+   *  getNumberLayers, represents the number size of layers that are being used.
+   * @return the number size of layers that are being used
    */
   public int getNumberLayers() {
     return layers.size();

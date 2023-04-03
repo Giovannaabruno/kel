@@ -35,5 +35,9 @@ public class CollagingCommandView implements CollagingView {
     ap.append(message);
   }
 
+  public Appendable getAppendable() {
+    return this.ap;
+  }
+
 
 }

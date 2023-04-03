@@ -286,4 +286,5 @@ public class ImageControllerTest {
     assertNotEquals(ic.getCurrentCommand(), "Out");
 
   }
+  //savelayer
 }

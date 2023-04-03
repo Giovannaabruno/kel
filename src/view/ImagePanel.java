@@ -31,6 +31,9 @@ public class ImagePanel extends JPanel {
     setPreferredSize(new Dimension(600, 800));
   }
 
+  public BufferedImage getImage() {
+    return this.img;
+  }
 
   @Override
   protected void paintComponent(Graphics g) {
