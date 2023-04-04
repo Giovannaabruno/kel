@@ -35,6 +35,11 @@ public class CollagingCommandView implements CollagingView {
     ap.append(message);
   }
 
+  /**
+   * Method getAppendable, represents the appendable.
+   *
+   * @return object appendable
+   */
   public Appendable getAppendable() {
     return this.ap;
   }

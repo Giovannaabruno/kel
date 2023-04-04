@@ -6,6 +6,9 @@ import java.io.IOException;
 
 import model.Layer;
 
+/**
+ * Interface JFrameViewInterface.
+ */
 public interface JFrameViewInterface {
 
   void actionPerformed(ActionEvent e);
@@ -15,7 +18,7 @@ public interface JFrameViewInterface {
    * Method ppmImageToBufferedImage, it will conver a ppm image to a
    * buffer image in order to draw it on the screen.
    *
-   * @param layer
+   * @param layer layer
    * @return find Image
    */
   BufferedImage ppmImageToBufferedImage(Layer layer);

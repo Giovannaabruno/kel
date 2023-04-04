@@ -9,8 +9,9 @@ public class Image implements ImageInterface {
   private final ArrayList<Layer> layers;
 
   /**
-   * this is a constructor for Iimage.
-   * @param width for image
+   * this is a constructor for Image.
+   *
+   * @param width  for image
    * @param height for image
    */
   public Image(int width, int height) {
@@ -20,6 +21,7 @@ public class Image implements ImageInterface {
 
   /**
    * Method getLayer, gets a specific index of layers.
+   *
    * @param index of layers
    * @return a specific index of layer
    */
@@ -28,7 +30,8 @@ public class Image implements ImageInterface {
   }
 
   /**
-   *  getNumberLayers, represents the number size of layers that are being used.
+   * getNumberLayers, represents the number size of layers that are being used.
+   *
    * @return the number size of layers that are being used
    */
   public int getNumberLayers() {

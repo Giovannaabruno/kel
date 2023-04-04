@@ -4,10 +4,6 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import model.Project;
-
-import static org.testng.AssertJUnit.assertEquals;
-
 
 /**
  * Testers for CollagingCommandView class.
@@ -21,7 +17,7 @@ public class CollagingCommandViewTest {
   public void renderMessage() throws IOException {
     CollagingCommandView commandView = new CollagingCommandView();
     commandView.renderMessage("Get Collage");
-   // assertEquals(s, "Get Collage");
+    // assertEquals(s, "Get Collage");
 
   }
 }

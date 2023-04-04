@@ -8,9 +8,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import model.Image;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * testers for ImagePanel class.
@@ -18,8 +17,9 @@ import static org.junit.Assert.*;
 public class ImagePanelTest {
 
   /**
+   * Tester for getImage method.
    *
-   * @throws IOException
+   * @throws IOException if given invalided image selection
    */
   @Test
   public void getImage() throws IOException {
@@ -31,14 +31,14 @@ public class ImagePanelTest {
   }
 
   /**
-   *  Tester for paintComponent method.
+   * Tester for paintComponent method.
    */
   @Test
   public void paintComponent() throws IOException {
     BufferedImage img = ImageIO.read(new File("images/tako.ppm"));
     ImagePanel panel = new ImagePanel(img);
     assertEquals(panel.getImage(), img);
-    if(panel != null && img != null) {
+    if (panel != null && img != null) {
       assertEquals(panel.getImage().getWidth(), img.getWidth());
     }
   }

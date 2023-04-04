@@ -2,6 +2,9 @@ package view;
 
 import java.awt.event.ActionEvent;
 
+/**
+ * Inerface for CommandPanelInterface.
+ */
 public interface CommandPanelInterface {
   /**
    * Returns a string for the command selected by the user from the combo boxes.

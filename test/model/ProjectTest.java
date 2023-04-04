@@ -100,6 +100,10 @@ public class ProjectTest {
     assertNotEquals(image.getHeight(), 700);
 
   }
+
+  /**
+   * Tester for combineAllLayers method.
+   */
   @Test
   public void combineAllLayers() {
     Project image = new Project(800, 600);

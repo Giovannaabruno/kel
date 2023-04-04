@@ -21,13 +21,12 @@ public interface ProjectInterface {
    * @return layer or null for incorrect layer type
    */
   Layer getLayer(String name);
-
-//  /**
-//   * Method getNumLayers, represent size amount of tota llayer.
-//   *
-//   * @return layer size amount
-//   */
-//  int getNumLayers();
+  //  /**
+  //   * Method getNumLayers, represent size amount of tota llayer.
+  //   *
+  //   * @return layer size amount
+  //   */
+  //  int getNumLayers();
 
   /**
    * Method addLayer, add layer to Image/project.
@@ -49,13 +48,19 @@ public interface ProjectInterface {
    * @return height
    */
   int getHeight();
+
+  /**
+   * Method getNumberLayers, represents Number of layers.
+   *
+   * @return number of layers
+   */
   int getNumberLayers();
 
 
   /**
    * Combines all layers
    *
-   * @return
+   * @return combination of multiple layers
    */
   Layer combineAllLayers();
 }

@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -36,18 +35,6 @@ public class JFrameView extends JFrame implements CollagingView {
 
   private Project currentProject;
 
-  /**
-   * Java get file extension
-   * @param filename
-   */
-  private String getExtension(String filename) {
-    String ext = "";
-    int i = filename.lastIndexOf(".");
-    if(i > 0) {
-      ext = filename.substring(i+1);
-    }
-    return ext;
-  }
   /**
    * Constructor for the JFrameView class.
    */
@@ -85,33 +72,37 @@ public class JFrameView extends JFrame implements CollagingView {
 
     this.projectNameLabel = new JLabel("No Project");
     topPanel.add(this.projectNameLabel);
-    currentProject = ic.newProject(800,600);
+    currentProject = ic.newProject(800, 600);
     this.newProjectButton.addActionListener(new ActionListener() {
       ///part5
 
       /**
-       *
+       * ActionPerformed, represents the dialogue messages.
        * @param e the event to be processed
        */
       @Override
       public void actionPerformed(ActionEvent e) {
-       String projectName = (String) JOptionPane.showInputDialog(
-           topPanel,
-           "Enter project name.",
-               "New Project Dialog",
-               JOptionPane.PLAIN_MESSAGE,
-               null,
-               null,
-               ""
-       );
-       projectNameLabel.setText("Project Name: " + projectName);
-       currentProject = ic.newProject(800,600);
+        String projectName = (String) JOptionPane.showInputDialog(
+                topPanel,
+                "Enter project name.",
+                "New Project Dialog",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                null,
+                ""
+        );
+        projectNameLabel.setText("Project Name: " + projectName);
+        currentProject = ic.newProject(800, 600);
       }
     });
 
     JFrame currentWindow = this;
     this.loadButton.addActionListener(new ActionListener() {
 
+      /**
+       * Method actionPerformed, creates the action sequences.
+       * @param e the event to be processed
+       */
       @Override
       public void actionPerformed(ActionEvent e) {
         final JFileChooser fc = new JFileChooser();
@@ -152,7 +143,7 @@ public class JFrameView extends JFrame implements CollagingView {
       }
     });
 
-    if(currentProject != null) {
+    if (currentProject != null) {
       this.listModel = new DefaultListModel<>();
       for (int l = 0; l < currentProject.getNumberLayers(); l++) {
         listModel.addElement(currentProject.getLayer(l).getName());
@@ -170,17 +161,30 @@ public class JFrameView extends JFrame implements CollagingView {
 
     this.add(topPanel);
     this.add(bottomPanel);
-    this.setPreferredSize(new Dimension(600,800));
+    this.setPreferredSize(new Dimension(600, 800));
     this.pack();
     this.setVisible(true);
   }
 
-
+  /**
+   * Method getExtension, gets the Java file extension.
+   *
+   * @param filename type
+   */
+  private String getExtension(String filename) {
+    String ext = "";
+    int i = filename.lastIndexOf(".");
+    if (i > 0) {
+      ext = filename.substring(i + 1);
+    }
+    return ext;
+  }
 
   /**
-   * Method ppmImageToBufferedImage, it will conver a ppm image to a
+   * Method ppmImageToBufferedImage, it will converse a ppm image to a
    * buffer image in order to draw it on the screen.
-   * @param layer
+   *
+   * @param layer equals layers
    * @return find Image
    */
   public BufferedImage ppmImageToBufferedImage(Layer layer) {
@@ -188,8 +192,8 @@ public class JFrameView extends JFrame implements CollagingView {
             new java.awt.image.BufferedImage(layer.getWidth(), layer.getHeight(), BufferedImage.TYPE_INT_ARGB
             );
 
-    for(int y = 0; y < layer.getHeight(); y++) {
-      for(int x = 0; x < layer.getWidth(); x++) {
+    for (int y = 0; y < layer.getHeight(); y++) {
+      for (int x = 0; x < layer.getWidth(); x++) {
         Pixel p = layer.getPixelAt(y, x);
         char a = (char) p.getAlpha();
         char r = (char) p.getRed();

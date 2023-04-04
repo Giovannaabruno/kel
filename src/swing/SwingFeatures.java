@@ -43,13 +43,13 @@ try {
  */
 
 /**
- *
+ * Class  SwingFeatures.
  */
 public class SwingFeatures {
 
   /**
-   *
-   * @param args
+   * Main method.
+   * @param args argument
    */
   public static void main(String[] args) {
     SwingFeaturesFrame.setDefaultLookAndFeelDecorated(false);
@@ -74,14 +74,17 @@ public class SwingFeatures {
       //    }
       // }
     } catch (UnsupportedLookAndFeelException e) {
+      System.out.println("hi");
       // handle exception
     } catch (ClassNotFoundException e) {
-      // handle exception
+      System.out.println("hi");
+      System.out.println("hi");
     } catch (InstantiationException e) {
-      // handle exception
+      System.out.println("hi");
     } catch (IllegalAccessException e) {
-      // handle exception
+      System.out.println("hi");
     } catch (Exception e) {
+      System.out.println("hi");
     }
 
   }

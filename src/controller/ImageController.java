@@ -33,6 +33,7 @@ public class ImageController implements ControllerInterface {
   /**
    * Method clamps, sets a value of range between a
    * defined minimum bound and a maximum bound.
+   *
    * @param value amount
    * @return Max range of values
    */
@@ -42,9 +43,10 @@ public class ImageController implements ControllerInterface {
 
   /**
    * Load a image from a file
-   * @param file
-   * @param layerName
-   * @return
+   *
+   * @param file      equals selected file
+   * @param layerName equals given title for layer
+   * @return layer
    */
   public Layer loadImage(File file, String layerName) {
     Pixel[][] pixels;

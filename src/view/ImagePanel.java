@@ -5,12 +5,11 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
-import javax.swing.JScrollPane;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
+
 import javax.swing.border.TitledBorder;
 
-import model.Image;
+
 
 /**
  * Class representing a panel which holds an image in a scroll pane.
@@ -31,10 +30,18 @@ public class ImagePanel extends JPanel {
     setPreferredSize(new Dimension(600, 800));
   }
 
+  /**
+   * Method  BufferedImag, represent BufferedImag for image.
+   * @return image
+   */
   public BufferedImage getImage() {
     return this.img;
   }
 
+  /**
+   * Method paintComponent, allows the orginal image to be altered.
+   * @param g the <code>Graphics</code> object to protect
+   */
   @Override
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);

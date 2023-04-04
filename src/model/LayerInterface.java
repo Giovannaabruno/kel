@@ -53,14 +53,6 @@ public interface LayerInterface<T> {
    */
   void setPixelAt(int row, int colum, Pixel pixel);
 
-
-  /**
-   * SetFilter, used for blending filters, where amount doesn't matter.
-   *
-   * @param filter filter type being used.
-   */
-  void setFilter(String filter);
-
   /**
    * Method setFilter, check whether filter is a valid choice, and the amount of
    * transparency for that layer.
@@ -76,6 +68,13 @@ public interface LayerInterface<T> {
    * @return filter type
    */
   String getFilter();
+
+  /**
+   * SetFilter, used for blending filters, where amount doesn't matter.
+   *
+   * @param filter filter type being used.
+   */
+  void setFilter(String filter);
   //  /**
   //   * Setter method setFilter, sets the type of filter on the image.
   //   *
@@ -107,5 +106,11 @@ public interface LayerInterface<T> {
 
   //returns whether this layer needs the layer behind it to work
   //might be renamed to something better
+
+  /**
+   * Method is isBlending, creates the blending effect.
+   *
+   * @return blending effects
+   */
   boolean isBlending();
 }

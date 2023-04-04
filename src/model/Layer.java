@@ -117,15 +117,6 @@ public class Layer implements LayerInterface<Pixel> {
     grid[row][colum] = pixel;
   }
 
-
-  /**
-   * SetFilter, used for blending filters, where amount doesn't matter.
-   * @param filter filter type being used.
-   */
-  public void setFilter(String filter) {
-    setFilter(filter, 0);
-  }
-
   /**
    * Method setFilter, check whether filter is a valid choice, and the amount of
    * transparency for that layer.
@@ -170,6 +161,15 @@ public class Layer implements LayerInterface<Pixel> {
   public String getFilter() {
     return this.filter;
   }
+
+  /**
+   * SetFilter, used for blending filters, where amount doesn't matter.
+   *
+   * @param filter filter type being used.
+   */
+  public void setFilter(String filter) {
+    setFilter(filter, 0);
+  }
   //  /**
   //   * Setter method setFilter, sets the type of filter on the image.
   //   *
@@ -183,6 +183,7 @@ public class Layer implements LayerInterface<Pixel> {
    * NEW: INCOMPLETE (MAKE A TESTER FOR THIS).
    * Method getFilteredGrid,check whether filter is a valid choice, and the amount of
    * transparency for that layer.
+   *
    * @param other layer type
    * @return layer type of null for incorrect layer
    */
@@ -240,6 +241,12 @@ public class Layer implements LayerInterface<Pixel> {
 
   //returns whether this layer needs the layer behind it to work
   //might be renamed to something better
+
+  /**
+   * Method is isBlending, creates the blending effect.
+   *
+   * @return blending effects
+   */
   public boolean isBlending() {
     return blending;
   }
@@ -472,12 +479,13 @@ public class Layer implements LayerInterface<Pixel> {
     }
     return result;
   }
-//// differances section
+  //// differances section
 
   /**
+   * Method inversionBlending, represent the inversionBlending effect.
    *
    * @param other differences
-   * @return
+   * @return inversionBlending result
    */
   private Pixel[][] inversionBlending(Layer other) {
     Pixel[][] result = new Pixel[height][width];
@@ -495,9 +503,10 @@ public class Layer implements LayerInterface<Pixel> {
   }
 
   /**
+   * Method darkenBlending, represent the inversionBlending effect.
    *
-   * @param other
-   * @return
+   * @param other differences
+   * @return darkenBlending result
    */
   private Pixel[][] darkenBlending(Layer other) {
     Pixel[][] result = new Pixel[height][width];
@@ -515,9 +524,10 @@ public class Layer implements LayerInterface<Pixel> {
   }
 
   /**
+   * Method brighteningBlending, represent the inversionBlending effect.
    *
-   * @param other
-   * @return
+   * @param other differences
+   * @return brighteningBlending result
    */
   private Pixel[][] brighteningBlending(Layer other) {
     Pixel[][] result = new Pixel[height][width];
@@ -530,7 +540,7 @@ public class Layer implements LayerInterface<Pixel> {
         double dL = other.grid[row][colum].getLightness();
         double lightness = (1 - ((1 - l) * (1 - dL)));
 
-        result[row][colum] = new Pixel(hue,saturation, lightness);
+        result[row][colum] = new Pixel(hue, saturation, lightness);
       }
 
     }

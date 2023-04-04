@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import controller.ImageController;
 
@@ -55,15 +54,14 @@ public class Project implements ProjectInterface {
     }
     return null;
   }
-
-//  /**
-//   * Method getNumLayers,represent total number of layers.
-//   *
-//   * @return layer size amount
-//   */
-//  public int getNumLayers() {
-//    return layers.size();
-//  }
+  //  /**
+  //   * Method getNumLayers,represent total number of layers.
+  //   *
+  //   * @return layer size amount
+  //   *
+  //  public int getNumLayers() {
+  //    return layers.size();
+  //  }
 
   /**
    * Method addLayer, add layer to Image/project.
@@ -99,9 +97,9 @@ public class Project implements ProjectInterface {
 
 
   /**
-   * Number of layers
-   * @return
+   * Method getNumberLayers, represents Number of layers.
    *
+   * @return number of layers
    */
   public int getNumberLayers() {
     return this.layers.size();
@@ -116,10 +114,10 @@ public class Project implements ProjectInterface {
   public Layer combineAllLayers() {
     Layer bg = getLayer(0);
     Layer finalLayer = new Layer(bg.getHeight(), bg.getWidth(), "final");
-    for(int l = 0; l < this.getNumberLayers(); l++) {
+    for (int l = 0; l < this.getNumberLayers(); l++) {
       Layer currentLayer = getLayer(l);
-      for(int r = 0; r < finalLayer.getHeight(); r++) {
-        for(int c = 0; c < finalLayer.getWidth(); c++) {
+      for (int r = 0; r < finalLayer.getHeight(); r++) {
+        for (int c = 0; c < finalLayer.getWidth(); c++) {
 
           Pixel oldPixel = finalLayer.getPixelAt(r, c);
           Pixel newPixel = currentLayer.getPixelAt(r, c);
@@ -127,9 +125,9 @@ public class Project implements ProjectInterface {
           Pixel combined = new Pixel(
                   ImageController.clamp(oldPixel.getRed() + newPixel.getRed()),
                   ImageController.clamp(oldPixel.getGreen() + newPixel.getGreen()),
-                  ImageController.clamp(oldPixel.getBlue() + newPixel.getBlue()) ,
+                  ImageController.clamp(oldPixel.getBlue() + newPixel.getBlue()),
                   ImageController.clamp(oldPixel.getAlpha() + newPixel.getAlpha()
-          ));
+                  ));
           finalLayer.setPixelAt(r, c, combined);
         }
       }

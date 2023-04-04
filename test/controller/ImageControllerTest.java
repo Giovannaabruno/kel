@@ -103,6 +103,9 @@ public class ImageControllerTest {
   }
 
 
+  /**
+   * Tester for GetProject.
+   */
   @Test
   public void testGetProject() {
     ImageController ic = new ImageController();

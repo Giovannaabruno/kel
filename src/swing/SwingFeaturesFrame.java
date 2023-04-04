@@ -5,37 +5,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 
-import java.awt.image.BufferedImage;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JColorChooser;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.ListSelectionModel;
+import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controller.ImageController;
-import model.Layer;
-import model.Pixel;
-import model.Project;
 
 /**
  * This class opens the main window, that has different elements illustrated in
@@ -44,24 +22,21 @@ import model.Project;
  */
 
 public class SwingFeaturesFrame extends JFrame implements ActionListener, ItemListener, ListSelectionListener {
-  private JPasswordField pfield;
-  private JButton pButton;
-  private JLabel pDisplay;
-  private JPanel mainPanel;
+  private final JPasswordField pfield;
+  private final JButton pButton;
+  private final JLabel pDisplay;
+  private final JPanel mainPanel;
+  private final JLabel checkboxDisplay;
+  private final JLabel radioDisplay;
+  private final JLabel comboboxDisplay;
+  private final JLabel colorChooserDisplay;
+  private final JLabel fileOpenDisplay;
+  private final JLabel fileSaveDisplay;
+  private final JLabel inputDisplay;
+  private final JLabel optionDisplay;
+  private final JList<String> listOfStrings;
+  private final JList<Integer> listOfIntegers;
   private JScrollPane mainScrollPane;
-
-  private JLabel checkboxDisplay;
-  private JLabel radioDisplay;
-  private JLabel comboboxDisplay;
-  private JLabel colorChooserDisplay;
-  private JLabel fileOpenDisplay;
-  private JLabel fileSaveDisplay;
-  private JLabel inputDisplay;
-  private JLabel optionDisplay;
-
-  private JList<String> listOfStrings;
-  private JList<Integer> listOfIntegers;
-
   private ImageController ic;
 
   private int currentLayerIndex;
@@ -85,228 +60,229 @@ public class SwingFeaturesFrame extends JFrame implements ActionListener, ItemLi
     // Project project = ic.newProject(800, 600);
     /**
      * part 3
-    JList list = new JList<>(new String[]{"apples", "bannanas", "carrots"});
-    list.setSelectedIndex(1);
-    list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-    list.setLayoutOrientation(JList.VERTICAL_WRAP);
-    list.setVisibleRowCount(-1); // max number of possible rows
+     JList list = new JList<>(new String[]{"apples", "bannanas", "carrots"});
+     list.setSelectedIndex(1);
+     list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+     list.setLayoutOrientation(JList.VERTICAL_WRAP);
+     list.setVisibleRowCount(-1); // max number of possible rows
 
-    JScrollPane listScroller = new JScrollPane(list);
-    listScroller.setPreferredSize(new Dimension(250, 80));
-    mainPanel.add(listScroller);
-    mainPanel.setVisible(true);
+     JScrollPane listScroller = new JScrollPane(list);
+     listScroller.setPreferredSize(new Dimension(250, 80));
+     mainPanel.add(listScroller);
+     mainPanel.setVisible(true);
      */
     /**
-    ic = new ImageController();
+     ic = new ImageController();
      Project project = ic.newProject(800, 600);
-    Layer image = ic.loadImage("images/tako.ppm", "image");
+     Layer image = ic.loadImage("images/tako.ppm", "image");
 
-    project.addLayer(image);
+     project.addLayer(image);
 
-    BufferedImage newImg = ppmImageToBufferedImage(project.combineAllLayers()); // create new buffered image
+     BufferedImage newImg = ppmImageToBufferedImage(project.combineAllLayers()); // create new buffered image
 
-    System.out.println(newImg);
+     System.out.println(newImg);
 
-    ImagePane pane = new ImagePane(newImg);
-    pane.repaint();
-    mainPanel.add(pane);*/
-     //text area
-     JTextArea textArea = new JTextArea(10, 20);
-     textArea.setBorder(BorderFactory.createTitledBorder("Regular text area"));
-     mainPanel.add(textArea);
-     //text area with a scrollbar
-     JTextArea sTextArea = new JTextArea(10, 20);
-     JScrollPane scrollPane = new JScrollPane(sTextArea);
-     sTextArea.setLineWrap(true);
-     //scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-     scrollPane.setBorder(BorderFactory.createTitledBorder("Scrollable text area"));
-     mainPanel.add(scrollPane);
-     //password fields
-     JPanel pPanel = new JPanel();
-     pPanel.setBorder(BorderFactory.createTitledBorder("Using Password fields"));
-     mainPanel.add(pPanel);
-     pPanel.setLayout(new BoxLayout(pPanel, BoxLayout.PAGE_AXIS));
-     pfield = new JPasswordField(10);
-     pPanel.add(pfield);
-     pButton = new JButton("Echo password");
-     pButton.addActionListener(this);
-     pButton.setActionCommand("password button");
-     pPanel.add(pButton);
-     pDisplay = new JLabel("Password will appear here");
-     pDisplay.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-     pPanel.add(pDisplay);
-     //checkboxes
-     JPanel checkBoxPanel = new JPanel();
-     checkBoxPanel.setBorder(BorderFactory.createTitledBorder("Checkboxes"));
-     checkBoxPanel.setLayout(new BoxLayout(checkBoxPanel, BoxLayout.PAGE_AXIS));
-     JCheckBox[] checkBoxes = new JCheckBox[5];
-     ButtonGroup group = new ButtonGroup();
-     for (int i = 0; i < checkBoxes.length; i++) {
-     checkBoxes[i] = new JCheckBox("Option " + (i + 1));
-     checkBoxes[i].setSelected(false);
-     checkBoxes[i].setActionCommand("CB" + (i + 1));
-     checkBoxes[i].addItemListener(this);
-     //	group.add(checkBoxes[i]);
-     checkBoxPanel.add(checkBoxes[i]);
-     }
-     checkboxDisplay = new JLabel("Which one did the user touch?");
-     checkBoxPanel.add(checkboxDisplay);
-     mainPanel.add(checkBoxPanel);
-     //radio buttons
-     JPanel radioPanel = new JPanel();
-     radioPanel.setBorder(BorderFactory.createTitledBorder("Radio buttons"));
-     radioPanel.setLayout(new BoxLayout(radioPanel, BoxLayout.PAGE_AXIS));
-     JRadioButton[] radioButtons = new JRadioButton[5];
-     //buttons groups are used to combine radio buttons. Only one radio
-     // button in each group can be selected.
-     ButtonGroup rGroup1 = new ButtonGroup();
-     ButtonGroup rGroup2 = new ButtonGroup();
-     for (int i = 0; i < radioButtons.length; i++) {
-     radioButtons[i] = new JRadioButton("Option " + (i + 1));
-     //radioButtons[i].setSelected(false);
-     radioButtons[i].setActionCommand("RB" + (i + 1));
-     radioButtons[i].addActionListener(this);
-     if (i < 2)
-     rGroup1.add(radioButtons[i]);
-     else
-     rGroup2.add(radioButtons[i]);
-     radioPanel.add(radioButtons[i]);
-     }
-     radioButtons[4].doClick();
-     radioDisplay = new JLabel("Which one did the user select?");
-     radioPanel.add(radioDisplay);
-     mainPanel.add(radioPanel);
-     //combo boxes
-     JPanel comboboxPanel = new JPanel();
-     comboboxPanel.setBorder(BorderFactory.createTitledBorder("Combo boxes"));
-     comboboxPanel.setLayout(new BoxLayout(comboboxPanel, BoxLayout.PAGE_AXIS));
-     mainPanel.add(comboboxPanel);
-     comboboxDisplay = new JLabel("Cold Stone Creamery: Which size do you "
-     + "want?");
-     comboboxPanel.add(comboboxDisplay);
-     String[] options = {"Like it", "Love it", "Gotta have it"};
-     JComboBox<String> combobox = new JComboBox<String>();
-     //the event listener when an option is selected
-     combobox.setActionCommand("Size options");
-     combobox.addActionListener(this);
-     for (int i = 0; i < options.length; i++) {
-     combobox.addItem(options[i]);
-     }
-     comboboxPanel.add(combobox);
-     //show an image with a scrollbar
-     JPanel imagePanel = new JPanel();
-     //a border around the panel with a caption
-     imagePanel.setBorder(BorderFactory.createTitledBorder("Showing an image"));
-     imagePanel.setLayout(new GridLayout(1, 0, 10, 10));
-     //imagePanel.setMaximumSize(null);
-     mainPanel.add(imagePanel);
-     String[] images = {"Jellyfish.jpg", "Koala.jpg", "Penguins.jpg"};
-     JLabel[] imageLabel = new JLabel[images.length+1];
-     JScrollPane[] imageScrollPane = new JScrollPane[images.length+1];
-     for (int i = 0; i < imageLabel.length; i++) {
-     imageLabel[i] = new JLabel();
-     imageScrollPane[i] = new JScrollPane(imageLabel[i]);
-     if(i < images.length) {
-     imageLabel[i].setIcon(new ImageIcon(images[i]));
-     } else {
-     imageLabel[i].setIcon(new ImageIcon(createImageFromScratch()));
-     }
-     imageScrollPane[i].setPreferredSize(new Dimension(100, 600));
-     imagePanel.add(imageScrollPane[i]);
-     }
-     //Selection lists
-     JPanel selectionListPanel = new JPanel();
-     selectionListPanel.setBorder(BorderFactory.createTitledBorder("Selection lists"));
-     selectionListPanel.setLayout(new BoxLayout(selectionListPanel, BoxLayout.X_AXIS));
-     mainPanel.add(selectionListPanel);
-     DefaultListModel<String> dataForListOfStrings = new DefaultListModel<>();
-     dataForListOfStrings.addElement("Apple");
-     dataForListOfStrings.addElement("Bear");
-     dataForListOfStrings.addElement("Cave");
-     dataForListOfStrings.addElement("Decorate");
-     dataForListOfStrings.addElement("Exciting");
-     dataForListOfStrings.addElement("Flicker");
-     listOfStrings = new JList<>(dataForListOfStrings);
-     listOfStrings.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-     listOfStrings.addListSelectionListener(this);
-     selectionListPanel.add(listOfStrings);
-     DefaultListModel<Integer> dataForListOfIntegers = new DefaultListModel<>();
-     for (int i = 0; i < 1000; i++)
-     dataForListOfIntegers.addElement(i);
-     listOfIntegers = new JList<>(dataForListOfIntegers);
-     listOfIntegers.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-     listOfIntegers.addListSelectionListener(this);
-     selectionListPanel.add(new JScrollPane(listOfIntegers));
-     //dialog boxes
-     JPanel dialogBoxesPanel = new JPanel();
-     dialogBoxesPanel.setBorder(BorderFactory.createTitledBorder("Dialog boxes"));
-     dialogBoxesPanel.setLayout(new BoxLayout(dialogBoxesPanel, BoxLayout.PAGE_AXIS));
-     mainPanel.add(dialogBoxesPanel);
-     //color chooser
-     JPanel colorChooserPanel = new JPanel();
-     colorChooserPanel.setLayout(new FlowLayout());
-     dialogBoxesPanel.add(colorChooserPanel);
-     JButton colorChooserButton = new JButton("Choose a color");
-     colorChooserButton.setActionCommand("Color chooser");
-     colorChooserButton.addActionListener(this);
-     colorChooserPanel.add(colorChooserButton);
-     colorChooserDisplay = new JLabel("      ");
-     colorChooserDisplay.setOpaque(true); //so that background color shows up
-     colorChooserDisplay.setBackground(Color.WHITE);
-     colorChooserPanel.add(colorChooserDisplay);
-     //file open
-     JPanel fileopenPanel = new JPanel();
-     fileopenPanel.setLayout(new FlowLayout());
-     dialogBoxesPanel.add(fileopenPanel);
-     JButton fileOpenButton = new JButton("Open a file");
-     fileOpenButton.setActionCommand("Open file");
-     fileOpenButton.addActionListener(this);
-     fileopenPanel.add(fileOpenButton);
-     fileOpenDisplay = new JLabel("File path will appear here");
-     fileopenPanel.add(fileOpenDisplay);
-     //file save
-     JPanel filesavePanel = new JPanel();
-     filesavePanel.setLayout(new FlowLayout());
-     dialogBoxesPanel.add(filesavePanel);
-     JButton fileSaveButton = new JButton("Save a file");
-     fileSaveButton.setActionCommand("Save file");
-     fileSaveButton.addActionListener(this);
-     filesavePanel.add(fileSaveButton);
-     fileSaveDisplay = new JLabel("File path will appear here");
-     filesavePanel.add(fileSaveDisplay);
-     //JOptionsPane message dialog
-     JPanel messageDialogPanel = new JPanel();
-     messageDialogPanel.setLayout(new FlowLayout());
-     dialogBoxesPanel.add(messageDialogPanel);
-     JButton messageButton = new JButton("Click for a message");
-     messageButton.setActionCommand("Message");
-     messageButton.addActionListener(this);
-     messageDialogPanel.add(messageButton);
-     //JOptionsPane input dialog
-     JPanel inputDialogPanel = new JPanel();
-     inputDialogPanel.setLayout(new FlowLayout());
-     dialogBoxesPanel.add(inputDialogPanel);
-     JButton inputButton = new JButton("Click to enter username");
-     inputButton.setActionCommand("Input");
-     inputButton.addActionListener(this);
-     inputDialogPanel.add(inputButton);
-     inputDisplay = new JLabel("Default");
-     inputDialogPanel.add(inputDisplay);
-     //JOptionsPane options dialog
-     JPanel optionsDialogPanel = new JPanel();
-     optionsDialogPanel.setLayout(new FlowLayout());
-     dialogBoxesPanel.add(optionsDialogPanel);
-     JButton optionButton = new JButton("Click to enter options");
-     optionButton.setActionCommand("Option");
-     optionButton.addActionListener(this);
-     optionsDialogPanel.add(optionButton);
-     optionDisplay = new JLabel("Default");
-     optionsDialogPanel.add(optionDisplay);
+     ImagePane pane = new ImagePane(newImg);
+     pane.repaint();
+     mainPanel.add(pane);*/
+    //text area
+    JTextArea textArea = new JTextArea(10, 20);
+    textArea.setBorder(BorderFactory.createTitledBorder("Regular text area"));
+    mainPanel.add(textArea);
+    //text area with a scrollbar
+    JTextArea sTextArea = new JTextArea(10, 20);
+    JScrollPane scrollPane = new JScrollPane(sTextArea);
+    sTextArea.setLineWrap(true);
+    //scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+    scrollPane.setBorder(BorderFactory.createTitledBorder("Scrollable text area"));
+    mainPanel.add(scrollPane);
+    //password fields
+    JPanel pPanel = new JPanel();
+    pPanel.setBorder(BorderFactory.createTitledBorder("Using Password fields"));
+    mainPanel.add(pPanel);
+    pPanel.setLayout(new BoxLayout(pPanel, BoxLayout.PAGE_AXIS));
+    pfield = new JPasswordField(10);
+    pPanel.add(pfield);
+    pButton = new JButton("Echo password");
+    pButton.addActionListener(this);
+    pButton.setActionCommand("password button");
+    pPanel.add(pButton);
+    pDisplay = new JLabel("Password will appear here");
+    pDisplay.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+    pPanel.add(pDisplay);
+    //checkboxes
+    JPanel checkBoxPanel = new JPanel();
+    checkBoxPanel.setBorder(BorderFactory.createTitledBorder("Checkboxes"));
+    checkBoxPanel.setLayout(new BoxLayout(checkBoxPanel, BoxLayout.PAGE_AXIS));
+    JCheckBox[] checkBoxes = new JCheckBox[5];
+    ButtonGroup group = new ButtonGroup();
+    for (int i = 0; i < checkBoxes.length; i++) {
+      checkBoxes[i] = new JCheckBox("Option " + (i + 1));
+      checkBoxes[i].setSelected(false);
+      checkBoxes[i].setActionCommand("CB" + (i + 1));
+      checkBoxes[i].addItemListener(this);
+      //	group.add(checkBoxes[i]);
+      checkBoxPanel.add(checkBoxes[i]);
+    }
+    checkboxDisplay = new JLabel("Which one did the user touch?");
+    checkBoxPanel.add(checkboxDisplay);
+    mainPanel.add(checkBoxPanel);
+    //radio buttons
+    JPanel radioPanel = new JPanel();
+    radioPanel.setBorder(BorderFactory.createTitledBorder("Radio buttons"));
+    radioPanel.setLayout(new BoxLayout(radioPanel, BoxLayout.PAGE_AXIS));
+    JRadioButton[] radioButtons = new JRadioButton[5];
+    //buttons groups are used to combine radio buttons. Only one radio
+    // button in each group can be selected.
+    ButtonGroup rGroup1 = new ButtonGroup();
+    ButtonGroup rGroup2 = new ButtonGroup();
+    for (int i = 0; i < radioButtons.length; i++) {
+      radioButtons[i] = new JRadioButton("Option " + (i + 1));
+      //radioButtons[i].setSelected(false);
+      radioButtons[i].setActionCommand("RB" + (i + 1));
+      radioButtons[i].addActionListener(this);
+      if (i < 2)
+        rGroup1.add(radioButtons[i]);
+      else
+        rGroup2.add(radioButtons[i]);
+      radioPanel.add(radioButtons[i]);
+    }
+    radioButtons[4].doClick();
+    radioDisplay = new JLabel("Which one did the user select?");
+    radioPanel.add(radioDisplay);
+    mainPanel.add(radioPanel);
+    //combo boxes
+    JPanel comboboxPanel = new JPanel();
+    comboboxPanel.setBorder(BorderFactory.createTitledBorder("Combo boxes"));
+    comboboxPanel.setLayout(new BoxLayout(comboboxPanel, BoxLayout.PAGE_AXIS));
+    mainPanel.add(comboboxPanel);
+    comboboxDisplay = new JLabel("Cold Stone Creamery: Which size do you "
+            + "want?");
+    comboboxPanel.add(comboboxDisplay);
+    String[] options = {"Like it", "Love it", "Gotta have it"};
+    JComboBox<String> combobox = new JComboBox<String>();
+    //the event listener when an option is selected
+    combobox.setActionCommand("Size options");
+    combobox.addActionListener(this);
+    for (int i = 0; i < options.length; i++) {
+      combobox.addItem(options[i]);
+    }
+    comboboxPanel.add(combobox);
+    //show an image with a scrollbar
+    JPanel imagePanel = new JPanel();
+    //a border around the panel with a caption
+    imagePanel.setBorder(BorderFactory.createTitledBorder("Showing an image"));
+    imagePanel.setLayout(new GridLayout(1, 0, 10, 10));
+    //imagePanel.setMaximumSize(null);
+    mainPanel.add(imagePanel);
+    String[] images = {"Jellyfish.jpg", "Koala.jpg", "Penguins.jpg"};
+    JLabel[] imageLabel = new JLabel[images.length + 1];
+    JScrollPane[] imageScrollPane = new JScrollPane[images.length + 1];
+    for (int i = 0; i < imageLabel.length; i++) {
+      imageLabel[i] = new JLabel();
+      imageScrollPane[i] = new JScrollPane(imageLabel[i]);
+      if (i < images.length) {
+        imageLabel[i].setIcon(new ImageIcon(images[i]));
+      } else {
+        imageLabel[i].setIcon(new ImageIcon(createImageFromScratch()));
+      }
+      imageScrollPane[i].setPreferredSize(new Dimension(100, 600));
+      imagePanel.add(imageScrollPane[i]);
+    }
+    //Selection lists
+    JPanel selectionListPanel = new JPanel();
+    selectionListPanel.setBorder(BorderFactory.createTitledBorder("Selection lists"));
+    selectionListPanel.setLayout(new BoxLayout(selectionListPanel, BoxLayout.X_AXIS));
+    mainPanel.add(selectionListPanel);
+    DefaultListModel<String> dataForListOfStrings = new DefaultListModel<>();
+    dataForListOfStrings.addElement("Apple");
+    dataForListOfStrings.addElement("Bear");
+    dataForListOfStrings.addElement("Cave");
+    dataForListOfStrings.addElement("Decorate");
+    dataForListOfStrings.addElement("Exciting");
+    dataForListOfStrings.addElement("Flicker");
+    listOfStrings = new JList<>(dataForListOfStrings);
+    listOfStrings.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    listOfStrings.addListSelectionListener(this);
+    selectionListPanel.add(listOfStrings);
+    DefaultListModel<Integer> dataForListOfIntegers = new DefaultListModel<>();
+    for (int i = 0; i < 1000; i++)
+      dataForListOfIntegers.addElement(i);
+    listOfIntegers = new JList<>(dataForListOfIntegers);
+    listOfIntegers.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    listOfIntegers.addListSelectionListener(this);
+    selectionListPanel.add(new JScrollPane(listOfIntegers));
+    //dialog boxes
+    JPanel dialogBoxesPanel = new JPanel();
+    dialogBoxesPanel.setBorder(BorderFactory.createTitledBorder("Dialog boxes"));
+    dialogBoxesPanel.setLayout(new BoxLayout(dialogBoxesPanel, BoxLayout.PAGE_AXIS));
+    mainPanel.add(dialogBoxesPanel);
+    //color chooser
+    JPanel colorChooserPanel = new JPanel();
+    colorChooserPanel.setLayout(new FlowLayout());
+    dialogBoxesPanel.add(colorChooserPanel);
+    JButton colorChooserButton = new JButton("Choose a color");
+    colorChooserButton.setActionCommand("Color chooser");
+    colorChooserButton.addActionListener(this);
+    colorChooserPanel.add(colorChooserButton);
+    colorChooserDisplay = new JLabel("      ");
+    colorChooserDisplay.setOpaque(true); //so that background color shows up
+    colorChooserDisplay.setBackground(Color.WHITE);
+    colorChooserPanel.add(colorChooserDisplay);
+    //file open
+    JPanel fileopenPanel = new JPanel();
+    fileopenPanel.setLayout(new FlowLayout());
+    dialogBoxesPanel.add(fileopenPanel);
+    JButton fileOpenButton = new JButton("Open a file");
+    fileOpenButton.setActionCommand("Open file");
+    fileOpenButton.addActionListener(this);
+    fileopenPanel.add(fileOpenButton);
+    fileOpenDisplay = new JLabel("File path will appear here");
+    fileopenPanel.add(fileOpenDisplay);
+    //file save
+    JPanel filesavePanel = new JPanel();
+    filesavePanel.setLayout(new FlowLayout());
+    dialogBoxesPanel.add(filesavePanel);
+    JButton fileSaveButton = new JButton("Save a file");
+    fileSaveButton.setActionCommand("Save file");
+    fileSaveButton.addActionListener(this);
+    filesavePanel.add(fileSaveButton);
+    fileSaveDisplay = new JLabel("File path will appear here");
+    filesavePanel.add(fileSaveDisplay);
+    //JOptionsPane message dialog
+    JPanel messageDialogPanel = new JPanel();
+    messageDialogPanel.setLayout(new FlowLayout());
+    dialogBoxesPanel.add(messageDialogPanel);
+    JButton messageButton = new JButton("Click for a message");
+    messageButton.setActionCommand("Message");
+    messageButton.addActionListener(this);
+    messageDialogPanel.add(messageButton);
+    //JOptionsPane input dialog
+    JPanel inputDialogPanel = new JPanel();
+    inputDialogPanel.setLayout(new FlowLayout());
+    dialogBoxesPanel.add(inputDialogPanel);
+    JButton inputButton = new JButton("Click to enter username");
+    inputButton.setActionCommand("Input");
+    inputButton.addActionListener(this);
+    inputDialogPanel.add(inputButton);
+    inputDisplay = new JLabel("Default");
+    inputDialogPanel.add(inputDisplay);
+    //JOptionsPane options dialog
+    JPanel optionsDialogPanel = new JPanel();
+    optionsDialogPanel.setLayout(new FlowLayout());
+    dialogBoxesPanel.add(optionsDialogPanel);
+    JButton optionButton = new JButton("Click to enter options");
+    optionButton.setActionCommand("Option");
+    optionButton.addActionListener(this);
+    optionsDialogPanel.add(optionButton);
+    optionDisplay = new JLabel("Default");
+    optionsDialogPanel.add(optionDisplay);
   }
 
 
   /**
    * Method actionPerformed.
+   *
    * @param arg0 the event to be processed
    */
   @Override
@@ -336,7 +312,7 @@ public class SwingFeaturesFrame extends JFrame implements ActionListener, ItemLi
       case "Size options":
         if (arg0.getSource() instanceof JComboBox) {
           JComboBox<String> box = (JComboBox<String>) arg0.getSource();
-          comboboxDisplay.setText("You selected: " + (String) box.getSelectedItem());
+          comboboxDisplay.setText("You selected: " + box.getSelectedItem());
 
 
         }
@@ -386,6 +362,7 @@ public class SwingFeaturesFrame extends JFrame implements ActionListener, ItemLi
 
   /**
    * Method itemStateChanged.
+   *
    * @param arg0 the event to be processed
    */
   @Override
@@ -449,14 +426,15 @@ public class SwingFeaturesFrame extends JFrame implements ActionListener, ItemLi
 
   /**
    * Method createImageFromScratch, Creates the image using ARGB values.
+   *
    * @return image
    */
   private java.awt.Image createImageFromScratch() {
     BufferedImage image = new BufferedImage(300, 400, BufferedImage.TYPE_INT_ARGB);
 
     //Iterating so x moves to the right and y moves down
-    for(int x = 0; x < image.getWidth(); x++) {
-      for(int y = 0; y < image.getHeight(); y++) {
+    for (int x = 0; x < image.getWidth(); x++) {
+      for (int y = 0; y < image.getHeight(); y++) {
         // Making every pixel the color chosen by Section 2 of CS3500
         // in Spring 2023
         int r = 99;
@@ -466,10 +444,10 @@ public class SwingFeaturesFrame extends JFrame implements ActionListener, ItemLi
         //Demonstrating we can change the alpha of individual pixels
         //and they will appear diffrently on the label
         int a = 255;
-        if(y * image.getWidth() + x >= 35000) {
+        if (y * image.getWidth() + x >= 35000) {
           a = 100;
         }
-        if (y * image.getWidth() +x >= 90000) {
+        if (y * image.getWidth() + x >= 90000) {
           a = 0;
         }
         if (y * image.getWidth() + x >= 110000) {
@@ -496,9 +474,9 @@ public class SwingFeaturesFrame extends JFrame implements ActionListener, ItemLi
   }
 
 
-
   /**
    * Method valueChanged.
+   *
    * @param e the event that characterizes the change.
    */
   @Override

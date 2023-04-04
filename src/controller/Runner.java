@@ -22,12 +22,11 @@ public class Runner {
     String command;
     ImageController imgCtr = new ImageController();
     Scanner scan = null;
-    if(args.length == 0) {
+    if (args.length == 0) {
       /// run a GUI
       CollagingView view = new JFrameView();
       return;
-    }
-    else if(args.length == 1 && args[0].equals("-text")) {
+    } else if (args.length == 1 && args[0].equals("-text")) {
       // interactive mode
       scan = new Scanner(System.in);
 
@@ -35,7 +34,7 @@ public class Runner {
       // run in file modes
       scan = new Scanner(new File(args[1]));
     }
-    if(scan != null) {
+    if (scan != null) {
       while (scan.hasNextLine()) {
         command = scan.nextLine();
         imgCtr.readCommand(command);

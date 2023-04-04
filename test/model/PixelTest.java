@@ -101,7 +101,7 @@ public class PixelTest {
   }
 
   /**
-   * Tester for getAlpha.
+   * Tester for getAlpha method.
    */
   @Test
   public void testGetAlpha() {
