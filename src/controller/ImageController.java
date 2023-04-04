@@ -42,7 +42,7 @@ public class ImageController implements ControllerInterface {
   }
 
   /**
-   * Load a image from a file
+   * Load a image from a file.
    *
    * @param file      equals selected file
    * @param layerName equals given title for layer

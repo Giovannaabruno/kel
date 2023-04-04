@@ -81,13 +81,8 @@ public class Pixel implements PixelInterface {
 
   ///NEW
   /**
-   * Converts an RGB representation in the range 0-1 into an HSL
-   * representation where
-   * <ul>
-   * <li> 0 &lt;= H &lt; 360</li>
-   * <li> 0 &lt;= S &lt;= 1</li>
-   * <li> 0 &lt;= L &lt;= 1</li>
-   * </ul>
+   *  Converts an RGB representation in the range 0-1 into an HSL
+   *   representation where
    */
   private void convertRGBtoHSL() {
     int r = red;
@@ -99,7 +94,8 @@ public class Pixel implements PixelInterface {
     double delta = componentMax - componentMin;
 
     double lightness = (componentMax + componentMin) / 2;
-    double hue, saturation;
+    double hue;
+    double saturation;
     if (delta == 0) {
       hue = 0;
       saturation = 0;
@@ -123,20 +119,15 @@ public class Pixel implements PixelInterface {
     this.hue = hue;
     this.saturation = saturation / 256;
     this.lightness = lightness / 256; //EXPERIMENTAL- forces lightness to be 0 < L < 1
-    //System.out.println("RGB (" + r + "," + g + "," + b +") to HSL => (" + hue + "," + saturation + "," + lightness + ")");
+    // System.out.println("RGB (" + r + "," + g + "," + b +") to HSL => (" + hue +
+    // "," + saturation + "," + lightness + ")");
   }
 
   ///NEW
-  /**
-   * Convers an HSL representation where
-   * <ul>
-   * <li> 0 &lt;= H &lt; 360</li>
-   * <li> 0 &lt;= S &lt;= 1</li>
-   * <li> 0 &lt;= L &lt;= 1</li>
-   * </ul>
-   * into an RGB representation where each component is in the range 0-1
-   */
 
+  /**
+   * Convers an HSL representation where.
+   */
   private void convertHSLtoRGB() {
     double r = convertFn(hue, saturation, lightness, 0) * 255;
     double g = convertFn(hue, saturation, lightness, 8) * 255;
@@ -147,7 +138,8 @@ public class Pixel implements PixelInterface {
     this.red = (int) (r * 256);
     this.green = (int) (g * 256);
     this.blue = (int) (b * 256);
-    //System.out.println("HSL (" + hue + "," + saturation + "," + lightness +") to RGB => (" + r + "," + g + "," + b + ")");
+    //System.out.println("HSL (" + hue + "," + saturation + ",
+    // " + lightness +") to RGB => (" + r + "," + g + "," + b + ")");
   }
 
 

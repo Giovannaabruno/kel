@@ -1,6 +1,5 @@
 package view;
 
-import org.junit.Test;
 
 /**
  * Tester for CommandPanel class.
@@ -13,13 +12,12 @@ public class CommandPanelTest {
   //    throw new IllegalStateException("Something went wrong.");
   //  }
   // are we suposed to test the
-
-  /**
-   * Tester for getComboBoxChoice method. NEEDS TO BE FINISHED
-   */
-  @Test
-  public void getComboBoxChoice() {
-    CommandPanel panel = new CommandPanel();
-
-  }
+  //  /**
+  //   * Tester for getComboBoxChoice method. NEEDS TO BE FINISHED
+  //   */
+  //  @Test
+  //  public void getComboBoxChoice() {
+  //    CommandPanel panel = new CommandPanel();
+  //
+  // /  }
 }

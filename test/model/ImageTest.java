@@ -2,7 +2,9 @@ package model;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotEquals;
+import static org.testng.AssertJUnit.assertEquals;
+
 
 /**
  * Tester class that represents ImageTest.

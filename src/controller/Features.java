@@ -2,6 +2,9 @@ package controller;
 
 import model.Layer;
 
+/**
+ * Interface for Features.
+ */
 public interface Features {
   /**
    * Method loadProject, loads a project into the program.
@@ -72,4 +75,3 @@ public interface Features {
    */
   void saveImage (String fileName);
 }
-

@@ -58,7 +58,7 @@ public interface ProjectInterface {
 
 
   /**
-   * Combines all layers
+   * Combines all layers.
    *
    * @return combination of multiple layers
    */

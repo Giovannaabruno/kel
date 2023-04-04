@@ -8,7 +8,10 @@ import controller.ImageController;
 import model.Layer;
 import model.Pixel;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotEquals;
+import static org.testng.AssertJUnit.assertEquals;
+import static org.testng.AssertJUnit.assertNotNull;
+
 
 /**
  * Testers for JFrameView class.
@@ -47,12 +50,11 @@ public class JFrameViewTest {
     assertEquals(topLeftRGB,  argb);
     assertNotEquals(topLeftRGB, 0);
   }
+  //  /**
+  //   * Tester for renderMessage method.
+  //   */
+  //  @Test
+  //  public void renderMessage() {
 
-  /**
-   * Tester for renderMessage method.
-   */
-  @Test
-  public void renderMessage() {
-
-  }
+  //}
 }

@@ -15,7 +15,6 @@ import javax.swing.border.TitledBorder;
  * Class representing a panel which holds an image in a scroll pane.
  */
 public class ImagePanel extends JPanel {
-  private final JLabel imageLabel;
   private BufferedImage img;
   
   /**
@@ -26,7 +25,7 @@ public class ImagePanel extends JPanel {
     this.setBorder(new TitledBorder("Current Image"));
     this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
     this.img = img;
-    this.imageLabel  = new JLabel();
+    JLabel imageLabel = new JLabel();
     setPreferredSize(new Dimension(600, 800));
   }
 

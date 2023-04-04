@@ -1,7 +1,7 @@
 package model;
 
 /**
- * Interface for the ImageInterface
+ * Interface for the ImageInterface.
  */
 public interface ImageInterface {
   /**

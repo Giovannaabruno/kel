@@ -2,16 +2,10 @@ package model;
 // need to have atleast 1 layer
 
 
+
+
 /**
  * Class for Layer which implements LayerInterface.
- * <p>
- * NOTES: the project will work with the blending method like this:
- * if(layers.get(i).isBlending()) {
- * layers.get(i).filter(layers.get(i-1));   <- this shows that filtering this layer requires
- * passing the layer beneath it as an argument
- * } else {
- * lyaers.get(i).filter();   <- if the layer is not blending, it needs no arguments
- * }
  */
 public class Layer implements LayerInterface<Pixel> {
   private int height;
@@ -146,6 +140,7 @@ public class Layer implements LayerInterface<Pixel> {
       case "brightenBlending":
         this.filter = filter;
         blending = true;
+        break;
       default:
         System.out.println("Invalid filter");
 

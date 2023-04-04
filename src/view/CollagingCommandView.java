@@ -36,7 +36,7 @@ public class CollagingCommandView implements CollagingView {
   }
 
   /**
-   * Method getAppendable, represents the appendable.
+   * Method getAppendable, represents the convertRGBtoHSLappendable.
    *
    * @return object appendable
    */

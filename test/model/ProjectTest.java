@@ -59,12 +59,12 @@ public class ProjectTest {
   @Test
   public void testGetNumberLayers() {
     Project image = new Project(800, 600);
-    image.addLayer(new Layer(800,600, "layer1"));
-    image.addLayer(new Layer(800,600, "layer2"));
-    image.addLayer(new Layer(800,600, "layer3"));
+    image.addLayer(new Layer(800, 600, "layer1"));
+    image.addLayer(new Layer(800, 600, "layer2"));
+    image.addLayer(new Layer(800, 600, "layer3"));
     int num = image.getNumberLayers();
-    assertEquals(4,num);
-    assertNotEquals(5,num);
+    assertEquals(4, num);
+    assertNotEquals(5, num);
   }
 
   /**
@@ -107,11 +107,11 @@ public class ProjectTest {
   @Test
   public void combineAllLayers() {
     Project image = new Project(800, 600);
-    image.addLayer(new Layer(800,600, "layer1"));
-    image.addLayer(new Layer(800,600, "layer2"));
+    image.addLayer(new Layer(800, 600, "layer1"));
+    image.addLayer(new Layer(800, 600, "layer2"));
     Layer layer = image.combineAllLayers();
-    System.out.println(layer.getPixelAt(0,0).getRed());
-    assertTrue(layer.getPixelAt (0,0).equals(new Pixel(255,255,255)));
+    System.out.println(layer.getPixelAt(0, 0).getRed());
+    assertTrue(layer.getPixelAt(0, 0).equals(new Pixel(255, 255, 255)));
 
 
   }
@@ -241,7 +241,7 @@ public class ProjectTest {
     Layer l = image.getLayer(0);
     l.setPixelAt(0, 0, new Pixel(255, 255, 255));
     Pixel oldPixel = l.getPixelAt(0, 0).clone();
-    l.setFilter("red-component",30);
+    l.setFilter("red-component", 30);
     Pixel[][] grid = l.getFilteredGrid();
     assertEquals(grid[0][0].getRed(), oldPixel.getRed());
     assertEquals(grid[0][0].getGreen(), 0);
@@ -282,7 +282,7 @@ public class ProjectTest {
     Layer l = image.getLayer(0);
     l.setPixelAt(0, 0, new Pixel(255, 255, 255));
     Pixel oldPixel = l.getPixelAt(0, 0).clone();
-    l.setFilter("blue-component",30);
+    l.setFilter("blue-component", 30);
     Pixel[][] grid = l.getFilteredGrid();
     assertEquals(grid[0][0].getRed(), 0);
     assertEquals(grid[0][0].getGreen(), 0);

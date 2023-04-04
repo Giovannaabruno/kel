@@ -190,7 +190,8 @@ public class LayerTest {
   /**
    * Tester for isBlending method.
    */
-  public void isBlending() {
+  @Test
+  public void testisBlending() {
     Layer ll = new Layer(800, 600, "image/tako.pmm");
     ll.setFilter("brightenBlending", 10);
     assertTrue(ll.isBlending());
@@ -199,10 +200,11 @@ public class LayerTest {
   /**
    * Tester that test FilteredGrid method. PART combineAllLayers2.
    */
+  @Test
   public void GetFilteredGrid() {
     Layer ll = new Layer(800, 600, "image/tako.pmm");
     int amount = 30;
-    ll.setFilter("darkenBlending", amount);
+    ll.setFilter("inversionBlending", amount);
     Pixel[][] grid = ll.getFilteredGrid();
     assertEquals(grid[0][0],
             new Pixel(255, 0, 0, 255));
