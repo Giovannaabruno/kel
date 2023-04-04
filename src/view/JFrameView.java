@@ -133,6 +133,7 @@ public class JFrameView extends JFrame implements CollagingView {
                 imagePanel = new ImagePanel(img);
                 imageWindow.add(imagePanel);
                 imageWindow.setVisible(true);
+                imageWindow.setSize(600,600);
                 imageWindow.setTitle(selectedFile.getName());
               }
             } else {
