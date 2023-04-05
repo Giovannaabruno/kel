@@ -37,6 +37,7 @@ public class JFrameViewTest {
   public void testPpmImageToBufferedImage() {
     JFrameView view = new JFrameView();
     ImageController ic = new ImageController();
+    ic.newProject(800,600);
     Layer layer = ic.loadImage("images/tako.ppm", "tako");
     BufferedImage img = view.ppmImageToBufferedImage(layer);
     int topLeftRGB = img.getRGB(0, 0);

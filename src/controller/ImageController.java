@@ -130,7 +130,7 @@ public class ImageController implements ControllerInterface {
    *
    * @param width  of the canvas
    * @param height of the canvas
-   * @return
+   * @return image
    */
   public Project newProject(int height, int width) {
     this.img = new Project(height, width);
@@ -353,11 +353,11 @@ public class ImageController implements ControllerInterface {
    */
   public void setFilter(String layerName, String filerOption, String otherLayerName) {
     Layer otherLayer = null;
-    if(otherLayerName != null) {
+    if (otherLayerName != null) {
       otherLayer = getProject().getLayer(otherLayerName);
     }
     Layer l = this.img.getLayer(layerName);
-    int amount = 200;
+    int amount = 60;
     switch (filerOption) {
       case "red-component":
         l.setFilter("red-component", amount);
@@ -376,7 +376,7 @@ public class ImageController implements ControllerInterface {
         l.applyFilter(null);
         break;
       case "brighten-intensity":
-        l.setFilter("brighten", amount);
+        l.setFilter("brighten-intensity", amount);
         l.applyFilter(null);
         break;
       case "brighten-luma":
@@ -388,7 +388,7 @@ public class ImageController implements ControllerInterface {
         l.applyFilter(null);
         break;
       case "darken-intensity":
-        l.setFilter("darken", amount);
+        l.setFilter("darken-intensity", amount);
         l.applyFilter(null);
         break;
       case "darken-luma":
@@ -510,7 +510,7 @@ public class ImageController implements ControllerInterface {
       case "set-filter":
         String layer = words[1];
         String filterOption = words[2];
-        if(filterOption.equals("darkenBlending") || filterOption.equals("inversionBlending") ||
+        if (filterOption.equals("darkenBlending") || filterOption.equals("inversionBlending") ||
                 filterOption.equals("brightenBlending")) {
           String otherLayerName = words[3];
           setFilter(layer, filterOption, otherLayerName);

@@ -11,6 +11,10 @@ import model.Layer;
  */
 public interface JFrameViewInterface {
 
+  /**
+   * Method actionPerformed, creates the action sequences.
+   * @param e the event to be processed
+   */
   void actionPerformed(ActionEvent e);
 
 

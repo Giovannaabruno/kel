@@ -72,8 +72,8 @@ public class JFrameView extends JFrame implements CollagingView {
 
     ImageController ic = new ImageController();
 
-
-    JPanel commandPanel = new CommandPanel(ic);
+    DefaultListModel<String> listModel = new DefaultListModel<>();
+    JPanel commandPanel = new CommandPanel(ic, listModel);
     bottomPanel.add(commandPanel);
 
     JButton newProjectButton = new JButton("New Project");
@@ -129,8 +129,8 @@ public class JFrameView extends JFrame implements CollagingView {
               if (getExtension(selectedFile.getName()).equals("ppm")) {
                 // load ppm
                 layer = ic.loadImage(selectedFile, selectedFile.getName());
+                listModel.addElement(selectedFile.getName());
                 System.out.println("Loading layer " + selectedFile.getName());
-                currentProject.addLayer(layer);
                 System.out.println("Loading ppm");
                 img = ppmImageToBufferedImage(layer);
               } else {
@@ -157,7 +157,6 @@ public class JFrameView extends JFrame implements CollagingView {
     });
 
     if (currentProject != null) {
-      DefaultListModel<String> listModel = new DefaultListModel<>();
       for (int l = 0; l < currentProject.getNumberLayers(); l++) {
         listModel.addElement(currentProject.getLayer(l).getName());
       }

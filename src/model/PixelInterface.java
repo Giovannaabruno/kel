@@ -10,8 +10,6 @@ public interface PixelInterface {
   ///NEW
 
 
-
-
   ///NEW
 
 
@@ -137,6 +135,13 @@ public interface PixelInterface {
    * @return RGBA values
    */
   Pixel clone();
+
+  /**
+   * Method toString, represents an objects structure.
+   *
+   * @return string representation of an object
+   */
+  String toString();
 
 
 }

@@ -69,12 +69,6 @@ public interface LayerInterface<T> {
    */
   String getFilter();
 
-  /**
-   * SetFilter, used for blending filters, where amount doesn't matter.
-   *
-   * @param filter filter type being used.
-   */
-  void setFilter(String filter);
   //  /**
   //   * Setter method setFilter, sets the type of filter on the image.
   //   *
@@ -83,6 +77,13 @@ public interface LayerInterface<T> {
   //  public void setFilter(String filter) {
   //    this.filter = filter;
   //  }
+
+  /**
+   * Method applyFilter, allows the users to apply the selscted filter to the layer.
+   *
+   * @param other layers
+   */
+  void applyFilter(Layer other);
 
   /**
    * NEW: INCOMPLETE (MAKE A TESTER FOR THIS).

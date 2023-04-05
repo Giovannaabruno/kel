@@ -38,6 +38,7 @@ public class ImageControllerTest {
   @Test
   public void testLoadImageValidFormatHeight() {
     ImageController imgCtr = new ImageController();
+    imgCtr.newProject(800,600);
     Layer l1 = imgCtr.loadImage("images/tako.ppm", "dark");
     assertEquals(800, l1.getHeight());
   }
@@ -48,6 +49,7 @@ public class ImageControllerTest {
   @Test
   public void testLoadImageValidFormatWidth() {
     ImageController imgCtr = new ImageController();
+    imgCtr.newProject(800,600);
     Layer l1 = imgCtr.loadImage("images/tako.ppm", "dark");
     assertEquals(600, l1.getWidth());
   }

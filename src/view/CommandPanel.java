@@ -4,7 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.DefaultListModel;
+import javax.swing.BorderFactory;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+
 
 import controller.ImageController;
 
@@ -14,68 +19,124 @@ import controller.ImageController;
 public class CommandPanel extends JPanel {
 
   private ImageController ic;
-
-
-  protected void executeCommand(String command) {
-    switch (command) {
-      case "None":
-        break;
-      case "New Project":
-        ic.newProject(800,600);
-        break;
-      case "Add Layer":
-        String layerName = JOptionPane.showInputDialog(this, "Enter layer name.");
-        ic.addLayer(layerName);
-        break;
-      case "Set Filter":
-        layerName = JOptionPane.showInputDialog(this, "Enter layer name");
-        String filterOption = JOptionPane.showInputDialog(this, "Enter filter option");
-        if(filterOption.equals("darkenBlending") || filterOption.equals("inversionBlending") ||
-                filterOption.equals("brightenBlending")) {
-            String otherName = JOptionPane.showInputDialog(this, "Enter other layer");
-            ic.setFilter(layerName, filterOption, otherName);
-        }
-        else {
-          ic.setFilter(layerName, filterOption, null);
-        }
-
-        break;
-      case "Add Image to Layer":
-        layerName = JOptionPane.showInputDialog(this, "Enter layer name");
-        String imageName = JOptionPane.showInputDialog(this, "Enter image name");
-        int xPos = Integer.parseInt(JOptionPane.showInputDialog(this, "Enter x Position"));
-        int yPos = Integer.parseInt(JOptionPane.showInputDialog(this, "Enter y Position"));
-        ic.addImageToLayer(layerName,imageName, xPos, yPos);
-        break;
-      case "Save Image":
-        filterOption = JOptionPane.showInputDialog(this, "Enter filter name");
-        ic.saveImage(filterOption);
-        break;
-      case "Save Project":
-        String fileName = JOptionPane.showInputDialog(this, "Enter file name");
-        ic.saveProject(fileName);
-        break;
-      default:
-        System.out.println("imcorrect command");
-    }
-  }
+  private DefaultListModel<String> listModel;
 
   /**
    * Constructor for the CommandPanel class.
    */
-  public CommandPanel(ImageController ic) {
+  public CommandPanel(ImageController ic, DefaultListModel<String> listModel) {
     super();
     this.ic = ic;
+
+    this.listModel = listModel;
     this.setBorder(BorderFactory.createTitledBorder("Commands:"));
     String[] options = {"None", "New Project", "Add Layer",
-            "Set Filter", "Add Image to Layer", "Save Image",
-            "Save Project"};
+                        "Set Filter", "Add Image to Layer", "Save Image",
+                        "Save Project"};
     JComboBox<String> comboBox = new JComboBox<>();
     for (String option : options) {
       comboBox.addItem(option);
     }
     comboBox.addItemListener(new ItemChangeListener());
     this.add(comboBox);
+  }
+
+  protected void executeCommand(String command) {
+    String layerName;
+    switch (command) {
+      case "None":
+        break;
+      case "New Project":
+        try {
+          ic.newProject(800, 600);
+          JOptionPane.showMessageDialog(this,
+                  "Successfully created new project");
+        } catch (Exception e) {
+          JOptionPane.showMessageDialog(this,
+                  "Failed creating new project");
+        }
+
+        break;
+      case "Add Layer":
+        try {
+          layerName = JOptionPane.showInputDialog(this,
+                  "Enter layer name.");
+          ic.addLayer(layerName);
+          JOptionPane.showMessageDialog(this,
+                  "Successfully added a layer.");
+          listModel.addElement(layerName);
+        } catch (Exception e) {
+          JOptionPane.showMessageDialog(this,
+                  "Failed adding new layer");
+        }
+        break;
+      case "Set Filter":
+        try {
+          layerName = JOptionPane.showInputDialog(this, "Enter layer name");
+          String filterOption = JOptionPane.showInputDialog(this,
+                  "Enter filter option");
+          if (filterOption.equals("darkenBlending") || filterOption.equals("inversionBlending") ||
+                  filterOption.equals("brightenBlending")) {
+            String otherName = JOptionPane.showInputDialog(this,
+                    "Enter other layer");
+            ic.setFilter(layerName, filterOption, otherName);
+          } else {
+            ic.setFilter(layerName, filterOption, null);
+          }
+          JOptionPane.showMessageDialog(this,
+                  "Successfully set filter");
+        } catch (Exception e) {
+          JOptionPane.showMessageDialog(this,
+                  "Failed setting filter");
+        }
+
+        break;
+      case "Add Image to Layer":
+        try {
+
+          layerName = JOptionPane.showInputDialog(this, "Enter layer name");
+          String imageName = JOptionPane.showInputDialog(this,
+                  "Enter image name");
+          int xPos = Integer.parseInt(JOptionPane.showInputDialog(this,
+                  "Enter x Position"));
+          int yPos = Integer.parseInt(JOptionPane.showInputDialog(this,
+                  "Enter y Position"));
+          ic.addImageToLayer(layerName, imageName, xPos, yPos);
+          JOptionPane.showMessageDialog(this,
+                  "Successfully added image to layer.");
+        } catch (Exception e) {
+          JOptionPane.showMessageDialog(this,
+                  "Failed adding image to layer.");
+        }
+        break;
+      case "Save Image":
+        try {
+          String filterOption = JOptionPane.showInputDialog(this,
+                  "Enter filter name.");
+          ic.saveImage(filterOption);
+          JOptionPane.showMessageDialog(this,
+                  "Successfully saved image.");
+        } catch (Exception e) {
+          JOptionPane.showMessageDialog(this,
+                  "Failed to save image.");
+        }
+        break;
+      case "Save Project":
+        try {
+          String fileName = JOptionPane.showInputDialog(this,
+                  "Enter file name");
+          ic.saveProject(fileName);
+          JOptionPane.showMessageDialog(this,
+                  "Successfully saved project");
+        } catch (Exception e) {
+          JOptionPane.showMessageDialog(this,
+                  "Failed to save Project.");
+        }
+
+        break;
+      default:
+        System.out.println("incorrect command");
+    }
   }
 
   /**

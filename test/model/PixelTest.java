@@ -354,4 +354,21 @@ public class PixelTest {
   }
 
 
+  /**
+   * Tester for toString.
+   */
+  @Test
+  public void testToString() {
+    Pixel pixel = new Pixel(255,255,255);
+    assertEquals(pixel.toString(), "(" + 255 + ", " + 255 + ", " + 255 + ")");
+    assertNotEquals(pixel.toString(), "(" + 100 + ", " + 255 + ", " + 255 + ")");
+    Pixel pixel2 = new Pixel(0,0,0);
+    assertEquals(pixel2.toString(), "(" + 0 + ", " + 0 + ", " + 0 + ")");
+    assertNotEquals(pixel2.toString(), "(" + 100 + ", " + 50 + ", " + 25 + ")");
+    Pixel pixel3 = new Pixel(50,100,20);
+    assertEquals(pixel3.toString(), "(" + 50 + ", " + 100 + ", " + 20 + ")");
+    assertNotEquals(pixel3.toString(), "(" + 100 + ", " + 50 + ", " + 25 + ")");
+  }
+
+
 }

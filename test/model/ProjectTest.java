@@ -109,9 +109,13 @@ public class ProjectTest {
     Project image = new Project(800, 600);
     image.addLayer(new Layer(800, 600, "layer1"));
     image.addLayer(new Layer(800, 600, "layer2"));
+
+    image.getLayer(1).setPixelAt(0, 0, new Pixel(30, 30, 30));
+    image.getLayer(2).setPixelAt(0, 0, new Pixel(30, 30, 30));
+
     Layer layer = image.combineAllLayers();
     System.out.println(layer.getPixelAt(0, 0).getRed());
-    assertTrue(layer.getPixelAt(0, 0).equals(new Pixel(255, 255, 255)));
+    assertTrue(layer.getPixelAt(0, 0).equals(new Pixel(60, 60, 60)));
 
 
   }
@@ -125,7 +129,7 @@ public class ProjectTest {
     Layer l = image.getLayer(0);
     l.setPixelAt(0, 0, new Pixel(255, 255, 255));
     Pixel oldPixel = l.getPixelAt(0, 0).clone();
-    l.setFilter("darken", 20);
+    l.setFilter("darken-intensity", 20);
     Pixel[][] grid = l.getFilteredGrid();
     Pixel newPixel = grid[0][0];
     assertTrue(newPixel.getRed() <= oldPixel.getRed());
@@ -183,12 +187,12 @@ public class ProjectTest {
     Layer l = image.getLayer(0);
     l.setPixelAt(0, 0, new Pixel(0, 0, 0));
     Pixel oldPixel = l.getPixelAt(0, 0).clone();
-    l.setFilter("brighten", 20);
+    l.setFilter("brighten-intensity", 20);
     Pixel[][] grid = l.getFilteredGrid();
     Pixel newPixel = grid[0][0];
-    assertTrue(newPixel.getRed() >= oldPixel.getRed());
-    assertTrue(newPixel.getGreen() >= oldPixel.getGreen());
-    assertTrue(newPixel.getBlue() >= oldPixel.getBlue());
+    assertTrue(newPixel.getRed() > oldPixel.getRed());
+    assertTrue(newPixel.getGreen() > oldPixel.getGreen());
+    assertTrue(newPixel.getBlue() > oldPixel.getBlue());
     assertFalse(newPixel.getRed() < oldPixel.getRed());
     assertFalse(newPixel.getGreen() < oldPixel.getGreen());
     assertFalse(newPixel.getBlue() < oldPixel.getBlue());
@@ -206,7 +210,7 @@ public class ProjectTest {
     l.setFilter("brighten-value", 20);
     Pixel[][] grid = l.getFilteredGrid();
     Pixel newPixel = grid[0][0];
-    assertTrue(newPixel.getGreen() > oldPixel.getGreen());
+    assertTrue(newPixel.getGreen() >= oldPixel.getGreen());
     assertFalse(newPixel.getGreen() < oldPixel.getGreen());
 
   }

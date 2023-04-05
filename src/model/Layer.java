@@ -1,9 +1,6 @@
 package model;
 // need to have atleast 1 layer
 
-
-
-
 /**
  * Class for Layer which implements LayerInterface.
  */
@@ -121,16 +118,17 @@ public class Layer implements LayerInterface<Pixel> {
   public void setFilter(String filter, int amount) {
     //ideally, this should check whether filter is a valid choice
     //and throw an error if it's not
+    this.amount = amount;
     this.filter = filter;
     switch (filter) {
       case "red-component":
       case "green-component":
       case "blue-component":
       case "brighten-value":
-      case "brighten":
+      case "brighten-intensity":
       case "brighten-luma":
       case "darken-value":
-      case "darken":
+      case "darken-intensity":
       case "darken-luma":
         this.filter = filter;
         blending = false;
@@ -147,9 +145,12 @@ public class Layer implements LayerInterface<Pixel> {
     }
   }
 
+  /**
+   * Method applyFilter, allows the users to apply the selscted filter to the layer.
+   * @param other layers
+   */
   public void applyFilter(Layer other) {
-    this.amount = amount;
-    if(this.filter.equals("darkenBlending") ||this.filter.equals("inversionBlending") ||
+    if (this.filter.equals("darkenBlending") || this.filter.equals("inversionBlending") ||
             this.filter.equals("brightenBlending")) {
       this.grid = getFilteredGrid(other);
     }
@@ -169,18 +170,14 @@ public class Layer implements LayerInterface<Pixel> {
     return this.filter;
   }
 
-  /**
-   * SetFilter, used for blending filters, where amount doesn't matter.
-   *
-   * @param filter filter type being used.
-   */
-  public void setFilter(String filter) {
-    setFilter(filter, 0);
-  }
+  //  public void setFilter(String filter) {
+  //    setFilter(filter, 0);
+  //  }
   //  /**
   //   * Setter method setFilter, sets the type of filter on the image.
-  //   *
-  //   * @param filter filter type
+  //
+  //  *
+  //   * @param
   //   */
   //  public void setFilter(String filter) {
   //    this.filter = filter;
@@ -225,14 +222,14 @@ public class Layer implements LayerInterface<Pixel> {
       // brighten intensity or brighten luma
       case "brighten-value":
         return brightenValue();
-      case "brighten":
+      case "brighten-intensity":
         return brighten();
       case "brighten-luma":
         return brightenLuma();
       //darken
       case "darken-value":
         return darkenValue();
-      case "darken":
+      case "darken-intensity":
         return darken();
       case "darken-luma":
         return darkenLuma();
@@ -258,6 +255,9 @@ public class Layer implements LayerInterface<Pixel> {
     return blending;
   }
 
+
+
+
   /**
    * Method darken, removes the brightness value
    * pixel by pixel according to value from the corresponding pixel
@@ -278,7 +278,7 @@ public class Layer implements LayerInterface<Pixel> {
         int resultGreen = Math.max(0, green - this.amount);
         int resultBlue = Math.max(0, blue - this.amount);
 
-        result[row][colum] = new Pixel(resultRed, resultBlue, resultGreen);
+        result[row][colum] = new Pixel(resultRed, resultGreen, resultBlue);
         //assume full opaqueness/full alpha
       }
     }
@@ -309,7 +309,7 @@ public class Layer implements LayerInterface<Pixel> {
         } else if (blue >= green && red >= red) {
           blue -= amount;
         }
-        result[row][colum] = new Pixel(red, blue, green);
+        result[row][colum] = new Pixel(red, green, blue);
         //assume full opaqueness/full alpha
       }
     }
@@ -337,7 +337,7 @@ public class Layer implements LayerInterface<Pixel> {
         int resultGreen = Math.max(0, green - amount);
         int resultBlue = Math.max(0, blue - amount);
 
-        result[row][colum] = new Pixel(resultRed, resultBlue, resultGreen);
+        result[row][colum] = new Pixel(resultRed, resultGreen, resultBlue);
         //assume full opaqueness/full alpha
       }
     }
@@ -366,7 +366,7 @@ public class Layer implements LayerInterface<Pixel> {
         int resultGreen = Math.min(255, green + amount);
         int resultBlue = Math.min(255, blue + amount);
 
-        result[row][colum] = new Pixel(resultRed, resultBlue, resultGreen);
+        result[row][colum] = new Pixel(resultRed, resultGreen, resultBlue);
         //assume full opaqueness/full alpha
       }
     }
@@ -396,7 +396,7 @@ public class Layer implements LayerInterface<Pixel> {
         } else if (blue >= green && red >= red) {
           blue += amount;
         }
-        result[row][colum] = new Pixel(red, blue, green);
+        result[row][colum] = new Pixel(red, green, blue);
         //assume full opaqueness/full alpha
       }
     }
@@ -423,7 +423,7 @@ public class Layer implements LayerInterface<Pixel> {
         int resultGreen = Math.max(0, green + amount);
         int resultBlue = Math.max(0, blue + amount);
 
-        result[row][colum] = new Pixel(resultRed, resultBlue, resultGreen);
+        result[row][colum] = new Pixel(resultRed, resultGreen, resultBlue);
         //assume full opaqueness/full alpha
       }
     }

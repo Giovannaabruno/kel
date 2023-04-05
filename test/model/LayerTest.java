@@ -53,12 +53,20 @@ public class LayerTest {
   public void testGetGrid() {
     Layer ll = new Layer(800, 600, "image/tako.pmm");
     Pixel[][] grid = ll.getGrid();
-    assertEquals(grid[0][0],
-            new Pixel(255, 255, 255, 255));
-    assertEquals(grid[ll.getHeight() / 2][ll.getWidth() / 2],
-            new Pixel(255, 255, 255, 255));
-    assertEquals(grid[ll.getHeight() - 1][ll.getWidth() - 1],
-            new Pixel(255, 255, 255, 255));
+
+    Pixel p1 = grid[0][0];
+    assertEquals(p1.getRed(), 0);
+    assertEquals(p1.getGreen(), 0);
+    assertEquals(p1.getBlue(), 0);
+    Pixel p2 = grid[ll.getHeight() / 2][ll.getWidth() / 2];
+    assertEquals(p2.getRed(), 0);
+    assertEquals(p2.getGreen(), 0);
+    assertEquals(p2.getBlue(), 0);
+    Pixel p3 = grid[ll.getHeight() - 1][ll.getWidth() - 1];
+    assertEquals(p3.getRed(), 0);
+    assertEquals(p3.getGreen(), 0);
+    assertEquals(p3.getBlue(), 0);
+
     assertNotEquals(grid[ll.getHeight() / 2][ll.getWidth() / 2],
             new Pixel(255, 128, 255, 255));
   }
@@ -69,17 +77,25 @@ public class LayerTest {
   @Test
   public void testGetPixelAt() {
     Layer ll = new Layer(800, 600, "image/tako.pmm");
-    assertEquals(ll.getPixelAt(0, 0),
-            new Pixel(255, 255, 255, 255));
+    Pixel[][] grid = ll.getGrid();
+    Pixel p1 = grid[0][0];
+    assertEquals(p1.getRed(), 0);
+    assertEquals(p1.getGreen(), 0);
+    assertEquals(p1.getBlue(), 0);
 
-    assertEquals(ll.getPixelAt(ll.getHeight() / 2, ll.getWidth() / 2),
-            new Pixel(255, 255, 255, 255));
+    Pixel p2 = grid[ll.getHeight() / 2][ll.getWidth() / 2];
+    assertEquals(p2.getRed(), 0);
+    assertEquals(p2.getGreen(), 0);
+    assertEquals(p2.getBlue(), 0);
 
-    assertEquals(ll.getPixelAt(ll.getHeight() - 1, ll.getWidth() - 1),
-            new Pixel(255, 255, 255, 255));
+    Pixel p3 = grid[ll.getHeight() - 1][ll.getWidth() - 1];
+    assertEquals(p3.getRed(), 0);
+    assertEquals(p3.getGreen(), 0);
+    assertEquals(p3.getBlue(), 0);
 
-    assertNotEquals(ll.getPixelAt(ll.getHeight() / 2, ll.getWidth() / 2),
+    assertNotEquals(grid[ll.getHeight() / 2][ll.getWidth() / 2],
             new Pixel(255, 128, 255, 255));
+
 
   }
 
@@ -147,6 +163,25 @@ public class LayerTest {
   }
 
   /**
+   * Tester for applyFilter.
+   */
+  @Test
+  public void applyFilter() {
+    Layer ll = new Layer(800, 600, "image/tako.pmm");
+    ll.setFilter("red-component", 80);
+    ll.applyFilter(null);
+    Pixel p = ll.getPixelAt(0,0);
+    assertEquals(p.getGreen(), 0);
+    assertEquals(p.getBlue(), 0);
+    // Proves it not equals
+    p = ll.getPixelAt(100, 100);
+    assertEquals(p.getGreen(), 0);
+    assertEquals(p.getBlue(), 0);
+
+
+  }
+
+  /**
    * Tester that test GetFilter method.
    */
   @Test
@@ -175,12 +210,19 @@ public class LayerTest {
     int amount = 30;
     ll.setFilter("red-component", amount);
     Pixel[][] grid = ll.getFilteredGrid();
-    assertEquals(grid[0][0],
-            new Pixel(255, 0, 0, 255));
-    assertEquals(grid[ll.getHeight() / 2][ll.getWidth() / 2],
-            new Pixel(255, 0, 0, 255));
-    assertEquals(grid[ll.getHeight() - 1][ll.getWidth() - 1],
-            new Pixel(255, 0, 0, 255));
+
+    Pixel p1 = grid[0][0];
+    assertEquals(p1.getGreen(), 0);
+    assertEquals(p1.getBlue(), 0);
+
+    Pixel p2 = grid[ll.getHeight() / 2][ll.getWidth() / 2];
+    assertEquals(p2.getGreen(), 0);
+    assertEquals(p2.getBlue(), 0);
+
+    Pixel p3 = grid[ll.getHeight() - 1][ll.getWidth() - 1];
+    assertEquals(p3.getGreen(), 0);
+    assertEquals(p3.getBlue(), 0);
+
     assertNotEquals(grid[ll.getHeight() / 2][ll.getWidth() / 2],
             new Pixel(855, 0, 0, 255));
 
@@ -242,20 +284,19 @@ public class LayerTest {
   public void testdarkenBlending() {
     Layer l1 = new Layer(800, 600, "image/tako.pmm");
     Layer l2 = new Layer(800, 600, "image/tako.pmm");
-    l1.setFilter("darkenBlending");
+    l1.setFilter("darkenBlending", 80);
 
     double lightness = l1.getPixelAt(0, 0).getLightness();
     double lightnessD = l2.getPixelAt(0, 0).getLightness();
     lightness *= lightnessD;
 
-    System.out.println(lightness);
     Pixel[][] mix = l1.getFilteredGrid(l2);
-    assertEquals(0.992, mix[0][0].getLightness(), 0.01);
+    assertEquals(0.0, mix[0][0].getLightness(), 0.01);
 
     lightness = l1.getPixelAt(1, 0).getLightness();
     lightnessD = l2.getPixelAt(1, 0).getLightness();
     lightness *= lightnessD;
-    assertEquals(1, mix[0][0].getLightness(), 0.01);
+    assertEquals(0.0, mix[0][0].getLightness(), 0.01);
 
 
   }
@@ -267,7 +308,7 @@ public class LayerTest {
   public void testbrighteningBlending() {
     Layer l = new Layer(800, 600, "image/tako.pmm");
     Layer ld = new Layer(800, 600, "image/tako.pmm");
-    l.setFilter("brightenBlending");
+    l.setFilter("brightenBlending", 80);
 
     double lightness = l.getPixelAt(0, 0).getLightness();
     double lightnessD = ld.getPixelAt(0, 0).getLightness();

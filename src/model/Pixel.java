@@ -331,6 +331,10 @@ public class Pixel implements PixelInterface {
     return new Pixel(red, green, blue, alpha);
   }
 
+  /**
+   * Method toString, represents an objects structure.
+   * @return string representation of an object
+   */
   @Override
   public String  toString() {
     return "(" + this.getRed() + ", " + this.getGreen() + ", " + this.getBlue() + ")";

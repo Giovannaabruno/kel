@@ -44,5 +44,4 @@ public class CollagingCommandView implements CollagingView {
     return this.ap;
   }
 
-
 }
