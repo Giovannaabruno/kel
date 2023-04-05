@@ -1,0 +1,25 @@
+Instructions for using the GUI
+- To use the load function, click on the "Load Image" button and a pop-up menu will appear.
+  Select the image file that you would like to use and click open. Upon doing so, the image that
+  the user selected will appear in another window.
+- To use the New Project function, click on the "New Project" button and a pop-up window will
+  appear for you to add the name of the project.
+- To use the Save Image function, click on the "Save Image" button and a pop-up window will
+  appear and allow you to choose the location you would like to save your image in.
+- To use Set Filter command, select the command in the Command drop-down menu. A pop-up window
+  will appear where you will enter the name of the layer you would like to set the filter on.
+  Next, you will be asked to enter the filter you want to implement. Here, you will enter
+  the name of the filter you want to add. This includes red-component, green-component,
+  blue-component, brighten-value, brighten-intensity, brighten-luma, darken-value, darken-intensity,
+  darken-luma, darkenBlending, brightenBlending, or inversionBlending.
+- To use the Add Image to Layer command, select the command in the Command drop-down menu.
+  A pop-up window will appear where you will enter the name of the layer you would like to use.
+  Then enter the name of the image you want to add to the layer. Finally, enter the x and y
+  positions you would like.
+- To use the Add Layer command, select the command in the Command drop-down menu. A pop-up
+  window will appear where you will enter the name of the layer you would like to use.
+- To use the Save Image command, select the command in the Command drop-down menu. A pop-up
+  window will appear where you will enter the name of the file you would like to save.
+- To use the Save Project command, select the command in the Command drop-down menu. A pop-ip
+  window will appear where you will enter the name of the file you want to save and it will show
+  whether or not it was saved successful.
