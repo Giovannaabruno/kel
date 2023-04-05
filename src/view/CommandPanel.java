@@ -3,12 +3,9 @@ package view;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
 
-import javax.swing.JPanel;
-import javax.swing.DefaultListModel;
-import javax.swing.BorderFactory;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 
 import controller.ImageController;
@@ -30,8 +27,8 @@ public class CommandPanel extends JPanel {
 
     this.listModel = listModel;
     this.setBorder(BorderFactory.createTitledBorder("Commands:"));
-    String[] options = {"None", "New Project", "Add Layer",
-                        "Set Filter", "Add Image to Layer", "Save Image",
+    String[] options = {"None", "Add Layer",
+                        "Set Filter", "Add Image to Layer",
                         "Save Project"};
     JComboBox<String> comboBox = new JComboBox<>();
     for (String option : options) {
@@ -110,15 +107,12 @@ public class CommandPanel extends JPanel {
         }
         break;
       case "Save Image":
-        try {
-          String filterOption = JOptionPane.showInputDialog(this,
-                  "Enter filter name.");
-          ic.saveImage(filterOption);
-          JOptionPane.showMessageDialog(this,
-                  "Successfully saved image.");
-        } catch (Exception e) {
-          JOptionPane.showMessageDialog(this,
-                  "Failed to save image.");
+        JFrame currentWindow = new JFrame();
+        JFileChooser fileChooser = new JFileChooser(".");
+        int returnValue = fileChooser.showSaveDialog(currentWindow);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+          File file = fileChooser.getSelectedFile();
+          ic.saveImage(String.valueOf(file));
         }
         break;
       case "Save Project":

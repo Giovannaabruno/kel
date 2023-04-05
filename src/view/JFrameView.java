@@ -63,6 +63,8 @@ public class JFrameView extends JFrame implements CollagingView {
     JPanel bottomPanel = new JPanel();
     bottomPanel.setLayout(new FlowLayout());
 
+    JButton newProjectButton = new JButton("New Project");
+    bottomPanel.add(newProjectButton);
 
     JButton loadButton = new JButton("Load Image");
     bottomPanel.add(loadButton);
@@ -76,8 +78,6 @@ public class JFrameView extends JFrame implements CollagingView {
     JPanel commandPanel = new CommandPanel(ic, listModel);
     bottomPanel.add(commandPanel);
 
-    JButton newProjectButton = new JButton("New Project");
-    topPanel.add(newProjectButton);
 
     this.projectNameLabel = new JLabel("No Project");
     topPanel.add(this.projectNameLabel);
@@ -152,6 +152,22 @@ public class JFrameView extends JFrame implements CollagingView {
                       "No current project so cannot assign to layer.");
             }
           }
+        }
+      }
+    });
+
+    saveButton.addActionListener(new ActionListener() {
+      /**
+       * Method actionPerformed, creates the action sequences.
+       * @param e the event to be processed
+       */
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        JFileChooser fileChooser = new JFileChooser(".");
+        int returnValue = fileChooser.showSaveDialog(currentWindow);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+          File file = fileChooser.getSelectedFile();
+
         }
       }
     });
