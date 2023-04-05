@@ -73,5 +73,5 @@ public interface Features {
    *
    * @param fileName name of the file
    */
-  void saveImage (String fileName);
+  void saveImage(String fileName);
 }

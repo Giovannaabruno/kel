@@ -1,6 +1,22 @@
 package view;
 
-import java.awt.*;
+
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.JFileChooser;
+import javax.swing.ListSelectionModel;
+import javax.swing.JScrollPane;
+
+import java.awt.FlowLayout;
+import java.awt.Dimension;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -8,7 +24,6 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 
 import controller.ImageController;
 import model.Layer;
@@ -18,18 +33,11 @@ import model.Project;
 /**
  * Implements the CollagingView interface. Constructs a GUI using the Swing framework.
  */
+// add a ActionListener. hook it to the button to creat the effect
 public class JFrameView extends JFrame implements CollagingView {
-  private final JButton loadButton;
-  private final JButton saveButton;
 
-  private JList layerList;
-  private DefaultListModel<String> listModel;
+  private final JLabel projectNameLabel;
 
-  private JLabel projectNameLabel;
-  private JButton newProjectButton;
-
-
-  private JPanel commandPanel;
 
   private ImagePanel imagePanel;
 
@@ -56,24 +64,25 @@ public class JFrameView extends JFrame implements CollagingView {
     bottomPanel.setLayout(new FlowLayout());
 
 
-    this.loadButton = new JButton("Load Image");
-    bottomPanel.add(this.loadButton);
+    JButton loadButton = new JButton("Load Image");
+    bottomPanel.add(loadButton);
 
-    this.saveButton = new JButton("Save Image");
-    bottomPanel.add(this.saveButton);
-
-    this.commandPanel = new CommandPanel();
-    bottomPanel.add(this.commandPanel);
+    JButton saveButton = new JButton("Save Image");
+    bottomPanel.add(saveButton);
 
     ImageController ic = new ImageController();
 
-    this.newProjectButton = new JButton("New Project");
+
+    JPanel commandPanel = new CommandPanel(ic);
+    bottomPanel.add(commandPanel);
+
+    JButton newProjectButton = new JButton("New Project");
     topPanel.add(newProjectButton);
 
     this.projectNameLabel = new JLabel("No Project");
     topPanel.add(this.projectNameLabel);
     currentProject = ic.newProject(800, 600);
-    this.newProjectButton.addActionListener(new ActionListener() {
+    newProjectButton.addActionListener(new ActionListener() {
       ///part5
 
       /**
@@ -97,7 +106,7 @@ public class JFrameView extends JFrame implements CollagingView {
     });
 
     JFrame currentWindow = this;
-    this.loadButton.addActionListener(new ActionListener() {
+    loadButton.addActionListener(new ActionListener() {
 
       /**
        * Method actionPerformed, creates the action sequences.
@@ -120,7 +129,9 @@ public class JFrameView extends JFrame implements CollagingView {
               if (getExtension(selectedFile.getName()).equals("ppm")) {
                 // load ppm
                 layer = ic.loadImage(selectedFile, selectedFile.getName());
+                System.out.println("Loading layer " + selectedFile.getName());
                 currentProject.addLayer(layer);
+                System.out.println("Loading ppm");
                 img = ppmImageToBufferedImage(layer);
               } else {
                 try {
@@ -130,14 +141,15 @@ public class JFrameView extends JFrame implements CollagingView {
                 }
               }
               if (img != null) {
-                imagePanel = new ImagePanel(img);
+                imagePanel = new ImagePanel(img, ic);
                 imageWindow.add(imagePanel);
                 imageWindow.setVisible(true);
                 imageWindow.setSize(600,600);
                 imageWindow.setTitle(selectedFile.getName());
               }
             } else {
-              JOptionPane.showMessageDialog(currentWindow, "No current project so cannot assign to layer.");
+              JOptionPane.showMessageDialog(currentWindow,
+                      "No current project so cannot assign to layer.");
             }
           }
         }
@@ -145,12 +157,12 @@ public class JFrameView extends JFrame implements CollagingView {
     });
 
     if (currentProject != null) {
-      this.listModel = new DefaultListModel<>();
+      DefaultListModel<String> listModel = new DefaultListModel<>();
       for (int l = 0; l < currentProject.getNumberLayers(); l++) {
         listModel.addElement(currentProject.getLayer(l).getName());
       }
 
-      this.layerList = new JList<>(listModel);
+      JList layerList = new JList<>(listModel);
       layerList.setSelectedIndex(1);
       layerList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
       layerList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
@@ -188,9 +200,10 @@ public class JFrameView extends JFrame implements CollagingView {
    * @param layer equals layers
    * @return find Image
    */
-  public BufferedImage ppmImageToBufferedImage(Layer layer) {
+  public static BufferedImage ppmImageToBufferedImage(Layer layer) {
     java.awt.image.BufferedImage finalImage =
-            new java.awt.image.BufferedImage(layer.getWidth(), layer.getHeight(), BufferedImage.TYPE_INT_ARGB
+            new java.awt.image.BufferedImage(layer.getWidth(),
+                    layer.getHeight(), BufferedImage.TYPE_INT_ARGB
             );
 
     for (int y = 0; y < layer.getHeight(); y++) {
@@ -219,6 +232,7 @@ public class JFrameView extends JFrame implements CollagingView {
    */
   @Override
   public void renderMessage(String message) throws IOException {
+    System.out.println("Hi");
 
   }
 

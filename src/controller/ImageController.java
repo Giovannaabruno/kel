@@ -98,6 +98,7 @@ public class ImageController implements ControllerInterface {
 
     //Project img = new Project(pixels[0].length, pixels.length);
     Layer layer = new Layer(pixels, layerName);
+    getProject().addLayer(layer);
     //img.addLayer(layer);
     return layer;
   }
@@ -350,45 +351,62 @@ public class ImageController implements ControllerInterface {
    * @param layerName   name of layer/filter type.
    * @param filerOption what is the filter option called.
    */
-  public void setFilter(String layerName, String filerOption) {
+  public void setFilter(String layerName, String filerOption, String otherLayerName) {
+    Layer otherLayer = null;
+    if(otherLayerName != null) {
+      otherLayer = getProject().getLayer(otherLayerName);
+    }
     Layer l = this.img.getLayer(layerName);
-    int amount = 20;
+    int amount = 200;
     switch (filerOption) {
       case "red-component":
         l.setFilter("red-component", amount);
+        l.applyFilter(null);
         break;
       case "green-component":
         l.setFilter("green-component", amount);
+        l.applyFilter(null);
         break;
       case "blue-component":
         l.setFilter("blue-component", amount);
+        l.applyFilter(null);
         break;
       case "brighten-value":
         l.setFilter("brighten-value", amount);
+        l.applyFilter(null);
         break;
       case "brighten-intensity":
         l.setFilter("brighten", amount);
+        l.applyFilter(null);
         break;
       case "brighten-luma":
         l.setFilter("brighten-luma", amount);
+        l.applyFilter(null);
         break;
       case "darken-value":
         l.setFilter("darken-value", amount);
+        l.applyFilter(null);
         break;
       case "darken-intensity":
         l.setFilter("darken", amount);
+        l.applyFilter(null);
         break;
       case "darken-luma":
         l.setFilter("darken-luma", amount);
+        l.applyFilter(null);
         break;
       case "darkenBlending":
+        System.out.println("Calling darken Blending");
         l.setFilter("darkenBlending", amount);
+        l.applyFilter(otherLayer);
         break;
       case "brightenBlending":
         l.setFilter("brightenBlending", amount);
+        l.applyFilter(otherLayer);
         break;
       case "inversionBlending":
         l.setFilter("inversionBlending", amount);
+        l.applyFilter(otherLayer);
         break;
 
       default:
@@ -491,8 +509,15 @@ public class ImageController implements ControllerInterface {
         break;
       case "set-filter":
         String layer = words[1];
-        String filerOption = words[2];
-        setFilter(layer, filerOption);
+        String filterOption = words[2];
+        if(filterOption.equals("darkenBlending") || filterOption.equals("inversionBlending") ||
+                filterOption.equals("brightenBlending")) {
+          String otherLayerName = words[3];
+          setFilter(layer, filterOption, otherLayerName);
+        }
+        else {
+          setFilter(layer, filterOption,null);
+        }
         break;
       case "save-image":
         if (words.length > 1) {
@@ -520,6 +545,7 @@ public class ImageController implements ControllerInterface {
         out.println("Invalid-command");
         this.currentCommand = "Invalid-command";
     }
+
 
   }
 }

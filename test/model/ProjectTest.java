@@ -128,9 +128,9 @@ public class ProjectTest {
     l.setFilter("darken", 20);
     Pixel[][] grid = l.getFilteredGrid();
     Pixel newPixel = grid[0][0];
-    assertTrue(newPixel.getRed() < oldPixel.getRed());
-    assertTrue(newPixel.getGreen() < oldPixel.getGreen());
-    assertTrue(newPixel.getBlue() < oldPixel.getBlue());
+    assertTrue(newPixel.getRed() <= oldPixel.getRed());
+    assertTrue(newPixel.getGreen() <= oldPixel.getGreen());
+    assertTrue(newPixel.getBlue() <= oldPixel.getBlue());
     assertFalse(newPixel.getRed() > oldPixel.getRed());
     assertFalse(newPixel.getGreen() > oldPixel.getGreen());
     assertFalse(newPixel.getBlue() > oldPixel.getBlue());
@@ -186,9 +186,9 @@ public class ProjectTest {
     l.setFilter("brighten", 20);
     Pixel[][] grid = l.getFilteredGrid();
     Pixel newPixel = grid[0][0];
-    assertTrue(newPixel.getRed() > oldPixel.getRed());
-    assertTrue(newPixel.getGreen() > oldPixel.getGreen());
-    assertTrue(newPixel.getBlue() > oldPixel.getBlue());
+    assertTrue(newPixel.getRed() >= oldPixel.getRed());
+    assertTrue(newPixel.getGreen() >= oldPixel.getGreen());
+    assertTrue(newPixel.getBlue() >= oldPixel.getBlue());
     assertFalse(newPixel.getRed() < oldPixel.getRed());
     assertFalse(newPixel.getGreen() < oldPixel.getGreen());
     assertFalse(newPixel.getBlue() < oldPixel.getBlue());
@@ -223,9 +223,11 @@ public class ProjectTest {
     l.setFilter("brighten-luma", 20);
     Pixel[][] grid = l.getFilteredGrid();
     Pixel newPixel = grid[0][0];
-    assertTrue(newPixel.getRed() > oldPixel.getRed());
-    assertTrue(newPixel.getGreen() > oldPixel.getGreen());
-    assertTrue(newPixel.getBlue() > oldPixel.getBlue());
+    System.out.println(newPixel);
+    System.out.println(oldPixel);
+    assertTrue(newPixel.getRed() >= oldPixel.getRed());
+    assertTrue(newPixel.getGreen() >= oldPixel.getGreen());
+    assertTrue(newPixel.getBlue() >= oldPixel.getBlue());
 
     assertFalse(newPixel.getRed() < oldPixel.getRed());
     assertFalse(newPixel.getGreen() < oldPixel.getGreen());

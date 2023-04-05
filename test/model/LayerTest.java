@@ -204,16 +204,13 @@ public class LayerTest {
   public void GetFilteredGrid() {
     Layer ll = new Layer(800, 600, "image/tako.pmm");
     int amount = 30;
+    Layer l2 = new Layer(800, 600, "image/tako.pmm");
     ll.setFilter("inversionBlending", amount);
-    Pixel[][] grid = ll.getFilteredGrid();
-    assertEquals(grid[0][0],
-            new Pixel(255, 0, 0, 255));
-    assertEquals(grid[ll.getHeight() / 2][ll.getWidth() / 2],
-            new Pixel(255, 0, 0, 255));
-    assertEquals(grid[ll.getHeight() - 1][ll.getWidth() - 1],
-            new Pixel(255, 0, 0, 255));
-    assertNotEquals(grid[ll.getHeight() / 2][ll.getWidth() / 2],
-            new Pixel(855, 0, 0, 255));
+    Pixel[][] grid = ll.getFilteredGrid(l2);
+    Pixel topLeft = grid[0][0];
+    assertEquals(topLeft.getRed(), 0);
+    assertEquals(topLeft.getBlue(), 0);
+    assertEquals(topLeft.getGreen(), 0);
 
   }
 

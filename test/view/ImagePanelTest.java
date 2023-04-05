@@ -8,6 +8,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import controller.ImageController;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
@@ -24,7 +26,8 @@ public class ImagePanelTest {
   @Test
   public void getImage() throws IOException {
     BufferedImage img = ImageIO.read(new File("images/tako.ppm"));
-    ImagePanel panel = new ImagePanel(img);
+    ImageController ic = new ImageController();
+    ImagePanel panel = new ImagePanel(img, ic);
     assertEquals(panel.getImage(), ImageIO.read(new File("images/tako.ppm")));
     assertNull(panel.getImage());
 
@@ -36,7 +39,8 @@ public class ImagePanelTest {
   @Test
   public void paintComponent() throws IOException {
     BufferedImage img = ImageIO.read(new File("images/tako.ppm"));
-    ImagePanel panel = new ImagePanel(img);
+    ImageController ic = new ImageController();
+    ImagePanel panel = new ImagePanel(img,ic);
     assertEquals(panel.getImage(), img);
     if (panel != null && img != null) {
       assertEquals(panel.getImage().getWidth(), img.getWidth());

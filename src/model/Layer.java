@@ -35,7 +35,7 @@ public class Layer implements LayerInterface<Pixel> {
     this.grid = new Pixel[height][width];
     for (int row = 0; row < grid.length; row++) {
       for (int colum = 0; colum < grid[0].length; colum++) {
-        grid[row][colum] = new Pixel(255, 255, 255);
+        grid[row][colum] = new Pixel(0, 0, 0);
       }
     }
   }
@@ -135,7 +135,7 @@ public class Layer implements LayerInterface<Pixel> {
         this.filter = filter;
         blending = false;
         break;
-      case "blendingDarkness"://REPLACE (RELOOK AT THIS)
+      case "darkenBlending"://REPLACE (RELOOK AT THIS)
       case "inversionBlending":
       case "brightenBlending":
         this.filter = filter;
@@ -145,7 +145,19 @@ public class Layer implements LayerInterface<Pixel> {
         System.out.println("Invalid filter");
 
     }
+  }
+
+  public void applyFilter(Layer other) {
     this.amount = amount;
+    if(this.filter.equals("darkenBlending") ||this.filter.equals("inversionBlending") ||
+            this.filter.equals("brightenBlending")) {
+      this.grid = getFilteredGrid(other);
+    }
+    else {
+      System.out.println("applying " + this.filter);
+      this.grid = getFilteredGrid();
+    }
+
   }
 
   /**
@@ -255,16 +267,16 @@ public class Layer implements LayerInterface<Pixel> {
    */
   private Pixel[][] darken() {
     Pixel[][] result = new Pixel[height][width];
-
+    System.out.println("amount " + this.amount);
     for (int row = 0; row < grid.length; row++) {
       for (int colum = 0; colum < grid[0].length; colum++) {
         int red = grid[row][colum].getRed();
         int green = grid[row][colum].getGreen();
         int blue = grid[row][colum].getBlue();
 
-        int resultRed = Math.max(0, red - amount);
-        int resultGreen = Math.max(0, green - amount);
-        int resultBlue = Math.max(0, blue - amount);
+        int resultRed = Math.max(0, red - this.amount);
+        int resultGreen = Math.max(0, green - this.amount);
+        int resultBlue = Math.max(0, blue - this.amount);
 
         result[row][colum] = new Pixel(resultRed, resultBlue, resultGreen);
         //assume full opaqueness/full alpha

@@ -186,11 +186,11 @@ public class ImageControllerTest {
     ImageController ic = new ImageController();
     ic.newProject(600, 800);
     ic.addLayer("layer1");
-    ic.setFilter("layer1", "red-component");
+    ic.setFilter("layer1", "red-component", null);
     assertEquals("red-component", ic.getProject().getLayer("layer1").getFilter());
     assertNotEquals("recomponent", ic.getProject().getLayer("layer1").getFilter());
     ic.addLayer("layer2");
-    ic.setFilter("layer2", "green-component");
+    ic.setFilter("layer2", "green-component", null);
     assertEquals("green-component", ic.getProject().getLayer("layer2").getFilter());
     assertNotEquals("grcomponent", ic.getProject().getLayer("layer2").getFilter());
 
@@ -226,7 +226,7 @@ public class ImageControllerTest {
     ImageController ic = new ImageController();
     ic.newProject(800, 800);
     ic.addImageToLayer("background", "./images/tako.ppm", 0, 0);
-    ic.setFilter("background", "darken");
+    ic.setFilter("background", "darken", null);
     ic.saveImage("newTako.ppm");
     File file = new File("newTako.ppm");
     assertTrue(file.exists());

@@ -98,7 +98,7 @@ public interface ControllerInterface {
    * @param layerName   name of layer/filter type.
    * @param filerOption what is the filter option called.
    */
-  void setFilter(String layerName, String filerOption);
+  void setFilter(String layerName, String filerOption, String otherLayerName);
 
   // save-image file-name: save the result of applying all filters on the image
   // how can you add multiple layers with transpareses that add up too 255.

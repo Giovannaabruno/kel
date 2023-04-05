@@ -50,11 +50,5 @@ public class JFrameViewTest {
     assertEquals(topLeftRGB,  argb);
     assertNotEquals(topLeftRGB, 0);
   }
-  //  /**
-  //   * Tester for renderMessage method.
-  //   */
-  //  @Test
-  //  public void renderMessage() {
 
-  //}
 }

@@ -48,6 +48,7 @@ public class Pixel implements PixelInterface {
     convertRGBtoHSL();
   }
   ///NEW
+
   /**
    * Constructor for Pixel, represents integer objects hue, saturation, and lightness.
    *
@@ -63,6 +64,7 @@ public class Pixel implements PixelInterface {
     convertHSLtoRGB();
   }
   ///NEW
+
   /**
    * Constructor for Pixel, represents alpha and integer hue, saturation, and lightness.
    *
@@ -80,9 +82,10 @@ public class Pixel implements PixelInterface {
   }
 
   ///NEW
+
   /**
-   *  Converts an RGB representation in the range 0-1 into an HSL
-   *   representation where
+   * Converts an RGB representation in the range 0-1 into an HSL
+   * representation where.
    */
   private void convertRGBtoHSL() {
     int r = red;
@@ -144,13 +147,15 @@ public class Pixel implements PixelInterface {
 
 
   ///NEW
+
   /**
    * Method convertFn, Helper method that performs the translation from the HSL polygonal
    * model to the more familiar RGB model.
-   * @param hue equals hue
+   *
+   * @param hue        equals hue
    * @param saturation equals saturation
-   * @param lightness equals lightness
-   * @param n number amount
+   * @param lightness  equals lightness
+   * @param n          number amount
    * @return calculation for conversion, total amount
    */
   private double convertFn(double hue, double saturation, double lightness, int n) {
@@ -170,8 +175,8 @@ public class Pixel implements PixelInterface {
   @Override
   public boolean equals(Object other) {
     Pixel otherPixel = (Pixel) other;
-    return this.red == otherPixel.red && this.blue == otherPixel.blue &&
-            this.green == otherPixel.green && this.alpha == otherPixel.alpha;
+    return this.red == otherPixel.red && this.blue == otherPixel.blue
+                       && this.green == otherPixel.green && this.alpha == otherPixel.alpha;
   }
 
 
@@ -324,5 +329,10 @@ public class Pixel implements PixelInterface {
   @Override
   public Pixel clone() {
     return new Pixel(red, green, blue, alpha);
+  }
+
+  @Override
+  public String  toString() {
+    return "(" + this.getRed() + ", " + this.getGreen() + ", " + this.getBlue() + ")";
   }
 }
