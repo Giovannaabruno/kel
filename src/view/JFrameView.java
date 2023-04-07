@@ -2,24 +2,16 @@ package view;
 
 
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
-import javax.swing.JFileChooser;
-import javax.swing.ListSelectionModel;
-import javax.swing.JScrollPane;
+import javax.swing.*;
 
 import java.awt.FlowLayout;
 import java.awt.Dimension;
 
+import java.awt.color.ColorSpace;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorConvertOp;
 import java.io.File;
 import java.io.IOException;
 
@@ -128,24 +120,53 @@ public class JFrameView extends JFrame implements CollagingView {
             if (currentProject != null) {
               if (getExtension(selectedFile.getName()).equals("ppm")) {
                 // load ppm
-                layer = ic.loadImage(selectedFile, selectedFile.getName());
-                listModel.addElement(selectedFile.getName());
                 System.out.println("Loading layer " + selectedFile.getName());
                 System.out.println("Loading ppm");
+                layer = ic.loadImage(selectedFile, selectedFile.getName());
+                listModel.addElement(selectedFile.getName());
                 img = ppmImageToBufferedImage(layer);
+                if (img != null) {
+                  imagePanel = new ImagePanel(img, ic);
+                  imageWindow.add(imagePanel);
+                  imageWindow.setVisible(true);
+                  imageWindow.setSize(600,600);
+                  imageWindow.setTitle(selectedFile.getName());
+                }}
+              else if (getExtension(selectedFile.getName()).equals("jpg") || getExtension(selectedFile.getName()).equals("png")) {
+                // kel
+                // Read the JPEG or PNG file
+                System.out.println("Loading file " + selectedFile.getName());
+                System.out.println("Loading " + getExtension(selectedFile.getName()));
+                BufferedImage image = null;
+                try {
+                  image = ImageIO.read(selectedFile);
+                } catch (IOException ex) {
+                  throw new RuntimeException(ex);
+                }
+
+                // Convert the image to RGB color space
+                ColorSpace cs = ColorSpace.getInstance(ColorSpace.CS_sRGB);
+                ColorConvertOp op = new ColorConvertOp(cs, null);
+                BufferedImage rgbImage = op.filter(image, null);
+
+                // Create a JFrame to display the image
+                JFrame frame = new JFrame();
+                frame.setSize(rgbImage.getWidth(), rgbImage.getHeight());
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+                // Create a JLabel with the image and add it to the frame
+                JLabel label = new JLabel(new ImageIcon(rgbImage));
+                frame.add(label);
+
+                // Show the frame
+                frame.setVisible(true);
+
               } else {
                 try {
                   img = ImageIO.read(selectedFile);
                 } catch (IOException err) {
                   JOptionPane.showMessageDialog(currentWindow, "File wasn't found.");
                 }
-              }
-              if (img != null) {
-                imagePanel = new ImagePanel(img, ic);
-                imageWindow.add(imagePanel);
-                imageWindow.setVisible(true);
-                imageWindow.setSize(600,600);
-                imageWindow.setTitle(selectedFile.getName());
               }
             } else {
               JOptionPane.showMessageDialog(currentWindow,
