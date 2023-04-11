@@ -27,7 +27,7 @@ public class ImagePanelTest {
   public void getImage() throws IOException {
     BufferedImage img = ImageIO.read(new File("images/tako.ppm"));
     ImageController ic = new ImageController();
-    ImagePanel panel = new ImagePanel(img, ic);
+    ImagePanel panel = new ImagePanel(ic);
     assertEquals(panel.getImage(), ImageIO.read(new File("images/tako.ppm")));
     assertNull(panel.getImage());
 
@@ -40,7 +40,7 @@ public class ImagePanelTest {
   public void paintComponent() throws IOException {
     BufferedImage img = ImageIO.read(new File("images/tako.ppm"));
     ImageController ic = new ImageController();
-    ImagePanel panel = new ImagePanel(img,ic);
+    ImagePanel panel = new ImagePanel(ic);
     assertEquals(panel.getImage(), img);
     if (panel != null && img != null) {
       assertEquals(panel.getImage().getWidth(), img.getWidth());

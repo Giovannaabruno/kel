@@ -126,43 +126,51 @@ public class JFrameView extends JFrame implements CollagingView {
                 listModel.addElement(selectedFile.getName());
                 img = ppmImageToBufferedImage(layer);
                 if (img != null) {
-                  imagePanel = new ImagePanel(img, ic);
+                  imagePanel = new ImagePanel(ic);
                   imageWindow.add(imagePanel);
                   imageWindow.setVisible(true);
                   imageWindow.setSize(600,600);
                   imageWindow.setTitle(selectedFile.getName());
                 }}
-              else if (getExtension(selectedFile.getName()).equals("jpg") || getExtension(selectedFile.getName()).equals("png")) {
+              else if (getExtension(selectedFile.getName()).equals("jpg")
+                      || getExtension(selectedFile.getName()).equals("png")) {
                 // kel
                 // Read the JPEG or PNG file
                 System.out.println("Loading file " + selectedFile.getName());
                 System.out.println("Loading " + getExtension(selectedFile.getName()));
-                BufferedImage image = null;
-                try {
-                  image = ImageIO.read(selectedFile);
-                } catch (IOException ex) {
-                  throw new RuntimeException(ex);
-                }
+                currentProject = Project.loadProjectFromImage(selectedFile.getPath());
+                ic.setCurrentProject(currentProject);
+                imagePanel = new ImagePanel(ic);
+                imageWindow.add(imagePanel);
+                imageWindow.setVisible(true);
+                imageWindow.setSize(ic.getProject().getWidth(),ic.getProject().getHeight());
+                imageWindow.setTitle(selectedFile.getName());
+
+//                try {
+//                  image = ImageIO.read(selectedFile);
+//                } catch (IOException ex) {
+//                  throw new RuntimeException(ex);
+//                }
 
                 // Convert the image to RGB color space
-                ColorSpace cs = ColorSpace.getInstance(ColorSpace.CS_sRGB);
-                ColorConvertOp op = new ColorConvertOp(cs, null);
-                BufferedImage rgbImage = op.filter(image, null);
+//                ColorSpace cs = ColorSpace.getInstance(ColorSpace.CS_sRGB);
+//                ColorConvertOp op = new ColorConvertOp(cs, null);
+//                BufferedImage rgbImage = op.filter(image, null);
 
                 // Create a JFrame to display the image
                 JFrame frame = new JFrame();
-                frame.setSize(rgbImage.getWidth(), rgbImage.getHeight());
+                frame.setSize(ic.getProject().getWidth(), ic.getProject().getHeight());
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
                 // Create a JLabel with the image and add it to the frame
-                JLabel label = new JLabel(new ImageIcon(rgbImage));
-                frame.add(label);
+                //JLabel label = new JLabel(new ImageIcon(rgbImage));
+                //frame.add(label);
 
                 // Show the frame
                 frame.setVisible(true);
 
               } else {
-                try {
+                /**try {
                   img = ImageIO.read(selectedFile);
                 } catch (IOException err) {
                   JOptionPane.showMessageDialog(currentWindow, "File wasn't found.");
@@ -171,11 +179,12 @@ public class JFrameView extends JFrame implements CollagingView {
             } else {
               JOptionPane.showMessageDialog(currentWindow,
                       "No current project so cannot assign to layer.");
+            }*/
+              }
             }
           }
         }
-      }
-    });
+    }});
 
     saveButton.addActionListener(new ActionListener() {
       /**
@@ -208,11 +217,11 @@ public class JFrameView extends JFrame implements CollagingView {
       bottomPanel.add(listScroller);
     }
 
-    this.add(topPanel);
-    this.add(bottomPanel);
-    this.setPreferredSize(new Dimension(600, 800));
-    this.pack();
-    this.setVisible(true);
+    add(topPanel);
+    add(bottomPanel);
+    setPreferredSize(new Dimension(600, 800));
+    pack();
+    setVisible(true);
   }
 
   /**
@@ -237,39 +246,34 @@ public class JFrameView extends JFrame implements CollagingView {
    * @return find Image
    */
   public static BufferedImage ppmImageToBufferedImage(Layer layer) {
-    java.awt.image.BufferedImage finalImage =
-            new java.awt.image.BufferedImage(layer.getWidth(),
-                    layer.getHeight(), BufferedImage.TYPE_INT_ARGB
-            );
+      java.awt.image.BufferedImage finalImage =
+              new java.awt.image.BufferedImage(layer.getWidth(),
+                      layer.getHeight(), BufferedImage.TYPE_INT_ARGB
+              );
 
-    for (int y = 0; y < layer.getHeight(); y++) {
-      for (int x = 0; x < layer.getWidth(); x++) {
-        Pixel p = layer.getPixelAt(y, x);
-        char a = (char) p.getAlpha();
-        char r = (char) p.getRed();
-        char g = (char) p.getGreen();
-        char b = (char) p.getBlue();
+      for (int y = 0; y < layer.getHeight(); y++) {
+        for (int x = 0; x < layer.getWidth(); x++) {
+          Pixel p = layer.getPixelAt(y, x);
+          char a = (char) p.getAlpha();
+          char r = (char) p.getRed();
+          char g = (char) p.getGreen();
+          char b = (char) p.getBlue();
 
-        int argb = a << 24;
-        argb |= r << 16;
-        argb |= g << 8;
-        argb |= b;
-        finalImage.setRGB(x, y, argb);
+          int argb = a << 24;
+          argb |= r << 16;
+          argb |= g << 8;
+          argb |= b;
+          finalImage.setRGB(x, y, argb);
+        }
       }
+      return finalImage;
     }
-    return finalImage;
-  }
 
-  /**
-   * Renders a given message to the GUI Application.
-   *
-   * @param message the message to be printed
-   * @throws IOException if the transmission of the message to the data output fails
-   */
   @Override
   public void renderMessage(String message) throws IOException {
-    System.out.println("Hi");
 
   }
-
 }
+
+
+

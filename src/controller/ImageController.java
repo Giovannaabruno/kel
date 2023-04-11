@@ -30,6 +30,11 @@ public class ImageController implements ControllerInterface {
     // Blank constructor, it does not do much and is unnessary for the controller.
   }
 
+
+  public void setCurrentProject(Project project) {
+    this.img = project;
+  }
+
   /**
    * Method clamps, sets a value of range between a
    * defined minimum bound and a maximum bound.

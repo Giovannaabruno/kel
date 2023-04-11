@@ -5,7 +5,13 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JFrame;
+import javax.swing.JFileChooser;
+import javax.swing.DefaultListModel;
+import javax.swing.BorderFactory;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 
 
 import controller.ImageController;
@@ -28,8 +34,8 @@ public class CommandPanel extends JPanel {
     this.listModel = listModel;
     this.setBorder(BorderFactory.createTitledBorder("Commands:"));
     String[] options = {"None", "Add Layer",
-                        "Set Filter", "Add Image to Layer",
-                        "Save Project"};
+            "Set Filter", "Add Image to Layer",
+            "Save Project"};
     JComboBox<String> comboBox = new JComboBox<>();
     for (String option : options) {
       comboBox.addItem(option);

@@ -1,6 +1,12 @@
 package model;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 import controller.ImageController;
 
@@ -113,7 +119,15 @@ public class Project implements ProjectInterface {
    */
   public Layer combineAllLayers() {
     Layer bg = getLayer(0);
-    Layer finalLayer = new Layer(bg.getHeight(), bg.getWidth(), "final");
+
+
+    int maxWidth = 0;
+    int maxHeight = 0;
+    for(int l = 0; l < getNumberLayers(); l++) {
+      maxWidth = Math.max(maxWidth, getLayer(l).getWidth());
+      maxHeight = Math.max(maxHeight, getLayer(l).getHeight());
+    }
+    Layer finalLayer = new Layer(maxHeight, maxWidth, "final");
     for (int l = 0; l < this.getNumberLayers(); l++) {
       Layer currentLayer = getLayer(l);
       for (int r = 0; r < finalLayer.getHeight(); r++) {
@@ -134,5 +148,76 @@ public class Project implements ProjectInterface {
     }
     return finalLayer;
   }
+///New part 3
+
+
+  private static byte lowestByte(int num) {
+    return (byte) (num & 0xFF);
+  }
+
+  private static Layer convertBufferedImageToLayer(BufferedImage img, String name) {
+    Layer layer = new Layer(img.getHeight(), img.getWidth(), name);
+    for (int r = 0; r < layer.getHeight(); r++) {
+      for (int c = 0; c < layer.getWidth(); c++) {
+        int p = img.getRGB(c, r);
+
+        byte blue = lowestByte(p);
+        p >>= 8;
+        byte green = lowestByte(p);
+        p >>= 8;
+        byte red = lowestByte(p);
+        p >>= 8;
+        byte alpha = lowestByte(p);
+
+        Pixel pix = new Pixel(red, green, blue, alpha);
+        layer.setPixelAt(r, c, pix);
+      }
+
+    }
+    return layer;
+  }
+
+
+  /**
+   * loadProjectFromImage, loads an entire project to an image.
+   * @param filename file name
+   * @return filename
+   */
+  public static Project loadProjectFromImage(String filename) {
+    try {
+      File file = new File(filename);
+      BufferedImage img = ImageIO.read(file);
+      Layer layer = convertBufferedImageToLayer(img, file.getName());
+      Project project = new Project(800,600);
+      project.addLayer(layer);
+      return project;
+    }
+    catch(IOException e) {
+      System.out.println("project could not load");
+
+    }
+    return null;
+  }
+
+  /**
+   * Adds Layer to filename.
+   * @param filename name of file
+   */
+  public void addLayerFromImage(String filename) {
+    try {
+      File file = new File(filename);
+      BufferedImage img = ImageIO.read(file);
+      Layer layer = convertBufferedImageToLayer(img, file.getName());
+      addLayer(layer);
+    }
+    catch(IOException e) {
+      System.out.println("layer could not load");
+
+    }
+
+
+  }
+
+
 
 }

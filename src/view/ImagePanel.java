@@ -27,13 +27,13 @@ public class ImagePanel extends JPanel {
   /**
    * Constructor for the ImagePanel class.
    */
-  public ImagePanel(BufferedImage img, ImageController ic) {
+  public ImagePanel(ImageController ic) {
     super();
     this.setBorder(new TitledBorder("Current Image"));
     this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
     this.img = img;
     JLabel imageLabel = new JLabel();
-    setPreferredSize(new Dimension(600, 800));
+    setPreferredSize(new Dimension(ic.getProject().getWidth(), ic.getProject().getHeight()));
     this.ic = ic;
   }
 

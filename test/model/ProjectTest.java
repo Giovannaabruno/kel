@@ -3,12 +3,11 @@ package model;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
-
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertThrows;
 
 /**
  * Testers for Project class.
@@ -301,5 +300,38 @@ public class ProjectTest {
 
 
   }
+  //New Part 3
+  @Test
+  public void testLoadProjectFromImage() {
+    Project image = Project.loadProjectFromImage("images/Koala.jpg");
+    assertEquals(image.getNumberLayers(), 2);
+    assertEquals(image.getLayer(1).getName(), "Koala.jpg");
+    Layer layer = image.getLayer(1);
+    Pixel topLeft = layer.getPixelAt(0, 0);
+    assertEquals(topLeft.getRed(), 101);
+    assertEquals(topLeft.getGreen(), 90);
+    assertEquals(topLeft.getBlue(), 58);
+    assertNotEquals(topLeft.getBlue(), 8);
+    //assertEquals(topLeft.getAlpha(),101);
+
+
+  }
+  @Test
+  public void testAddLayerFromImage() {
+    Project image = new Project(800, 600);
+    image.addLayerFromImage("images/Koala.jpg");
+    assertEquals(image.getNumberLayers(), 2);
+    Layer layer = image.getLayer(1);
+    assertEquals(layer.getName(), "Koala.jpg");
+    Pixel topLeft = layer.getPixelAt(0, 0);
+    assertEquals(topLeft.getRed(),101 );
+    assertEquals(topLeft.getGreen(), 90);
+    assertEquals(topLeft.getBlue(), 58);
+    assertNotEquals(topLeft.getBlue(), 8);
+
+
+
+  }
+
 
 }

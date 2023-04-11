@@ -63,5 +63,12 @@ public interface ProjectInterface {
    * @return combination of multiple layers
    */
   Layer combineAllLayers();
+  //NEW part 3
+
+  /**
+   * adds Layer to filename.
+   * @param filename name of file
+   */
+  void addLayerFromImage(String filename);
 }
 
