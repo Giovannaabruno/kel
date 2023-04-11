@@ -158,16 +158,16 @@ public class JFrameView extends JFrame implements CollagingView {
 //                BufferedImage rgbImage = op.filter(image, null);
 
                 // Create a JFrame to display the image
-                JFrame frame = new JFrame();
-                frame.setSize(ic.getProject().getWidth(), ic.getProject().getHeight());
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//                JFrame frame = new JFrame();
+//                frame.setSize(ic.getProject().getWidth(), ic.getProject().getHeight());
+//                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
                 // Create a JLabel with the image and add it to the frame
                 //JLabel label = new JLabel(new ImageIcon(rgbImage));
                 //frame.add(label);
 
                 // Show the frame
-                frame.setVisible(true);
+//                frame.setVisible(true);
 
               } else {
                 /**try {

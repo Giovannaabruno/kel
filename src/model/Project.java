@@ -121,8 +121,8 @@ public class Project implements ProjectInterface {
     Layer bg = getLayer(0);
 
 
-    int maxWidth = 0;
     int maxHeight = 0;
+    int maxWidth = 0;
     for(int l = 0; l < getNumberLayers(); l++) {
       maxWidth = Math.max(maxWidth, getLayer(l).getWidth());
       maxHeight = Math.max(maxHeight, getLayer(l).getHeight());
@@ -130,8 +130,8 @@ public class Project implements ProjectInterface {
     Layer finalLayer = new Layer(maxHeight, maxWidth, "final");
     for (int l = 0; l < this.getNumberLayers(); l++) {
       Layer currentLayer = getLayer(l);
-      for (int r = 0; r < finalLayer.getHeight(); r++) {
-        for (int c = 0; c < finalLayer.getWidth(); c++) {
+      for (int r = 0; r < currentLayer.getHeight(); r++) {
+        for (int c = 0; c < currentLayer.getWidth(); c++) {
 
           Pixel oldPixel = finalLayer.getPixelAt(r, c);
           Pixel newPixel = currentLayer.getPixelAt(r, c);
@@ -151,8 +151,8 @@ public class Project implements ProjectInterface {
 ///New part 3
 
 
-  private static byte lowestByte(int num) {
-    return (byte) (num & 0xFF);
+  private static int lowestByte(int num) {
+    return (num & 0xFF);
   }
 
   private static Layer convertBufferedImageToLayer(BufferedImage img, String name) {
@@ -161,13 +161,13 @@ public class Project implements ProjectInterface {
       for (int c = 0; c < layer.getWidth(); c++) {
         int p = img.getRGB(c, r);
 
-        byte blue = lowestByte(p);
+        int blue = lowestByte(p);
         p >>= 8;
-        byte green = lowestByte(p);
+        int green = lowestByte(p);
         p >>= 8;
-        byte red = lowestByte(p);
+        int red = lowestByte(p);
         p >>= 8;
-        byte alpha = lowestByte(p);
+        int alpha = lowestByte(p);
 
         Pixel pix = new Pixel(red, green, blue, alpha);
         layer.setPixelAt(r, c, pix);
@@ -188,7 +188,7 @@ public class Project implements ProjectInterface {
       File file = new File(filename);
       BufferedImage img = ImageIO.read(file);
       Layer layer = convertBufferedImageToLayer(img, file.getName());
-      Project project = new Project(800,600);
+      Project project = new Project(layer.getHeight(),layer.getWidth());
       project.addLayer(layer);
       return project;
     }

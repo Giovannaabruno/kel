@@ -312,6 +312,11 @@ public class ProjectTest {
     assertEquals(topLeft.getGreen(), 90);
     assertEquals(topLeft.getBlue(), 58);
     assertNotEquals(topLeft.getBlue(), 8);
+    Pixel somewhere = layer.getPixelAt(layer.getHeight() - 1, layer.getWidth() - 1);
+    assertEquals(somewhere.getRed(), 146);
+    assertEquals(somewhere.getGreen(), 118);
+    assertEquals(somewhere.getBlue(), 96);
+
     //assertEquals(topLeft.getAlpha(),101);
 
 
